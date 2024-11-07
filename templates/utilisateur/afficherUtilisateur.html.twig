@@ -1,0 +1,198 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+   {% trans %}Liste des utilisateurs{% endtrans %}
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+		th,
+		tfoot {
+			font-size: 15px !important;
+			text-align: center !important;
+			font-weight: bold !important;
+			background-color: #F1F1F1 !important;
+		}
+
+		tr:hover {
+			background-color: rgba(62, 128, 235, 0.2) !important;
+			color: #3e80eb !important;
+		}
+
+        td {
+			font-size: 12px !important;
+			text-align: center !important;
+		}
+	</style>
+{% endblock %}
+
+
+
+{% block body %}
+<!-- App-Content -->
+<div class="hor-content main-content">
+	<div class="container">
+
+		<!--Page header-->
+		<div class="page-header">
+			<div class="page-leftheader">
+				<h4 class="page-title mb-0 text-primary"><i class="si si-people me-2"></i>{% trans %}Les utilisateurs{% endtrans %}</h4>
+			</div>
+			<div class="page-rightheader">
+				<div class="btn-list">
+					<a href="{{ path ('ajouter_utilisateur') }}" class="btn btn-outline-primary"><i class="fe fe-plus me-2"></i>
+						{% trans %}Ajouter un utilisateur{% endtrans %}</a>
+					<a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fe fe-printer me-2"></i>
+						{% trans %}Imprimer{% endtrans %}</a>
+					
+				</div>
+			</div>
+		</div>
+		<!--End Page header-->
+
+		<!--Row-->
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12">
+				<div class="card border-primary">
+					<div class="card-header">
+						<div class="col-xl-8 col-lg-8 col-md-8">
+							<h3 class="card-title">
+								<i class="si si-people me-2"></i>{% trans %}Utilisateurs enregistrés{% endtrans %}
+							</h3>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 text-right">
+							
+							<button class="btn btn-outline-primary">
+								<span>{% trans %}Nombres d'utilisateurs{% endtrans %}</span>
+								<span class="badge  bg-primary rounded-pill">{{ utilisateurs|length }}</span>
+							</button>
+							
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped card-table table-vcenter text-nowrap" id="datatable">
+								<thead>
+									<tr>
+										<th>{% trans %}N°{% endtrans %}</th>
+										<th>{% trans %}Photo{% endtrans %}</th>
+										<th>{% trans %}Nom complet{% endtrans %}</th>
+										<th>{% trans %}Rôle{% endtrans %}</th>
+										<th>{% trans %}Opérations{% endtrans %}</th>
+										<th>{% trans %}Débloqué(e) / Bloqué(e){% endtrans %}</th>
+									</tr>
+								</thead>
+								<tfoot>
+									<tr>
+										<th>{% trans %}N°{% endtrans %}</th>
+										<th>{% trans %}Photo{% endtrans %}</th>
+										<th>{% trans %}Nom complet{% endtrans %}</th>
+										<th>{% trans %}Rôle{% endtrans %}</th>
+										<th>{% trans %}Opérations{% endtrans %}</th>
+										<th>{% trans %}Débloqué(e) / Bloqué(e){% endtrans %}</th>
+									</tr>
+								</tfoot>
+								<tbody>
+									{% set i = 1 %}
+									{% for utilisateur in utilisateurs %}
+										{% if utilisateur.user.roles[0] != 'ROLE_ADMINISTRATEUR' %}
+											<tr>
+												<td>
+													<h5 class="text-blue"><span class="badge bg-primary">{{ i }}</span></h5>
+												</td>
+												<td style="vertical-align: middle; text-align:center;">
+													<div class="box-widget widget-user text-center">
+														<div class="widget-user-image mx-auto">
+															<a href="javascript:void(0);">
+																{% if utilisateur.imageName %}
+																	<img alt="{{ utilisateur.nom }}" class="rounded-circle" src="{{ asset('images/photoUsers/' ~ utilisateur.imageName) }}" width="100" height="100">
+																	{% else %}
+																	{% if utilisateur.genre.genre == 'F' %}
+																		<img alt="{{ utilisateur.nom }}" class="rounded-circle" src="{{ asset('images/photoUsers/f.png') }}" width="100" height="100">
+																		{% else %}
+																		<img alt="{{ utilisateur.nom }}" class="rounded-circle" src="{{ asset('images/photoUsers/m.jpg') }}" width="100" height="100">
+
+																	{% endif %}
+																{% endif %}
+															</a>
+															
+														</div>
+													</div>
+													<br>
+													<h5 class="text-blue"><span class="badge bg-primary">{{ utilisateur.user.username }}</span></h5>
+												</td>
+												
+												<td>
+													<span class="tag tag-primary mt-2">{{ utilisateur.nom }}</span> <br> 
+													<span class="tag tag-gray mt-2">{{ utilisateur.genre.genre }}</span>
+													<span class="tag tag-gray mt-2">{{ utilisateur.contact }}</span>
+													<span class="tag tag-gray mt-2">{{ utilisateur.email }}</span><br>
+													<span class="tag tag-gray mt-2">{{ utilisateur.adresse }}</span>
+
+												</td>
+												<td>
+													{% set typeUtilisateur = utilisateur.user.typeUtilisateur.typeUtilisateur %}
+													{% if typeUtilisateur == 'CAISSIÈRE' %}
+														<span class="tag tag-blue">{{ utilisateur.user.typeUtilisateur.typeUtilisateur }}</span>
+														{% else %}
+														{% if typeUtilisateur == 'PHARMACIEN' %}
+															<span class="tag tag-cyan">{{ utilisateur.user.typeUtilisateur.typeUtilisateur }}</span>
+															{% else %}
+															{% if typeUtilisateur == 'RÉGIES DES RECETTES' %}
+																<span class="tag tag-red">{{ utilisateur.user.typeUtilisateur.typeUtilisateur }}</span>
+																{% else %}
+																{% if typeUtilisateur == 'DIRECTEUR' %}
+																	<span class="tag tag-green">{{ utilisateur.user.typeUtilisateur.typeUtilisateur }}</span>
+																	{% else %}
+																	{% if typeUtilisateur == 'SECRÉTAIRE' %}
+																		<span class="tag tag-azure">{{ utilisateur.user.typeUtilisateur.typeUtilisateur }}</span>
+																		{% else %}
+																		<span class="tag tag-gray-dark">{{ utilisateur.user.typeUtilisateur.typeUtilisateur }}</span>
+
+																	{% endif %}
+																{% endif %}
+															{% endif %}
+														{% endif %}	
+													{% endif %}
+												</td>
+												
+												<td>
+													{% if utilisateur.user.roles[0] != 'ROLE_ADMINISTRATEUR' %} 
+														<a href="{{ path ('modifier_utilisateur', {'slug': utilisateur.user.slug })}}" class="btn btn-outline-primary"><i class="fe fe-edit"></i></a>
+														{# <a href="{{ path ('modifier_utilisateur', {'slug': utilisateur.user.slug })}}" class="btn btn-outline-primary"><i class="fe fe-eye"></i></a> #}
+													{% endif %}
+												</td>
+												<td>
+													{% if utilisateur.user.roles[0] != 'ROLE_ADMINISTRATEUR' %} 
+														<div class="form-group">
+															<label class="custom-switch">
+																{# {% if utilisateur.user.etat %}
+																	<span class="custom-switch-description me-2">{% trans %}Bloqué(e){% endtrans %}</span>
+																{% else %}
+																	<span class="custom-switch-description me-2">{% trans %}Débloqué(e){% endtrans %}</span>
+																{% endif %} #}
+																<input type="checkbox" class="custom-switch-input" data-id="{{ utilisateur.user.id }}" {% if utilisateur.user.etat %}checked{% endif %} >
+																
+																<span class="custom-switch-indicator custom-switch-indicator-lg"></span>
+															</label>
+														</div>
+													{% endif %}
+												</td>
+											</tr>
+										{% endif %}
+										
+										{% set i = i + 1 %}
+									{% endfor %}
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End app-content-->
+<script src="{{ asset ('js/activerDesactiverUser.js')}}"></script>
+{% endblock %}

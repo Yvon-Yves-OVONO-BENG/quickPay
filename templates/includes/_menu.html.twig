@@ -1,0 +1,527 @@
+
+
+		
+
+				{% if app.user %}
+
+					{% if licence == 1 %}
+						{% if is_granted('ROLE_CAISSIERE') or is_granted('ROLE_PHARMACIEN') or is_granted('ROLE_SECRETAIRE') or is_granted('ROLE_REGIES_DES_RECETTES')%}
+							<!--/Horizontal-main -->
+							<div class="sticky">
+								<div class="horizontal-main hor-menu clearfix">
+									<div class="horizontal-mainwrapper container clearfix">
+										<nav class="horizontalMenu clearfix">
+											<ul class="horizontalMenu-list">
+												<li aria-haspopup="true">
+													<a href="{{ path ('accueil') }}" class="sub-icon">
+														
+														<svg class="hor-icon" class="side-menu__icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+															<path d="M18.5 3H16C15.7239 3 15.5 3.22386 15.5 3.5V3.55891L19 6.35891V3.5C19 3.22386 18.7762 3 18.5 3Z" fill="#1C274C"/>
+															<path fill-rule="evenodd" clip-rule="evenodd" d="M10.75 9.5C10.75 8.80964 11.3097 8.25 12 8.25C12.6904 8.25 13.25 8.80964 13.25 9.5C13.25 10.1904 12.6904 10.75 12 10.75C11.3097 10.75 10.75 10.1904 10.75 9.5Z" fill="#1C274C"/>
+															<path fill-rule="evenodd" clip-rule="evenodd" d="M20.75 10.9605L21.5315 11.5857C21.855 11.8444 22.3269 11.792 22.5857 11.4685C22.8444 11.1451 22.792 10.6731 22.4685 10.4143L14.3426 3.91362C12.9731 2.81796 11.027 2.81796 9.65742 3.91362L1.53151 10.4143C1.20806 10.6731 1.15562 11.1451 1.41438 11.4685C1.67313 11.792 2.1451 11.8444 2.46855 11.5857L3.25003 10.9605V21.25H2.00003C1.58581 21.25 1.25003 21.5858 1.25003 22C1.25003 22.4142 1.58581 22.75 2.00003 22.75H22C22.4142 22.75 22.75 22.4142 22.75 22C22.75 21.5858 22.4142 21.25 22 21.25H20.75V10.9605ZM9.25003 9.5C9.25003 7.98122 10.4812 6.75 12 6.75C13.5188 6.75 14.75 7.98122 14.75 9.5C14.75 11.0188 13.5188 12.25 12 12.25C10.4812 12.25 9.25003 11.0188 9.25003 9.5ZM12.0494 13.25C12.7143 13.25 13.2871 13.2499 13.7459 13.3116C14.2375 13.3777 14.7088 13.5268 15.091 13.909C15.4733 14.2913 15.6223 14.7625 15.6884 15.2542C15.7462 15.6842 15.7498 16.2146 15.75 16.827C15.75 16.8679 15.75 16.9091 15.75 16.9506L15.75 21.25H14.25V17C14.25 16.2717 14.2484 15.8009 14.2018 15.454C14.1581 15.1287 14.0875 15.0268 14.0304 14.9697C13.9733 14.9126 13.8713 14.842 13.546 14.7982C13.1991 14.7516 12.7283 14.75 12 14.75C11.2717 14.75 10.8009 14.7516 10.4541 14.7982C10.1288 14.842 10.0268 14.9126 9.9697 14.9697C9.9126 15.0268 9.84199 15.1287 9.79826 15.454C9.75162 15.8009 9.75003 16.2717 9.75003 17V21.25H8.25003L8.25003 16.9506C8.24999 16.2858 8.24996 15.7129 8.31163 15.2542C8.37773 14.7625 8.52679 14.2913 8.90904 13.909C9.29128 13.5268 9.76255 13.3777 10.2542 13.3116C10.7129 13.2499 11.2858 13.25 11.9507 13.25H12.0494Z" fill="#1C274C"/>
+															<path fill-rule="evenodd" clip-rule="evenodd" d="M10.75 9.5C10.75 8.80964 11.3097 8.25 12 8.25C12.6904 8.25 13.25 8.80964 13.25 9.5C13.25 10.1904 12.6904 10.75 12 10.75C11.3097 10.75 10.75 10.1904 10.75 9.5Z" fill="#1C274C"/>
+														</svg>
+													</a>
+												</li>
+												
+												{% if is_granted('ROLE_PHARMACIEN') or is_granted('ROLE_SECRETAIRE')  %}
+													<li aria-haspopup="true">
+														<a href="javascript:void(0);" class="sub-icon">
+															<svg class="hor-icon" class="side-menu__icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																<path d="M8.42229 20.6181C10.1779 21.5395 11.0557 22.0001 12 22.0001V12.0001L2.63802 7.07275C2.62423 7.09491 2.6107 7.11727 2.5974 7.13986C2 8.15436 2 9.41678 2 11.9416V12.0586C2 14.5834 2 15.8459 2.5974 16.8604C3.19479 17.8749 4.27063 18.4395 6.42229 19.5686L8.42229 20.6181Z" fill="#1C274C"/>
+																<path opacity="0.7" d="M17.5774 4.43152L15.5774 3.38197C13.8218 2.46066 12.944 2 11.9997 2C11.0554 2 10.1776 2.46066 8.42197 3.38197L6.42197 4.43152C4.31821 5.53552 3.24291 6.09982 2.6377 7.07264L11.9997 12L21.3617 7.07264C20.7564 6.09982 19.6811 5.53552 17.5774 4.43152Z" fill="#1C274C"/>
+																<path opacity="0.5" d="M21.4026 7.13986C21.3893 7.11727 21.3758 7.09491 21.362 7.07275L12 12.0001V22.0001C12.9443 22.0001 13.8221 21.5395 15.5777 20.6181L17.5777 19.5686C19.7294 18.4395 20.8052 17.8749 21.4026 16.8604C22 15.8459 22 14.5834 22 12.0586V11.9416C22 9.41678 22 8.15436 21.4026 7.13986Z" fill="#1C274C"/>
+															</svg>
+															{% trans %}Lots{% endtrans %} <i class="fa fa-angle-down horizontal-icon"></i>
+														</a>
+														<ul class="sub-menu border-primary">
+															<li aria-haspopup="true">
+																<a href="{{ path ('ajouter_lot') }}"><i class="fe fe-plus"></i>{% trans %}Ajouter un lot{% endtrans %}</a>
+															</li>
+															<li aria-haspopup="true">
+																<a href="{{ path ('afficher_lot', {'a': 1 }) }}"><i class="fe fe-list"></i> {% trans %}Afficher les lots{% endtrans %}</a>
+															</li>
+														</ul>
+													</li>
+												{% endif %}
+												<li aria-haspopup="true">
+													{% if is_granted('ROLE_CAISSIERE') %}
+														<a href="{{ path ('afficher_produit', {'a': 1 }) }}" class="sub-icon">
+														{# <a href="#" id="afficherProduits" class="sub-icon"> #}
+
+															<svg class="hor-icon" class="side-menu__icon" fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+																	viewBox="0 0 512 512" xml:space="preserve">
+																<g>
+																	<g>
+																		<path d="M107.888,84.09l16.235-16.235h298.432c8.504,0,15.422-6.918,15.422-15.422V15.422C437.976,6.918,431.058,0,422.554,0
+																			H89.446c-8.504,0-15.422,6.918-15.422,15.422v37.012c0,8.504,6.918,15.422,15.422,15.422h8.505l-3.15,3.15
+																			c-13.398,13.398-20.777,31.214-20.777,50.161v97.822v123.373v24.675c0,5.111,4.143,9.253,9.253,9.253
+																			c5.11,0,9.253-4.142,9.253-9.253v-15.422h72.298c19.167,37.049,52.87,61.687,91.172,61.687c38.301,0,72.005-24.638,91.172-61.687
+																			h72.298v101.783c0,22.11-17.988,40.096-40.096,40.096H132.627c-22.109,0-40.096-17.987-40.096-40.096v-49.344
+																			c0-5.111-4.143-9.253-9.253-9.253c-5.11,0-9.253,4.142-9.253,9.253v49.344c0,32.313,26.29,58.602,58.602,58.602h246.747
+																			c32.313,0,58.602-26.29,58.602-58.602V342.361V218.988v-97.822c0-10.828-2.533-21.685-7.326-31.395
+																			c-2.261-4.583-7.812-6.464-12.393-4.202c-4.582,2.261-6.464,7.811-4.202,12.393c3.542,7.177,5.415,15.201,5.415,23.204v88.569
+																			h-72.298c-19.167-37.049-52.87-61.687-91.172-61.687c-38.301,0-72.004,24.638-91.172,61.687H92.53v-88.569
+																			C92.53,107.161,97.984,93.995,107.888,84.09z M92.53,49.349V18.506h326.94v30.843H92.53z M355.149,228.241h64.321v104.867h-64.321
+																			c5.659-16.092,8.803-33.819,8.803-52.434C363.952,262.06,360.808,244.333,355.149,228.241z M256,166.554
+																			c49.321,0,89.446,51.194,89.446,114.12S305.321,394.795,256,394.795s-89.446-51.194-89.446-114.12S206.679,166.554,256,166.554z
+																			M156.851,228.241c-5.659,16.092-8.803,33.819-8.803,52.434c0,18.615,3.144,36.342,8.803,52.434H92.53V228.241H156.851z"/>
+																	</g>
+																</g>
+															</svg>
+															{% trans %}Produits{% endtrans %} 
+														</a>
+														{% else %}
+															{% if is_granted('ROLE_PHARMACIEN') or is_granted('ROLE_SECRETAIRE') %}
+																<a href="javascript:void(0);" class="sub-icon">
+																	<svg class="hor-icon" class="side-menu__icon" 	fill="#000000" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+																	viewBox="0 0 512 512" xml:space="preserve">
+																			<g>
+																				<g>
+																					<path d="M107.888,84.09l16.235-16.235h298.432c8.504,0,15.422-6.918,15.422-15.422V15.422C437.976,6.918,431.058,0,422.554,0
+																						H89.446c-8.504,0-15.422,6.918-15.422,15.422v37.012c0,8.504,6.918,15.422,15.422,15.422h8.505l-3.15,3.15
+																						c-13.398,13.398-20.777,31.214-20.777,50.161v97.822v123.373v24.675c0,5.111,4.143,9.253,9.253,9.253
+																						c5.11,0,9.253-4.142,9.253-9.253v-15.422h72.298c19.167,37.049,52.87,61.687,91.172,61.687c38.301,0,72.005-24.638,91.172-61.687
+																						h72.298v101.783c0,22.11-17.988,40.096-40.096,40.096H132.627c-22.109,0-40.096-17.987-40.096-40.096v-49.344
+																						c0-5.111-4.143-9.253-9.253-9.253c-5.11,0-9.253,4.142-9.253,9.253v49.344c0,32.313,26.29,58.602,58.602,58.602h246.747
+																						c32.313,0,58.602-26.29,58.602-58.602V342.361V218.988v-97.822c0-10.828-2.533-21.685-7.326-31.395
+																						c-2.261-4.583-7.812-6.464-12.393-4.202c-4.582,2.261-6.464,7.811-4.202,12.393c3.542,7.177,5.415,15.201,5.415,23.204v88.569
+																						h-72.298c-19.167-37.049-52.87-61.687-91.172-61.687c-38.301,0-72.004,24.638-91.172,61.687H92.53v-88.569
+																						C92.53,107.161,97.984,93.995,107.888,84.09z M92.53,49.349V18.506h326.94v30.843H92.53z M355.149,228.241h64.321v104.867h-64.321
+																						c5.659-16.092,8.803-33.819,8.803-52.434C363.952,262.06,360.808,244.333,355.149,228.241z M256,166.554
+																						c49.321,0,89.446,51.194,89.446,114.12S305.321,394.795,256,394.795s-89.446-51.194-89.446-114.12S206.679,166.554,256,166.554z
+																						M156.851,228.241c-5.659,16.092-8.803,33.819-8.803,52.434c0,18.615,3.144,36.342,8.803,52.434H92.53V228.241H156.851z"/>
+																				</g>
+																			</g>
+																		</svg>
+
+																	{% trans %}Produits{% endtrans %}  <i class="fa fa-angle-down horizontal-icon"></i>
+																</a>
+																<ul class="sub-menu border-primary">
+																	<li aria-haspopup="true">
+																		<a href="{{ path ('ajouter_produit') }}"><i class="fe fe-plus"></i>{% trans %}Ajouter un produit{% endtrans %}</a>
+																	</li>
+																	<li aria-haspopup="true">
+																		<a href="{{ path ('afficher_produit', {'a': 1 }) }}"><i class="fe fe-list"></i>{% trans %}Afficher les produits{% endtrans %}</a>
+																	</li>
+																	<li aria-haspopup="true">
+																		<a href="{{ path ('afficher_produit_seuil', {'a': 1 }) }}"><i class="fe fe-list"></i>{% trans %}Afficher les produits seuils{% endtrans %}</a>
+																	</li>
+																</ul>
+															{% endif %}
+													{% endif %}
+												</li>
+
+												{% if is_granted('ROLE_PHARMACIEN') or is_granted('ROLE_SECRETAIRE')  %}
+													<li aria-haspopup="true">
+														<a href="javascript:void(0);" class="sub-icon">
+															<svg class="hor-icon" class="side-menu__icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																<path d="M8.42229 20.6181C10.1779 21.5395 11.0557 22.0001 12 22.0001V12.0001L2.63802 7.07275C2.62423 7.09491 2.6107 7.11727 2.5974 7.13986C2 8.15436 2 9.41678 2 11.9416V12.0586C2 14.5834 2 15.8459 2.5974 16.8604C3.19479 17.8749 4.27063 18.4395 6.42229 19.5686L8.42229 20.6181Z" fill="#1C274C"/>
+																<path opacity="0.7" d="M17.5774 4.43152L15.5774 3.38197C13.8218 2.46066 12.944 2 11.9997 2C11.0554 2 10.1776 2.46066 8.42197 3.38197L6.42197 4.43152C4.31821 5.53552 3.24291 6.09982 2.6377 7.07264L11.9997 12L21.3617 7.07264C20.7564 6.09982 19.6811 5.53552 17.5774 4.43152Z" fill="#1C274C"/>
+																<path opacity="0.5" d="M21.4026 7.13986C21.3893 7.11727 21.3758 7.09491 21.362 7.07275L12 12.0001V22.0001C12.9443 22.0001 13.8221 21.5395 15.5777 20.6181L17.5777 19.5686C19.7294 18.4395 20.8052 17.8749 21.4026 16.8604C22 15.8459 22 14.5834 22 12.0586V11.9416C22 9.41678 22 8.15436 21.4026 7.13986Z" fill="#1C274C"/>
+															</svg>
+															{% trans %}Kits{% endtrans %} <i class="fa fa-angle-down horizontal-icon"></i>
+														</a>
+														<ul class="sub-menu border-primary">
+															<li aria-haspopup="true">
+																<a href="{{ path ('ajouter_kit') }}"><i class="fe fe-plus"></i>{% trans %}Ajouter un kit{% endtrans %}</a>
+															</li>
+															<li aria-haspopup="true">
+																<a href="{{ path ('liste_kit', {'a': 1 }) }}"><i class="fe fe-list"></i>{% trans %}Afficher les kits{% endtrans %}</a>
+															</li>
+														</ul>
+													</li>
+												{% endif %}
+
+												{% if is_granted('ROLE_CAISSIERE') %}
+													<li aria-haspopup="true">
+														<a href="{{ path ('liste_kit', {'a': 1 }) }}" class="sub-icon">
+															<svg class="hor-icon" class="side-menu__icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																		<path d="M8.42229 20.6181C10.1779 21.5395 11.0557 22.0001 12 22.0001V12.0001L2.63802 7.07275C2.62423 7.09491 2.6107 7.11727 2.5974 7.13986C2 8.15436 2 9.41678 2 11.9416V12.0586C2 14.5834 2 15.8459 2.5974 16.8604C3.19479 17.8749 4.27063 18.4395 6.42229 19.5686L8.42229 20.6181Z" fill="#1C274C"/>
+																		<path opacity="0.7" d="M17.5774 4.43152L15.5774 3.38197C13.8218 2.46066 12.944 2 11.9997 2C11.0554 2 10.1776 2.46066 8.42197 3.38197L6.42197 4.43152C4.31821 5.53552 3.24291 6.09982 2.6377 7.07264L11.9997 12L21.3617 7.07264C20.7564 6.09982 19.6811 5.53552 17.5774 4.43152Z" fill="#1C274C"/>
+																		<path opacity="0.5" d="M21.4026 7.13986C21.3893 7.11727 21.3758 7.09491 21.362 7.07275L12 12.0001V22.0001C12.9443 22.0001 13.8221 21.5395 15.5777 20.6181L17.5777 19.5686C19.7294 18.4395 20.8052 17.8749 21.4026 16.8604C22 15.8459 22 14.5834 22 12.0586V11.9416C22 9.41678 22 8.15436 21.4026 7.13986Z" fill="#1C274C"/>
+																	</svg>
+															{% trans %}Kits{% endtrans %}
+														</a>
+													</li>
+												{% endif %}
+												
+												{% if is_granted('ROLE_REGIES_DES_RECETTES') %}
+
+													<li aria-haspopup="true">
+														<a href="javascript:void(0);" class="sub-icon">
+															<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg"  class="side-menu__icon" width="24" height="24" viewBox="0 0 24 24"><path d="M22 7.999a1 1 0 0 0-.516-.874l-9.022-5a1.003 1.003 0 0 0-.968 0l-8.978 4.96a1 1 0 0 0-.003 1.748l9.022 5.04a.995.995 0 0 0 .973.001l8.978-5A1 1 0 0 0 22 7.999zm-9.977 3.855L5.06 7.965l6.917-3.822 6.964 3.859-6.918 3.852z"/><path d="M20.515 11.126 12 15.856l-8.515-4.73-.971 1.748 9 5a1 1 0 0 0 .971 0l9-5-.97-1.748z"/><path d="M20.515 15.126 12 19.856l-8.515-4.73-.971 1.748 9 5a1 1 0 0 0 .971 0l9-5-.97-1.748z"/></svg>
+
+															{% trans %}Factures & recettes{% endtrans %} 
+														<i class="fa fa-angle-down horizontal-icon"></i>
+														</a>
+														<ul class="sub-menu border-primary">
+															<li aria-haspopup="true">
+																<a href="{{ path ('liste_facture', {'a': 1})}}"><i class="fa fa-file-pdf-o me-2"></i>{% trans %}Afficher les factures{% endtrans %}</a>
+															</li>
+
+															<li aria-haspopup="true">
+																<a href="{{ path ('liste_facture_annulee')}}"><i class="fe fe-x-circle me-2"></i>{% trans %}Afficher les factures annulées{% endtrans %}</a>
+															</li>
+
+														</ul>
+													</li>
+												
+												{% endif %}
+													
+												{% if is_granted('ROLE_SECRETAIRE') %}
+													<li aria-haspopup="true">
+														<a href="javascript:void(0);" class="sub-icon">
+
+															<svg class="hor-icon" class="svg-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon"  height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11.17 8l-.58-.59L9.17 6H4v12h16V8h-8z" opacity=".3"/><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l1.41 1.41.59.59H20v10z"/></svg>
+																	
+															{% trans %}Commandes{% endtrans %} <i class="fa fa-angle-down horizontal-icon"></i>
+														</a>
+														<ul class="sub-menu border-primary">
+															<li aria-haspopup="true">
+																<a href="{{ path ('ajouter_commande') }}"><i class="fe fe-plus"></i> {% trans %}Ajouter une commande{% endtrans %}</a>
+															</li>
+															<li aria-haspopup="true">
+																<a href="{{ path ('liste_commande', {'a': 1 }) }}"><i class="fe fe-list"></i>{% trans %}Afficher les commandes{% endtrans %}</a>
+															</li>
+														</ul>
+													</li>
+												{% endif %}
+												{% if is_granted('ROLE_CAISSIERE') or is_granted('ROLE_PHARMACIEN') %}
+													<li aria-haspopup="true">
+														<a href="{{ path ('liste_facture', {'a': 1})}}" class="sub-icon">
+															<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg"  class="side-menu__icon" width="24" height="24" viewBox="0 0 24 24"><path d="M22 7.999a1 1 0 0 0-.516-.874l-9.022-5a1.003 1.003 0 0 0-.968 0l-8.978 4.96a1 1 0 0 0-.003 1.748l9.022 5.04a.995.995 0 0 0 .973.001l8.978-5A1 1 0 0 0 22 7.999zm-9.977 3.855L5.06 7.965l6.917-3.822 6.964 3.859-6.918 3.852z"/><path d="M20.515 11.126 12 15.856l-8.515-4.73-.971 1.748 9 5a1 1 0 0 0 .971 0l9-5-.97-1.748z"/><path d="M20.515 15.126 12 19.856l-8.515-4.73-.971 1.748 9 5a1 1 0 0 0 .971 0l9-5-.97-1.748z"/></svg>
+
+															{% trans %}Factures{% endtrans %} 
+														</a>
+													</li>
+												{% endif %}
+
+												{% if is_granted('ROLE_CAISSIERE') or is_granted('ROLE_SECRETAIRE') or is_granted('ROLE_PHARMACIEN') %}
+													<li aria-haspopup="true">
+														<a href="{{ path ('impression') }}" class="sub-icon">
+															
+															<svg class="hor-icon" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+																	viewBox="0 0 488.9 488.9" xml:space="preserve">
+																<g>
+																	<g>
+																		<path style="fill:#94A4A4;" d="M108.05,130.2V25.7c0-9.2,7.4-16.6,16.6-16.6h239.4c9.2,0,16.6,7.4,16.6,16.6v104.6"/>
+																		<path style="fill:#94A4A4;" d="M364.15,479.7h-239.4c-9.2,0-16.6-7.4-16.6-16.6V252h272.7v211.2
+																			C380.75,472.3,373.35,479.7,364.15,479.7z"/>
+																		<path style="fill:#2C2F33;" d="M48.55,382.8h50.5v80.4c0,14.2,11.5,25.7,25.7,25.7h239.4c14.2,0,25.7-11.5,25.7-25.7v-80.4h50.5
+																			c22.3,0,40.4-18.1,40.4-40.4V161.5c0-22.3-18.1-40.4-40.4-40.4h-50.6V25.7c0-14.2-11.5-25.7-25.7-25.7h-239.4
+																			c-14.2,0-25.7,11.5-25.7,25.7v95.5h-50.4c-22.3,0-40.4,18.1-40.4,40.4v180.8C8.15,364.7,26.25,382.8,48.55,382.8z M371.75,463.1
+																			c0,4.2-3.4,7.5-7.5,7.5h-239.5c-4.2,0-7.5-3.4-7.5-7.5V261h254.5V463.1z M117.15,25.7c0-4.2,3.4-7.5,7.5-7.5h239.4
+																			c4.2,0,7.5,3.4,7.5,7.5v95.5h-254.4C117.15,121.2,117.15,25.7,117.15,25.7z M26.35,161.5c0-12.3,10-22.2,22.2-22.2h391.8
+																			c12.3,0,22.2,10,22.2,22.2v180.9c0,12.3-10,22.2-22.2,22.2h-50.5V252c0-5-4.1-9.1-9.1-9.1h-272.6c-5,0-9.1,4.1-9.1,9.1v112.7
+																			h-50.5c-12.3,0-22.2-10-22.2-22.2C26.35,342.5,26.35,161.5,26.35,161.5z"/>
+																		<path style="fill:#2C2F33;" d="M77.75,199.9c2.4,0,4.7-1,6.4-2.7c1.7-1.7,2.6-4,2.6-6.4s-1-4.7-2.6-6.4c-1.7-1.7-4-2.7-6.4-2.7
+																			s-4.7,1-6.4,2.7c-1.7,1.7-2.7,4-2.7,6.4s1,4.7,2.7,6.4C73.05,198.9,75.35,199.9,77.75,199.9z"/>
+																		<path style="fill:#2C2F33;" d="M314.65,356.8h-140.4c-5,0-9.1,4.1-9.1,9.1s4.1,9.1,9.1,9.1h140.5c5,0,9.1-4.1,9.1-9.1
+																			S319.65,356.8,314.65,356.8z"/>
+																		<path style="fill:#2C2F33;" d="M314.65,413h-140.4c-5,0-9.1,4.1-9.1,9.1s4.1,9.1,9.1,9.1h140.5c5,0,9.1-4.1,9.1-9.1
+																			C323.75,417,319.65,413,314.65,413z"/>
+																		<path style="fill:#2C2F33;" d="M314.65,300.6h-140.4c-5,0-9.1,4.1-9.1,9.1s4.1,9.1,9.1,9.1h140.5c5,0,9.1-4.1,9.1-9.1
+																			S319.65,300.6,314.65,300.6z"/>
+																	</g>
+																</g>
+															</svg>
+															{% trans %}Impressions{% endtrans %}
+														</a>
+													</li>
+												{% endif %}
+												{% if is_granted('ROLE_REGIES_DES_RECETTES') %}
+													<li aria-haspopup="true">
+														<a href="javascript:void(0);" class="sub-icon">
+															
+															<svg class="hor-icon" class="side-menu__icon" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+																	width="800px" height="800px" viewBox="0 0 512 512"  xml:space="preserve">
+																
+																<g>
+																	<path class="st0" d="M360,343.266c-6.5,0-11.75,5.25-11.75,11.734s5.25,11.75,11.75,11.75c6.469,0,11.734-5.266,11.734-11.75
+																		S366.469,343.266,360,343.266z"/>
+																	<path class="st0" d="M475.531,306.203h-3.781v-55.297c0-14.063-4.75-27-12.672-37.375L512,179.438l-4.172-6.813L402.656,1.172
+																		L180.938,137.141H94c-50.531,0-91.594,39.875-93.797,89.828l-0.016,0.109L0,243.516v35.719v137.594c0,51.922,42.078,93.984,94,94
+																		h318.25c34.109-0.016,61.75-27.656,61.75-61.766v-45.266h1.531c9.672-0.016,17.5-7.828,17.516-17.5v-62.594
+																		C493.031,314.031,485.219,306.203,475.531,306.203z M397.344,23.156l92.688,151l-43.781,26.828
+																		c-4.5-3.281-9.484-5.953-14.797-7.938l12.516-7.672c-4.656-14.594-0.484-30.797,10.906-41.156l-46.688-76.141
+																		c-14.438,5.375-30.719,1.781-41.641-8.984L154.469,189.141h-27.688L397.344,23.156z M393.5,146.625
+																		c-6.906,4.188-15.875,2.016-20.125-4.891c-4.188-6.813-2.016-15.875,4.813-20.047c6.891-4.266,15.969-2.094,20.125,4.813
+																		C402.563,133.391,400.406,142.391,393.5,146.625z M301.563,153.938l-1.609-0.641c0,0-5.531-0.656-9.625,0.563
+																		c-2.484,0.719-4.984,1.672-7.453,2.875l-4.422-7.141l-10.109,6.188l4.5,7.375c-1.047,0.875-2.094,1.766-2.969,2.734
+																		c-2.094,2.328-3.688,4.813-4.734,7.531c-1.047,2.734-1.438,5.469-1.203,8.344c0.203,2.469,1.078,4.922,2.391,7.375h-31.984
+																		c0.063-20.641,10.359-40.781,29.266-52.375c29.047-17.813,67.078-8.75,84.797,20.297c6.172,10.031,9.047,21.125,9.078,32.078
+																		h-30.188c-0.484-1.203-1-2.391-1.734-3.594c-3.063-5.063-6.906-7.953-11.563-8.672c-4.656-0.797-10.031,0.406-16.297,3.453
+																		l-8.422,4.25c-3.047,1.438-5.453,2.016-7.297,1.688s-3.359-1.453-4.484-3.375c-1.375-2.156-1.609-4.484-0.719-6.813
+																		c0.797-2.406,3.031-4.656,6.484-6.828c2.734-1.672,5.453-2.891,8.344-3.766c2.813-0.875,6.828-0.563,6.828-0.563
+																		c0.875-0.078,1.594-0.719,1.766-1.531l1.844-7.703L301.563,153.938z M457.969,449.063c-0.016,12.641-5.109,24.031-13.391,32.328
+																		c-8.297,8.281-19.672,13.375-32.328,13.391H94c-21.547-0.016-40.984-8.719-55.125-22.828
+																		c-14.125-14.141-22.813-33.578-22.828-55.125V279.234v-35.563l0.203-16.047c1.828-41.406,35.906-74.453,77.75-74.438h60.781
+																		l-58.563,35.953l-23.422,0.016v16.047l337.359-0.016c12.578,0.063,23.891,5.141,32.156,13.391
+																		c8.281,8.297,13.391,19.688,13.391,32.328v55.297H354.359c-13.484-0.016-25.703,5.469-34.516,14.297l-0.016,0.016
+																		c-8.813,8.813-14.281,21.016-14.281,34.484s5.469,25.672,14.266,34.5l0.063,0.031l-0.031-0.016
+																		c8.813,8.813,21.031,14.297,34.516,14.281h103.609V449.063z M477,386.297c0,0.781-0.656,1.453-1.469,1.453H354.359
+																		c-9.141-0.016-17.125-3.609-23.156-9.578h-0.016c-5.969-6.031-9.578-14.047-9.594-23.172c0.016-9.109,3.625-17.141,9.594-23.156
+																		c6.031-5.969,14.031-9.578,23.172-9.594h121.172c0.813,0,1.469,0.672,1.469,1.453V386.297z"/>
+																</g>
+																</svg>
+
+															{% trans %}Recettes{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
+														</a>
+														<ul class="sub-menu border-primary">
+															<li aria-haspopup="true">
+																<a href="{{ path ('recette_caissiere_du_jour') }}"><i class="si si-wallet me-2"></i> {% trans %}Recettes du jour{% endtrans %}</a>
+															</li>
+															<li aria-haspopup="true">
+																<a href="{{ path ('recettes') }}"><i class="si si-wallet me-2"></i>{% trans %}Afficher les recettes{% endtrans %}</a>
+															</li>
+														</ul>
+													</li>
+													<li aria-haspopup="true">
+														<a href="javascript:void(0);" class="sub-icon">
+															
+															<svg class="hor-icon" class="side-menu__icon" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+																	width="800px" height="800px" viewBox="0 0 512 512"  xml:space="preserve">
+																
+																<g>
+																	<path class="st0" d="M360,343.266c-6.5,0-11.75,5.25-11.75,11.734s5.25,11.75,11.75,11.75c6.469,0,11.734-5.266,11.734-11.75
+																		S366.469,343.266,360,343.266z"/>
+																	<path class="st0" d="M475.531,306.203h-3.781v-55.297c0-14.063-4.75-27-12.672-37.375L512,179.438l-4.172-6.813L402.656,1.172
+																		L180.938,137.141H94c-50.531,0-91.594,39.875-93.797,89.828l-0.016,0.109L0,243.516v35.719v137.594c0,51.922,42.078,93.984,94,94
+																		h318.25c34.109-0.016,61.75-27.656,61.75-61.766v-45.266h1.531c9.672-0.016,17.5-7.828,17.516-17.5v-62.594
+																		C493.031,314.031,485.219,306.203,475.531,306.203z M397.344,23.156l92.688,151l-43.781,26.828
+																		c-4.5-3.281-9.484-5.953-14.797-7.938l12.516-7.672c-4.656-14.594-0.484-30.797,10.906-41.156l-46.688-76.141
+																		c-14.438,5.375-30.719,1.781-41.641-8.984L154.469,189.141h-27.688L397.344,23.156z M393.5,146.625
+																		c-6.906,4.188-15.875,2.016-20.125-4.891c-4.188-6.813-2.016-15.875,4.813-20.047c6.891-4.266,15.969-2.094,20.125,4.813
+																		C402.563,133.391,400.406,142.391,393.5,146.625z M301.563,153.938l-1.609-0.641c0,0-5.531-0.656-9.625,0.563
+																		c-2.484,0.719-4.984,1.672-7.453,2.875l-4.422-7.141l-10.109,6.188l4.5,7.375c-1.047,0.875-2.094,1.766-2.969,2.734
+																		c-2.094,2.328-3.688,4.813-4.734,7.531c-1.047,2.734-1.438,5.469-1.203,8.344c0.203,2.469,1.078,4.922,2.391,7.375h-31.984
+																		c0.063-20.641,10.359-40.781,29.266-52.375c29.047-17.813,67.078-8.75,84.797,20.297c6.172,10.031,9.047,21.125,9.078,32.078
+																		h-30.188c-0.484-1.203-1-2.391-1.734-3.594c-3.063-5.063-6.906-7.953-11.563-8.672c-4.656-0.797-10.031,0.406-16.297,3.453
+																		l-8.422,4.25c-3.047,1.438-5.453,2.016-7.297,1.688s-3.359-1.453-4.484-3.375c-1.375-2.156-1.609-4.484-0.719-6.813
+																		c0.797-2.406,3.031-4.656,6.484-6.828c2.734-1.672,5.453-2.891,8.344-3.766c2.813-0.875,6.828-0.563,6.828-0.563
+																		c0.875-0.078,1.594-0.719,1.766-1.531l1.844-7.703L301.563,153.938z M457.969,449.063c-0.016,12.641-5.109,24.031-13.391,32.328
+																		c-8.297,8.281-19.672,13.375-32.328,13.391H94c-21.547-0.016-40.984-8.719-55.125-22.828
+																		c-14.125-14.141-22.813-33.578-22.828-55.125V279.234v-35.563l0.203-16.047c1.828-41.406,35.906-74.453,77.75-74.438h60.781
+																		l-58.563,35.953l-23.422,0.016v16.047l337.359-0.016c12.578,0.063,23.891,5.141,32.156,13.391
+																		c8.281,8.297,13.391,19.688,13.391,32.328v55.297H354.359c-13.484-0.016-25.703,5.469-34.516,14.297l-0.016,0.016
+																		c-8.813,8.813-14.281,21.016-14.281,34.484s5.469,25.672,14.266,34.5l0.063,0.031l-0.031-0.016
+																		c8.813,8.813,21.031,14.297,34.516,14.281h103.609V449.063z M477,386.297c0,0.781-0.656,1.453-1.469,1.453H354.359
+																		c-9.141-0.016-17.125-3.609-23.156-9.578h-0.016c-5.969-6.031-9.578-14.047-9.594-23.172c0.016-9.109,3.625-17.141,9.594-23.156
+																		c6.031-5.969,14.031-9.578,23.172-9.594h121.172c0.813,0,1.469,0.672,1.469,1.453V386.297z"/>
+																</g>
+																</svg>
+
+															{% trans %}Caisses séparées{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
+														</a>
+														<ul class="sub-menu border-primary">
+															<li aria-haspopup="true">
+																<a href="{{ path ('caisses_separees_du_jour') }}"><i class="si si-wallet me-2"></i> {% trans %}Caisses séparées du jour{% endtrans %}</a>
+															</li>
+															<li aria-haspopup="true">
+																<a href="{{ path ('caisses_separees_d_un_jour_particulier') }}"><i class="si si-wallet me-2"></i>{% trans %}Caisses séparées d'un jour particulier{% endtrans %}</a>
+															</li>
+															<li aria-haspopup="true">
+																<a href="{{ path ('caisses_separees_d_une_periode') }}"><i class="si si-wallet me-2"></i>{% trans %}Caisses séparées d'une période{% endtrans %}</a>
+															</li>
+														</ul>
+														
+													</li>
+
+												{% endif %}
+												
+												{% if is_granted('ROLE_SECRETAIRE') %}
+													<li aria-haspopup="true">
+														<a href="javascript:void(0);" class="sub-icon">
+
+															<svg class="hor-icon" class="svg-icon"  xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><rect height="7" width="3" x="4" y="10"/><rect height="7" width="3" x="10.5" y="10"/><rect height="3" width="20" x="2" y="19"/><rect height="7" width="3" x="17" y="10"/><polygon points="12,1 2,6 2,8 22,8 22,6"/></g></g></svg>
+																	
+															{% trans %}Sociétés, patients & Utilisateurs{% endtrans %} <i class="fa fa-angle-down horizontal-icon"></i>
+														</a>
+														<ul class="sub-menu border-primary">
+															<li aria-haspopup="true">
+																<a href="{{ path ('afficher_societe', {'a': 1 }) }}"><i class="fa fa-building-o me-2"></i>{% trans %}Afficher les sociétés{% endtrans %}</a>
+															</li>
+															<li aria-haspopup="true">
+																<a href="{{ path ('afficher_patient', {'a': 1 }) }}"><i class="fa fa-users me-2"></i>{% trans %}Afficher les pris en charge{% endtrans %}</a>
+															</li>
+
+															<li aria-haspopup="true">
+																<a href="{{ path ('afficher_fournisseur', {'a': 1 }) }}"><i class="si si-people me-2"></i>{% trans %}Afficher les fournisseurs{% endtrans %}</a>
+															</li>
+														</ul>
+													</li>
+
+												{% endif %}
+												
+											</ul>
+										</nav>
+										<!--Nav-->
+									</div>
+								</div>
+							</div>
+							<!--/Horizontal-main -->
+						{% endif %}
+
+						{% if is_granted('ROLE_ADMINISTRATEUR') or is_granted('ROLE_DIRECTEUR') %}
+							<!--/Horizontal-main -->
+							<div class="sticky">
+								<div class="horizontal-main hor-menu clearfix">
+									<div class="horizontal-mainwrapper container clearfix">
+										<nav class="horizontalMenu clearfix">
+											<ul class="horizontalMenu-list">
+												<li aria-haspopup="true">
+													<a href="{{ path ('accueil') }}" class="sub-icon">
+														
+														<svg class="hor-icon" class="side-menu__icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+															<path d="M18.5 3H16C15.7239 3 15.5 3.22386 15.5 3.5V3.55891L19 6.35891V3.5C19 3.22386 18.7762 3 18.5 3Z" fill="#1C274C"/>
+															<path fill-rule="evenodd" clip-rule="evenodd" d="M10.75 9.5C10.75 8.80964 11.3097 8.25 12 8.25C12.6904 8.25 13.25 8.80964 13.25 9.5C13.25 10.1904 12.6904 10.75 12 10.75C11.3097 10.75 10.75 10.1904 10.75 9.5Z" fill="#1C274C"/>
+															<path fill-rule="evenodd" clip-rule="evenodd" d="M20.75 10.9605L21.5315 11.5857C21.855 11.8444 22.3269 11.792 22.5857 11.4685C22.8444 11.1451 22.792 10.6731 22.4685 10.4143L14.3426 3.91362C12.9731 2.81796 11.027 2.81796 9.65742 3.91362L1.53151 10.4143C1.20806 10.6731 1.15562 11.1451 1.41438 11.4685C1.67313 11.792 2.1451 11.8444 2.46855 11.5857L3.25003 10.9605V21.25H2.00003C1.58581 21.25 1.25003 21.5858 1.25003 22C1.25003 22.4142 1.58581 22.75 2.00003 22.75H22C22.4142 22.75 22.75 22.4142 22.75 22C22.75 21.5858 22.4142 21.25 22 21.25H20.75V10.9605ZM9.25003 9.5C9.25003 7.98122 10.4812 6.75 12 6.75C13.5188 6.75 14.75 7.98122 14.75 9.5C14.75 11.0188 13.5188 12.25 12 12.25C10.4812 12.25 9.25003 11.0188 9.25003 9.5ZM12.0494 13.25C12.7143 13.25 13.2871 13.2499 13.7459 13.3116C14.2375 13.3777 14.7088 13.5268 15.091 13.909C15.4733 14.2913 15.6223 14.7625 15.6884 15.2542C15.7462 15.6842 15.7498 16.2146 15.75 16.827C15.75 16.8679 15.75 16.9091 15.75 16.9506L15.75 21.25H14.25V17C14.25 16.2717 14.2484 15.8009 14.2018 15.454C14.1581 15.1287 14.0875 15.0268 14.0304 14.9697C13.9733 14.9126 13.8713 14.842 13.546 14.7982C13.1991 14.7516 12.7283 14.75 12 14.75C11.2717 14.75 10.8009 14.7516 10.4541 14.7982C10.1288 14.842 10.0268 14.9126 9.9697 14.9697C9.9126 15.0268 9.84199 15.1287 9.79826 15.454C9.75162 15.8009 9.75003 16.2717 9.75003 17V21.25H8.25003L8.25003 16.9506C8.24999 16.2858 8.24996 15.7129 8.31163 15.2542C8.37773 14.7625 8.52679 14.2913 8.90904 13.909C9.29128 13.5268 9.76255 13.3777 10.2542 13.3116C10.7129 13.2499 11.2858 13.25 11.9507 13.25H12.0494Z" fill="#1C274C"/>
+															<path fill-rule="evenodd" clip-rule="evenodd" d="M10.75 9.5C10.75 8.80964 11.3097 8.25 12 8.25C12.6904 8.25 13.25 8.80964 13.25 9.5C13.25 10.1904 12.6904 10.75 12 10.75C11.3097 10.75 10.75 10.1904 10.75 9.5Z" fill="#1C274C"/>
+														</svg>
+													</a>
+												</li>
+
+												<li aria-haspopup="true">
+													<a href="javascript:void(0);" class="sub-icon">
+														<svg class="hor-icon" class="side-menu__icon" width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+																	<path d="M8.42229 20.6181C10.1779 21.5395 11.0557 22.0001 12 22.0001V12.0001L2.63802 7.07275C2.62423 7.09491 2.6107 7.11727 2.5974 7.13986C2 8.15436 2 9.41678 2 11.9416V12.0586C2 14.5834 2 15.8459 2.5974 16.8604C3.19479 17.8749 4.27063 18.4395 6.42229 19.5686L8.42229 20.6181Z" fill="#1C274C"/>
+																	<path opacity="0.7" d="M17.5774 4.43152L15.5774 3.38197C13.8218 2.46066 12.944 2 11.9997 2C11.0554 2 10.1776 2.46066 8.42197 3.38197L6.42197 4.43152C4.31821 5.53552 3.24291 6.09982 2.6377 7.07264L11.9997 12L21.3617 7.07264C20.7564 6.09982 19.6811 5.53552 17.5774 4.43152Z" fill="#1C274C"/>
+																	<path opacity="0.5" d="M21.4026 7.13986C21.3893 7.11727 21.3758 7.09491 21.362 7.07275L12 12.0001V22.0001C12.9443 22.0001 13.8221 21.5395 15.5777 20.6181L17.5777 19.5686C19.7294 18.4395 20.8052 17.8749 21.4026 16.8604C22 15.8459 22 14.5834 22 12.0586V11.9416C22 9.41678 22 8.15436 21.4026 7.13986Z" fill="#1C274C"/>
+																</svg>
+														{% trans %}Lots & produits{% endtrans %} <i class="fa fa-angle-down horizontal-icon"></i>
+													</a>
+													<ul class="sub-menu border-primary">
+
+														<li aria-haspopup="true"><a href="{{ path ('afficher_lot', {'a': 1 }) }}"> <i class="fa fa-cube me-2"></i>{% trans %}Afficher les lots{% endtrans %}</a></li>
+
+														
+														<li aria-haspopup="true"><a href="{{ path ('afficher_produit', {'a': 1 }) }}"><i class="fa fa-spoon me-2"></i>{% trans %}Afficher les produits{% endtrans %}</a></li>
+														
+														<li aria-haspopup="true"><a href="{{ path ('liste_kit', {'a': 1 }) }}"><i class="fe fe-package me-2"></i>{% trans %}Afficher les kits{% endtrans %}</a></li>
+														{# <li aria-haspopup="true"><a href="{{ path ('liste_examen', {'a': 1 }) }}"><i class="fe fe-package me-2"></i>{% trans %}Afficher les examens{% endtrans %}</a></li> #}
+													
+													</ul>
+												</li>
+													
+												<li aria-haspopup="true">
+													<a href="javascript:void(0);" class="sub-icon">
+
+														<svg class="hor-icon" class="svg-icon" xmlns="http://www.w3.org/2000/svg" class="side-menu__icon"  height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M11.17 8l-.58-.59L9.17 6H4v12h16V8h-8z" opacity=".3"/><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V6h5.17l1.41 1.41.59.59H20v10z"/></svg>
+																
+														{% trans %}Fournisseurs & Commandes{% endtrans %} 
+														<i class="fa fa-angle-down horizontal-icon"></i>
+													</a>
+													<ul class="sub-menu border-primary">
+														<li aria-haspopup="true">
+															
+															<a href="{{ path ('afficher_fournisseur', {'a': 1 }) }}"><i class="fe fe-truck me-2"></i> {% trans %}Afficher les fournisseurs{% endtrans %}</a>
+														</li>
+														<li aria-haspopup="true">
+															<a href="{{ path ('liste_commande', {'a': 1 }) }}"><i class="fa fa-wpforms me-2"></i> {% trans %}Afficher les commandes{% endtrans %}</a>
+														</li>
+													</ul>
+												</li>
+												
+												<li aria-haspopup="true">
+													<a href="javascript:void(0);" class="sub-icon">
+														<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg"  class="side-menu__icon" width="24" height="24" viewBox="0 0 24 24"><path d="M22 7.999a1 1 0 0 0-.516-.874l-9.022-5a1.003 1.003 0 0 0-.968 0l-8.978 4.96a1 1 0 0 0-.003 1.748l9.022 5.04a.995.995 0 0 0 .973.001l8.978-5A1 1 0 0 0 22 7.999zm-9.977 3.855L5.06 7.965l6.917-3.822 6.964 3.859-6.918 3.852z"/><path d="M20.515 11.126 12 15.856l-8.515-4.73-.971 1.748 9 5a1 1 0 0 0 .971 0l9-5-.97-1.748z"/><path d="M20.515 15.126 12 19.856l-8.515-4.73-.971 1.748 9 5a1 1 0 0 0 .971 0l9-5-.97-1.748z"/></svg>
+
+														{% trans %}Factures & recettes{% endtrans %} 
+													<i class="fa fa-angle-down horizontal-icon"></i>
+													</a>
+													<ul class="sub-menu border-primary">
+														<li aria-haspopup="true">
+															<a href="{{ path ('liste_facture', {'a': 1})}}"><i class="fa fa-file-pdf-o me-2"></i>{% trans %}Afficher les factures{% endtrans %}</a>
+														</li>
+
+														<li aria-haspopup="true">
+															<a href="{{ path ('liste_facture_annulee')}}"><i class="fe fe-x-circle me-2"></i>{% trans %}Afficher les factures annulées{% endtrans %}</a>
+														</li>
+
+														<li aria-haspopup="true">
+															<a href="{{ path ('recette_caissiere_du_jour') }}"><i class="si si-wallet me-2"></i>{% trans %}Recettes du jour{% endtrans %}</a>
+														</li>
+														<li aria-haspopup="true">
+															<a href="{{ path ('recettes') }}"><i class="si si-wallet me-2"></i>{% trans %}Toutes les recettes{% endtrans %}</a>
+														</li>
+														<li aria-haspopup="true">
+															<li aria-haspopup="true" class="sub-menu-sub"><a href="javascript:void(0);"><i class="si si-wallet me-2"></i>{% trans %}Caisses séparées{% endtrans %}</a>
+
+															<ul class="sub-menu border-danger">
+																<li aria-haspopup="true"><a href="{{ path ('caisses_separees_du_jour') }}"><i class="fe fe-arrow-right me-2"></i>Du jour</a></li>
+																<li aria-haspopup="true">
+																	<a href="{{ path ('caisses_separees_d_un_jour_particulier') }}"><i class="fe fe-arrow-right me-2"></i>{% trans %}D'un jour particulier{% endtrans %}</a>
+																</li>
+																<li aria-haspopup="true">
+																	<a href="{{ path ('caisses_separees_d_une_periode') }}"><i class="fe fe-arrow-right me-2"></i>{% trans %}D'une période donnée{% endtrans %}</a>
+																</li>
+															</ul>
+															
+														</li>
+													</ul>
+												</li>
+												
+												<li aria-haspopup="true">
+													<a href="{{ path ('impression') }}" class="sub-icon">
+														<svg class="hor-icon" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+																viewBox="0 0 488.9 488.9" xml:space="preserve">
+															<g>
+																<g>
+																	<path style="fill:#94A4A4;" d="M108.05,130.2V25.7c0-9.2,7.4-16.6,16.6-16.6h239.4c9.2,0,16.6,7.4,16.6,16.6v104.6"/>
+																	<path style="fill:#94A4A4;" d="M364.15,479.7h-239.4c-9.2,0-16.6-7.4-16.6-16.6V252h272.7v211.2
+																		C380.75,472.3,373.35,479.7,364.15,479.7z"/>
+																	<path style="fill:#2C2F33;" d="M48.55,382.8h50.5v80.4c0,14.2,11.5,25.7,25.7,25.7h239.4c14.2,0,25.7-11.5,25.7-25.7v-80.4h50.5
+																		c22.3,0,40.4-18.1,40.4-40.4V161.5c0-22.3-18.1-40.4-40.4-40.4h-50.6V25.7c0-14.2-11.5-25.7-25.7-25.7h-239.4
+																		c-14.2,0-25.7,11.5-25.7,25.7v95.5h-50.4c-22.3,0-40.4,18.1-40.4,40.4v180.8C8.15,364.7,26.25,382.8,48.55,382.8z M371.75,463.1
+																		c0,4.2-3.4,7.5-7.5,7.5h-239.5c-4.2,0-7.5-3.4-7.5-7.5V261h254.5V463.1z M117.15,25.7c0-4.2,3.4-7.5,7.5-7.5h239.4
+																		c4.2,0,7.5,3.4,7.5,7.5v95.5h-254.4C117.15,121.2,117.15,25.7,117.15,25.7z M26.35,161.5c0-12.3,10-22.2,22.2-22.2h391.8
+																		c12.3,0,22.2,10,22.2,22.2v180.9c0,12.3-10,22.2-22.2,22.2h-50.5V252c0-5-4.1-9.1-9.1-9.1h-272.6c-5,0-9.1,4.1-9.1,9.1v112.7
+																		h-50.5c-12.3,0-22.2-10-22.2-22.2C26.35,342.5,26.35,161.5,26.35,161.5z"/>
+																	<path style="fill:#2C2F33;" d="M77.75,199.9c2.4,0,4.7-1,6.4-2.7c1.7-1.7,2.6-4,2.6-6.4s-1-4.7-2.6-6.4c-1.7-1.7-4-2.7-6.4-2.7
+																		s-4.7,1-6.4,2.7c-1.7,1.7-2.7,4-2.7,6.4s1,4.7,2.7,6.4C73.05,198.9,75.35,199.9,77.75,199.9z"/>
+																	<path style="fill:#2C2F33;" d="M314.65,356.8h-140.4c-5,0-9.1,4.1-9.1,9.1s4.1,9.1,9.1,9.1h140.5c5,0,9.1-4.1,9.1-9.1
+																		S319.65,356.8,314.65,356.8z"/>
+																	<path style="fill:#2C2F33;" d="M314.65,413h-140.4c-5,0-9.1,4.1-9.1,9.1s4.1,9.1,9.1,9.1h140.5c5,0,9.1-4.1,9.1-9.1
+																		C323.75,417,319.65,413,314.65,413z"/>
+																	<path style="fill:#2C2F33;" d="M314.65,300.6h-140.4c-5,0-9.1,4.1-9.1,9.1s4.1,9.1,9.1,9.1h140.5c5,0,9.1-4.1,9.1-9.1
+																		S319.65,300.6,314.65,300.6z"/>
+																</g>
+															</g>
+															</svg>
+														{% trans %}Impressions{% endtrans %}
+													</a>
+												</li>
+											
+												<li aria-haspopup="true">
+													<a href="javascript:void(0);" class="sub-icon">
+
+														<svg class="hor-icon" class="svg-icon"  xmlns="http://www.w3.org/2000/svg" class="side-menu__icon" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24"><g><rect fill="none" height="24" width="24"/></g><g><g><rect height="7" width="3" x="4" y="10"/><rect height="7" width="3" x="10.5" y="10"/><rect height="3" width="20" x="2" y="19"/><rect height="7" width="3" x="17" y="10"/><polygon points="12,1 2,6 2,8 22,8 22,6"/></g></g></svg>
+																
+														{% trans %}Sociétés, patients & Utilisateurs{% endtrans %} <i class="fa fa-angle-down horizontal-icon"></i>
+													</a>
+													<ul class="sub-menu border-primary">
+														<li aria-haspopup="true">
+															<a href="{{ path ('afficher_societe', {'a': 1 }) }}"><i class="fa fa-building-o me-2"></i>{% trans %}Afficher les sociétés{% endtrans %}</a>
+														</li>
+														<li aria-haspopup="true">
+															<a href="{{ path ('afficher_patient', {'a': 1 }) }}"><i class="fa fa-users me-2"></i>{% trans %}Afficher les pris en charge{% endtrans %}</a>
+														</li>
+
+														<li aria-haspopup="true">
+															<a href="{{ path ('afficher_utilisateur', {'a': 1 }) }}"><i class="si si-people me-2"></i>{% trans %}Afficher les utilisateurs{% endtrans %}</a>
+														</li>
+													</ul>
+												</li>
+												
+											</ul>
+										</nav>
+										<!--Nav-->
+									</div>
+								</div>
+							</div>
+							<!--/Horizontal-main -->
+						{% endif %}
+					{% endif %}
+				{% endif %}
+				

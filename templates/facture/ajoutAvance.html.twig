@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Ajout avance à la facture : {% endtrans %} {{ facture.reference }} {% endblock %}
+
+{% block body %}
+    <!-- App-Content -->
+    <div class="hor-content main-content">
+        <div class="container">
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title mb-0 text-primary"><i class="si si-plus me-2"></i> {% trans %}Ajout avance à la facture : {% endtrans %} {{ facture.reference }} {% trans %} de 
+                        {% endtrans %} {{ facture.patient ? facture.patient.nom : facture.nomPatient }}
+                    </h4>
+                </div>
+                <div class="page-rightheader">
+                    <div class="btn-list">
+                        <a href="{{ path ('liste_facture', {'a': 1}) }}" class="btn btn-outline-primary"><i class="fe fe-list me-2"></i>
+                            {% trans %}Les factures{% endtrans %}
+                        </a>
+                        <a href="{{ path ('afficher_produit', {'a': 1}) }}" class="btn btn-outline-primary"><i class="fe fe-square me-2"></i>
+                            {% trans %}Les produits{% endtrans %}
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+            <!--End Page header-->
+
+            <!--Row-->
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="card box-widget widget-user border-primary">
+                        <div class="card-body text-center">
+                            <div class="pro-user">
+                                <h4 class="pro-user-username mb-1 font-weight-bold">Etat de la facture</h4>
+                                
+                                <a href="javascript:void(0);" class="btn btn-success mt-3"><i class="si si-wallet me-2"></i> {% trans %}Net à payer : {% endtrans %} {{ facture.netApayer|number_format }}</a>
+                                <a href="javascript:void(0);" class="btn btn-primary mt-3"><i class="si si-wallet me-2"></i> {% trans %}Avance : {% endtrans %} {{ facture.avance|number_format }}</a>
+                                <a href="javascript:void(0);" class="btn btn-danger mt-3"><i class="si si-wallet me-2"></i> {% trans %}Reste : {% endtrans %} {{ (facture.netApayer - facture.avance)|number_format }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="card box-widget widget-user border-success">
+                        <div class="card-body">
+                            <div class="pro-user">
+                                {{ form_start(ajoutAvanceForm, {'attr': {'class':'row g-4 needs-validation', 'novalidate':''}})}}
+                                    
+                                <div class="col-md-8">
+                                    {# <input type="number" name="avance" min="5" max="{{ facture.netApayer - facture.avance }}" class="form-control" id="validationCustom03" required>
+                                    <div class="invalid-feedback">
+                                        {% trans %}Veuillez saisir le montant à verser{% endtrans %}
+                                    </div> #}
+
+                                    <input type="hidden" name="slugFacture" value="{{ facture.slug }}">
+
+                                    <label for="validationCustom04" class="form-label">{% trans %}Avance de la facture{% endtrans %}</label>
+                                    {{ form_row(ajoutAvanceForm.avance, {'attr': {'id':'validationCustom04'}})}}
+                                    <div class="invalid-tooltip">
+                                        {% trans %}Veuillez saisir l'avance{% endtrans %}
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="col-md-4 text-center">
+                                    <label for="validationCustom04" class="form-label text-white" >{% trans %}Avance de la facture{% endtrans %}</label>
+                                    
+                                    <button class="btn btn-outline-primary" name="envoyer" type="submit"><i class="fe fe-plus me-2"></i> {% trans %}Verser l'avance{% endtrans %}</button>
+                                </div>
+                                {{ form_end(ajoutAvanceForm)}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

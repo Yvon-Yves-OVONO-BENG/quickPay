@@ -4,6 +4,12 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    # ici vos autres variables
+    app.locales: [en, fr]
+    app.jwtsecret: '%env(JWT_SECRET)%'
+    photoProduit.upload_directory: '%kernel.project_dir%/public/images/photoProduits'
+    photoUsers.upload_directory: '%kernel.project_dir%/public/images/photoUsers'
+
 
 services:
     # default configuration for services in *this* file
@@ -19,6 +25,13 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    App\Security\UserChecker:
+        tags:
+            - { name: 'security.user_checker'}
+
+    App\Twig\AppExtension:
+        tags: [twig.extension]
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

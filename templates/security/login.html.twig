@@ -1,0 +1,135 @@
+{% extends 'baseConnexion.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+{% block stylesheets %}
+	<link href="{{ asset ('assets/iconfonts/feather/feather.css')}}" rel="stylesheet"/>
+	<link rel="stylesheet" href="{{ asset ('assets/plugins/notify/css/notifIt.css')}}">
+{% endblock %}
+{% block body %}
+{% for message in app.flashes('info')  %}
+	{# <div class="alert alert-danger">{{ message }}</div> #}
+	<!-- NOTIFICATIONS js-->
+	<script src="{{ asset ('assets/js/notifications.js')}}"></script>
+
+	<!-- INTERNAL Notifications js -->
+	<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+	<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+	<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+	<script>
+		notif({
+				type: "success",
+				msg: "<b>{{ message }}</b>",
+				position: "center",
+				width: 500,
+				height: 60,
+				autohide: true
+			});
+	</script>
+
+{% endfor %}
+
+{% if error %}
+	<script src="{{ asset ('assets/js/notifications.js')}}"></script>
+
+	<!-- INTERNAL Notifications js -->
+	<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+	<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+	<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+	<script>
+		notif({type: 'error', position: 'left', msg: "<b>{{ error.messageKey|trans(error.messageData, 'security') }}<b>"});
+	</script>
+{% endif %}
+
+<body class="register1">
+		<div class="page">
+			<div class="page-single">
+				<div class="container">
+					<div class="row">
+						<div class="col mx-auto">
+							<div class="row justify-content-center">
+								<div class="col-xl-7 col-lg-12">
+									<div class="row p-0 m-0">
+										<div class="col-lg-6 p-0">
+											<div class="text-justified text-white p-5 register-1 overflow-hidden">
+												<div class="custom-content">
+													<div class="mb-5 br-7 text-center">
+														<img src="{{ asset ('assets/images/brand/logoPharmacy.png')}}" class="header-brand-img desktop-lgo" alt="logo">
+														
+													</div>
+													<div class="ms-5">
+														<div class="fs-18 mb-6 font-weight-bold text-white">Bienvenue sur Pharmacy</div>
+														<div class="mb-6 text-white text-center font-weight-bold">
+															{% trans %}	La gestion d'une pharmacie n'a jamais été facile avec Pharmacy.
+														{% endtrans %}
+														</div>
+														<div class="br-7" style="text-align: center !important;">
+                                                            <img src="{{ asset ('assets/images/brand/medicament.png')}}" class="desktop-lgo text-center" alt="logo" height="90" weight="300">
+													    </div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-8 col-lg-6 p-0 mx-auto" >
+                                            <div class="bg-white text-dark br-7 br-tl-0 br-bl-0 border-primary">
+                                                <div class="card-body">
+                                                    <div class="text-center mb-3">
+                                                        <h1 class="mb-2">Connexion</h1>
+                                                        <a href="javascript:void(0);" class=""></a>
+                                                    </div>
+                                                    <form method="post" class="mt-5">
+                                                        {# {% if error %}
+                                                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                                        {% endif %} #}
+
+                                                        {% if app.user %}
+                                                            <div class="mb-3">
+                                                                {% trans %}Vous êtes connectés sous {% endtrans %} : {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">{% trans %}Déconnexion{% endtrans %}</a>
+                                                            </div>
+                                                        {% endif %}
+                                                        <div class="input-group mb-4">
+                                                            <div class="input-group-text">
+                                                                <i class="fe fe-user"></i>
+                                                            </div>
+                                                            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus placeholder="Nom de connexion">
+                                                        </div>
+                                                        <div class="input-group mb-4">
+                                                            <div class="input-group" id="Password-toggle">
+                                                                <a href="" class="input-group-text">
+                                                                    <i class="fe fe-eye" aria-hidden="true"></i>
+                                                                </a>
+                                                                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="Mot de passe">
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                                        
+                                                        <div class="form-group">
+                                                            <label class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="_remember_me" class="custom-control-input" />
+                                                                <span class="custom-control-label">{% trans %}Se souvenir de moi{% endtrans %}</span>
+                                                            </label>
+                                                        </div>
+
+
+                                                        <div class="form-group text-center mb-3">
+                                                            <button class="btn btn-outline-primary btn-md w-100 br-7"><i class="fe fe-unlock me-2"></i> {% trans %}Connexion{% endtrans %}</button>
+                                                        </div>
+                                                        <div class="form-group fs-13 text-center">
+                                                            <a href="{{ path ('mot_de_passe_oublie') }}">
+																<span class="badge badge-gradient-danger mt-2">
+																	{% trans %}Mot de passe oublié ?{% endtrans %}
+																</span>
+															</a> 
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+{% endblock %}

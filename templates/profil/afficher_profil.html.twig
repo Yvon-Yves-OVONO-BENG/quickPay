@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Mon profil{% endtrans %}{% endblock %}
+
+{% block body %}
+<!-- App-Content -->
+    <div class="hor-content main-content">
+        <div class="container">
+
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title mb-0 text-primary"><i class="fe fe-user me-2"></i> {% trans %}Mon profil{% endtrans %}</h4>
+                </div>
+                <div class="page-rightheader">
+                    <div class="btn-list">
+                        {% if is_granted('ROLE_CAISSIERE') or is_granted('ROLE_ADMINISTRATEUR') %}
+                            <a href="{{ path ('afficher_produit', {'a': 1 }) }}" class="btn btn-outline-primary btn-pill">
+                                <i class="fa fa-database me-2 fs-14"></i> 
+                                {% trans %}Produits{% endtrans %}
+                            </a>
+                            <a href="{{ path ('liste_facture') }}"  class="btn btn-outline-primary btn-pill">
+                                <i class="fa fa-file me-2 fs-14"></i> {% trans %}Factures{% endtrans %}
+                            </a>
+                        {% endif %}
+                            {% if is_granted('ROLE_PHARMACIEN') or is_granted('ROLE_ADMINISTRATEUR') %}
+                            <a href="{{ path ('afficher_produit', {'a': 1 }) }}" class="btn btn-outline-primary btn-pill">
+                                <i class="fa fa-database me-2 fs-14"></i> {% trans %}Produits{% endtrans %}
+                            </a>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+            </div>
+            <!--End Page header-->
+
+            <div class="main-proifle border-primary">
+                <div class="row ">
+                    <div class="col-lg-12 col-xl-8 ">
+                        <div class="box-widget widget-user">
+                            <div class="widget-user-image1 d-xl-flex d-block">
+                                {% if profil.imageName %}
+                                    <img alt="User Avatar" class="avatar brround p-0" src="{{ asset('images/photoUsers/' ~ profil.imageName) }}">
+                                    {% else %}
+                                    {% if app.user.genre.genre == 'F' %}
+                                        <img alt="User Avatar" class="avatar brround p-0" src="{{ asset('images/photoUsers/f.png') }}">
+                                        {% else %}
+                                        <img alt="User Avatar" class="avatar brround p-0" src="{{ asset('images/photoUsers/m.jpg') }}">
+                                    {% endif %}
+                                {% endif %}
+                                
+                                <div class="mt-1 ms-xl-5">
+                                    <h4 class="pro-user-username mb-3 font-weight-bold">{{ profil.nom }} 
+                                        <i class="fa fa-check-circle text-success"></i>
+                                    </h4>
+                                    <ul class="mb-0 pro-details">
+                                        <li>
+                                            <span class="profile-icon bg-danger-transparent text-danger">
+                                                <i class="fe fe-user"></i>
+                                            </span>
+                                            <span class="h6 mt-3">{{ profil.username }} </span>
+                                        </li>
+                                        <li>
+                                            <span class="profile-icon bg-success-transparent text-success">
+                                                <i class="fe fe-mail"></i>
+                                            </span>
+                                            <span class="h6 mt-3">{{ profil.email ? profil.email : "Votre email" }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="profile-icon bg-info-transparent text-info">
+                                                <i class="fe fe-flag"></i>
+                                            </span>
+                                            <span class="h6 mt-3">{{ profil.adresse ? profil.adresse : "Votre adresse" }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="profile-icon bg-warning-transparent text-warning">
+                                                <i class="fe fe-phone-call"></i>
+                                            </span>
+                                            <span class="h6 mt-3">{{ profil.contact }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-auto col-xl-4">
+                        <div class="text-xl-right text-left btn-list mt-4 mt-lg-0">
+                            <a href="{{ path ('modifier_mon_profil') }}" class="btn btn-outline-primary">
+                                <i class="fe fe-edit me-2"></i> {% trans %}Modifier mon profil{% endtrans %}
+                            </a>
+                            <a href="{{ path ('reponse_question') }}" class="btn btn-outline-primary">
+                                <i class="fe fe-help-circle me-2"></i> {% trans %}Question Secrète{% endtrans %}
+                            </a>
+                        </div>
+                        <div class="mt-5">
+                            <div class="main-profile-contact-list row">
+                                
+                                <div class="media col-sm-8 mb-3">
+                                    <div class="media-icon bg-primary-transparent text-primary me-3 mt-1">
+                                        <i class="fa fa-user fs-18"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <small class="text-muted">{% trans %}Type utilisateur{% endtrans %}</small>
+                                        <div class="font-weight-normal1">
+                                            {{ profil.user.typeUtilisateur.typeUtilisateur }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-cover">
+                    <div class="wideget-user-tab">
+                        <div class="tab-menu-heading p-0">
+                            <div class="tabs-menu1 px-3">
+                                <ul class="nav">
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.profile-cover -->
+            </div>
+            
+
+        </div>
+    </div><!-- right app-content-->
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+document.addEventListener('DOMContentLoaded', function() {
+    $('.custom-switch-input').change(function() {
+        let utilisateurId = $(this).data('id');
+        let isChecked = $(this).is(':checked');
+        console.log(isChecked );
+        ///je cree un nouvel objet XMLHttpRequest
+			var xhr = new XMLHttpRequest();
+			xhr.open('POST', '/pharmacie/public/utilisateur/activer-utilisateur', true);
+			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			xhr.onreadystatechange = function() 
+			{
+				if (xhr.readyState === 4 && xhr.status === 200) 
+				{
+					var response = JSON.parse(xhr.responseText);
+					if (response.success) 
+					{
+						if (isChecked == false) {
+							notif({
+								msg: "<b>Utilisateur débloqué(e) avec succès !</b>",
+								type: "success",
+								position: "right",
+								width: 500,
+								height: 60,
+								autohide: true
+								});
+						}
+						else if(isChecked == true){
+							notif({
+								msg: "<b>Utilisateur bloqué(e) avec succès !</b>",
+								type: "error",
+								position: "left",
+								width: 500,
+								height: 60,
+								autohide: true
+								});
+						}
+					}
+					else 
+					{
+						notif({
+							msg: "<b>Erreur lors de la mise à jour du utilisateur !</b>",
+							type: "danger",
+							position: "left",
+							width: 500,
+							height: 60,
+							autohide: true
+							});
+					}
+				}
+			};
+			
+			//j'envoie la request avec le utilisateur ID
+			xhr.send('utilisateur_id=' + utilisateurId);
+        
+    });
+});

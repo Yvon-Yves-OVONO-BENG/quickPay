@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if slug == 0 %}
+        {% trans %}Ajouter une société{% endtrans %}
+        {% else %}
+        {% trans %}Modification d'une société{% endtrans %}
+    {% endif %}    
+{% endblock %}
+
+{% block body %}
+<!-- App-Content -->
+				<div class="hor-content main-content">
+					<div class="container">
+
+						<!--Page header-->
+						<div class="page-header">
+							<div class="page-leftheader">
+								<h4 class="page-title mb-0 text-primary">
+                                    {% if slug == 0 %}
+                                        <i class="fe fe-plus"></i>
+                                        {% trans %}Enregistrement d'une société{% endtrans %}
+                                        {% else %}
+                                        <i class="fe fe-edit"></i>
+                                        {% trans %}Modification d'une société{% endtrans %}
+                                    {% endif %}
+                                </h4>
+							</div>
+							<div class="page-rightheader">
+								<div class="btn-list">
+									<a href="{{ path ('afficher_societe', {'a': 1 }) }}" class="btn btn-outline-primary"><i class="fe fe-list me-2"></i>
+										{% trans %}Afficher les sociétés{% endtrans %}
+                                    </a>
+									
+								</div>
+							</div>
+						</div>
+
+                        {% if slug == 0 %}
+                            <div class="card border-primary">
+                            {% else %}
+                            <div class="card border-danger">
+                        {% endif %}
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    {% if slug == 0 %}
+                                        <i class="fe fe-plus"></i>
+                                        {% trans %}Ajouter une société{% endtrans %}
+                                        {% else %}
+                                        <i class="fe fe-edit"></i>
+                                        {% trans %}Modification de la société : {% endtrans %} {{ societe.societe }}
+                                    {% endif %}
+                                    
+                                </h3>
+                            </div>
+                            <div class="card-body ">
+                                {{ form_start(formSociete, {'attr': {'class':'row g-4 needs-validation', 'novalidate':""}})}}
+                                    <div class="row" style="margin-top: 15px !important;">
+                                        <div class="col-md-2 position-relative">
+                                        </div>
+                                        <div class="col-md-4 position-relative">
+                                            <label for="validationCustom01" class="form-label">{% trans %}Société{% endtrans %}</label>
+                                            {{ form_widget(formSociete.societe, {'attr': {'id':'validationCustom01'}}) }}
+
+                                            <div class="invalid-feedback">
+                                                {% trans %}Veuillez saisir une société !{% endtrans %}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 position-relative text-center" style="margin-top: 30px !important;">
+                                            <button type="submit" class="btn btn-outline-primary btn-md">
+                                                <i class="fe fe-save"></i> 
+                                                {% if slug == 0 %}
+                                                    {% trans %}Enregistrer{% endtrans %}
+                                                    {% else %}
+                                                    {% trans %}Enregistrer les modifications{% endtrans %}
+                                                {% endif %}
+                                            </button>
+                                        </div>
+                                        <div class="col-md-2 position-relative">
+                                        </div>
+                                    </div>
+                                        
+                                {{ form_end(formSociete)}}
+
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

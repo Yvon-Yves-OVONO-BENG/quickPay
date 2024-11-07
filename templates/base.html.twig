@@ -2,16 +2,349 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+        <title>{% block title %}Bienvenue{% endblock %}</title>
+        <!-- Meta data -->
+		<meta charset="UTF-8">
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+		<meta content="Pharmacy" name="description">
+		<meta content="Spruko Private Limited" name="author">
+		<meta name="keywords" content="admin, admin template, dashboard, admin dashboard, responsive, bootstrap, bootstrap 5, admin theme, admin themes, bootstrap admin template, scss, ui, crm, modern, flat">
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
+
+		<!--Favicon -->
+		<link rel="icon" href="{{ asset ('assets/images/brand/logoPharmacy.png')}}" type="image/x-icon"/>
+
+		<!--Bootstrap css -->
+		<link href="{{ asset ('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+		<!-- Style css -->
+		<link href="{{ asset ('assets/css/style.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/css/dark.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/css/skin-modes.css')}}" rel="stylesheet" />
+
+		<!-- Animate css -->
+		<link href="{{ asset ('assets/css/animated.css')}}" rel="stylesheet" />
+
+		<!-- P-scroll bar css-->
+		<link href="{{ asset ('assets/plugins/p-scrollbar/p-scrollbar.css')}}" rel="stylesheet" />
+
+		<!---Icons css-->
+		<link href="{{ asset ('assets/css/icons.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('css/stylePanier.css')}}" rel="stylesheet" />
+
+		<!-- Simplebar css -->
+		<link rel="stylesheet" href="{{ asset ('assets/plugins/simplebar/css/simplebar.css')}}">
+
+		<!-- INTERNAL Morris Charts css -->
+		<link href="{{ asset ('assets/plugins/morris/morris.css')}}" rel="stylesheet" />
+
+		<!-- INTERNAL Select2 css -->
+		<link href="{{ asset ('assets/plugins/select2/select2.min.css')}}" rel="stylesheet" />
+
+		<!-- Data table css -->
+		<link href="{{ asset ('assets/plugins/datatables/DataTables/css/dataTables.bootstrap4.min.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/datatables/Responsive/css/responsive.bootstrap4.min.css')}}" rel="stylesheet" />
+		<!-- Data table css -->
+		<link href="{{ asset ('assets/plugins/datatables/DataTables/css/dataTables.bootstrap5.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/datatables/Buttons/css/buttons.bootstrap5.min.css')}}"  rel="stylesheet">
+		<link href="{{ asset ('assets/plugins/datatables/Responsive/css/responsive.bootstrap5.min.css')}}" rel="stylesheet" />
+
+	    <!-- Color Skin css -->
+		<link id="theme" href="{{ asset ('assets/colors/color1.css')}}" rel="stylesheet" type="text/css"/>
+
+		<!-- INTERNAL File Uploads css -->
+		<link href="{{ asset ('assets/plugins/fancyuploder/fancy_fileupload.css') }}" rel="stylesheet" />
+
+		<!-- INTERNAL File Uploads css-->
+        <link href="{{ asset ('assets/plugins/fileupload/css/fileupload.css') }}" rel="stylesheet" type="text/css" />
+
+		<!-- INTERNAL Switcher css -->
+		<link href="{{ asset ('assets/switcher/css/switcher.css')}}" rel="stylesheet"/>
+		<link href="{{ asset ('assets/switcher/demo.css')}}" rel="stylesheet"/>
+
+		<!--- INTERNAL Sweetalert css-->
+		<link href="{{ asset ('assets/plugins/sweet-alert/jquery.sweet-modal.min.css') }}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/sweet-alert/sweetalert.css') }}" rel="stylesheet" />
+
+		{# <link data-require="sweet-alert@*" data-semver="0.4.2" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" /> #}
+
+		<!-- INTERNAL Notifications  Css -->
+		{# <link href="{{ asset ('assets/plugins/notify/css/jquery.growl.css')}}" rel="stylesheet" /> #}
+		{% set maSession = app.session %}
+		{% if maSession.get('ajout') is defined 
+		or maSession.get('misAjour') is defined 
+		or maSession.get('suppression') is defined  %}
+			<link href="{{ asset ('assets/plugins/notify/css/notifIt.css')}}" rel="stylesheet" />
+		{% endif %}
+		<script src="{{ asset ('js/swal.js') }}"></script>
+		<script src="{{ asset ('js/popupPanier.js') }}"></script>
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="app">
+		<!---Global-loader-->
+		<div id="global-loader" >
+			<img src="{{ asset ('assets/images/svgs/loader.svg') }}" alt="loader" width="150" height="150">
+		</div>
+		<!--- End Global-loader-->
+		<!-- Page -->
+		<div class="page">
+			<div class="page-main">
+				{% include "includes/_entete.html.twig" %}
+				
+				{% include "includes/_menu.html.twig" %}
+				
+					{% block stylesheets %}
+						{# {{ encore_entry_link_tags('app') }} #}
+					{% endblock %}
+
+					{% block javascripts %}
+						{# {{ encore_entry_script_tags('app') }}
+						{% block importmap %}{{ importmap('app') }}{% endblock %} #}
+					{% endblock %}
+				
+				{% block body %}
+					
+				{% endblock %}
+				{% if app.user.etat %}
+				
+					<script>
+						// Exemple d'utilisation de SweetAlert2
+						Swal.fire({
+							title: 'Votre compte est désactivé',
+							text: "Veuillez contacter l'administrateur.",
+							icon: 'error',
+							allowOutsideClick: false,
+							allowEscapeKey: false,
+							allowEnterKey: false,
+							showConfirmButton: true,
+							confirmButtonText: "D'accord",
+						}).then((result) => {
+							if (result.isConfirmed) {
+								// Redirection vers une autre page ou rafraîchissement de la page actuelle
+								window.location.href = "{{ path ('app_logout') }}"; // Exemple de redirection
+							}
+						});
+						// Empêcher toute interaction utilisateur
+						
+					</script>
+																
+				{% endif %}
+
+        		{% include "includes/_footer.html.twig" %}
+
+        <!-- Back to top -->
+		<a href="#top" id="back-to-top"><i class="fe fe-chevron-up"></i></a>
+
+ 		{# <script src="{{asset('js/produits.js')}}"></script> #}
+
+		{# <script src="{{ asset ('js/confirmerFacture.js')}}"></script> #}
+
+		<!-- Show Password -->
+		<script src="{{ asset ('assets/js/bootstrap-show-password.min.js') }}"></script>
+		
+
+		<!-- Jquery js-->
+		<script src="{{ asset ('assets/js/jquery.min.js')}}"></script>
+
+		<!-- Bootstrap5 js-->
+		<script src="{{ asset ('assets/plugins/bootstrap/popper.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+
+		<!--Othercharts js-->
+		<script src="{{ asset ('assets/plugins/othercharts/jquery.sparkline.min.js')}}"></script>
+
+		<!-- Circle-progress js-->
+		<script src="{{ asset ('assets/js/circle-progress.min.js')}}"></script>
+
+		<!-- Jquery-rating js-->
+		<script src="{{ asset ('assets/plugins/rating/jquery.rating-stars.js')}}"></script>
+
+		<!--Horizontal-menu js-->
+		<script src="{{ asset ('assets/plugins/horizontal-menu/horizontal-menu.js')}}"></script>
+
+		<!-- Sticky js-->
+		<script src="{{ asset ('assets/js/stiky.js')}}"></script>
+
+		<!-- P-scroll js-->
+		<script src="{{ asset ('assets/plugins/p-scrollbar/p-scrollbar.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/p-scrollbar/p-scroll.js')}}"></script>
+
+		<!--INTERNAL Flot Charts js-->
+		<script src="{{ asset ('assets/plugins/flot/jquery.flot.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/flot/jquery.flot.fillbetween.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/flot/jquery.flot.pie.js')}}"></script>
+		<script src="{{ asset ('assets/js/dashboard.sampledata.js')}}"></script>
+		<script src="{{ asset ('assets/js/chart.flot.sampledata.js')}}"></script>
+
+		<!-- INTERNAL Chart js -->
+		<script src="{{ asset ('assets/plugins/chart/chart.bundle.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/chart/utils.js')}}"></script>
+
+		<!-- INTERNAL Apexchart js -->
+		<script src="{{ asset ('assets/js/apexcharts.js')}}"></script>
+
+		<!--INTERNAL Moment js-->
+		<script src="{{ asset ('assets/plugins/moment/moment.js')}}"></script>
+
+		<!--INTERNAL Index js-->
+		<script src="{{ asset ('assets/js/index1.js')}}"></script>
+
+		<!-- INTERNAL Data tables -->
+		<script src="{{ asset ('assets/plugins/datatables/Responsive/js/dataTables.responsive.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Responsive/js/responsive.bootstrap5.min.js')}}"></script>
+
+		<!-- INTERNAL Data tables -->
+		<script src="{{ asset ('assets/plugins/datatables/DataTables/js/jquery.dataTables.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/DataTables/js/dataTables.bootstrap5.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Buttons/js/dataTables.buttons.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Buttons/js/buttons.bootstrap4.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/JSZip/jszip.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/pdfmake/pdfmake.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/pdfmake/vfs_fonts.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Buttons/js/buttons.html5.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Buttons/js/buttons.print.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Buttons/js/buttons.colVis.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Responsive/js/dataTables.responsive.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/datatables/Responsive/js/responsive.bootstrap5.min.js')}}"></script>
+		<script src="{{ asset ('assets/js/datatables.js')}}"></script>
+
+
+		<!-- INTERNAL Select2 js -->
+		<script src="{{ asset ('assets/plugins/select2/select2.full.min.js')}}"></script>
+		<script src="{{ asset ('assets/js/select2.js')}}"></script>
+
+		<!-- Simplebar JS -->
+		<script src="{{ asset ('assets/plugins/simplebar/js/simplebar.min.js')}}"></script>
+
+		<!-- Rounded bar chart js-->
+		<script src="{{ asset ('assets/js/rounded-barchart.js')}}"></script>
+
+		<!-- Custom js-->
+		<script src="{{ asset ('assets/js/custom.js')}}"></script>
+
+		<!-- Switcher js -->
+		<script src="{{ asset ('assets/switcher/js/switcher.js')}}"></script>
+
+		<!--Form Validations js-->
+		<script src="{{ asset ('assets/js/form-vallidations.js') }}"></script>
+
+		<!-- INTERNAL File uploads js -->
+        <script src="{{ asset ('assets/plugins/fileupload/js/dropify.js') }}"></script>
+		<script src="{{ asset ('assets/js/filupload.js') }}"></script>
+
+		<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+		
+		<!-- INTERNAL Sweet alert js -->
+		<script src="{{ asset ('assets/plugins/sweet-alert/jquery.sweet-modal.min.js') }}"></script>
+		<script src="{{ asset ('assets/plugins/sweet-alert/sweetalert.min.js') }}"></script>
+		<script src="{{ asset ('assets/js/sweet-alert.js') }}"></script>
+
+		{# <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> #}
+
+		{# NOTIFICATIONS  #}
+		{# On recupère la session #}
+		{% set maSession = app.session %}
+
+		{% if maSession.get('ajout') is defined %}
+			<!-- NOTIFICATIONS js-->
+			<script src="{{ asset ('assets/js/notifications.js')}}"></script>
+
+			<!-- INTERNAL Notifications js -->
+			<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+			<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+			{# <script src="{{asset('assets/plugins/notify/js/jquery.growl.js')}}"></script> #}
+			<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+
+			{% if maSession.get('ajout') == 1 %}
+				{% set notificationSuccess = "" %}
+
+				{% for message in app.flashes('info') %}
+					{% set notificationSuccess = message %}
+				{% endfor %}
+
+				<script>
+
+					{# swal('Success !', '{{ notificationSuccess }}', 'success'); #}
+					window.onload = () => {
+						notif({
+						msg: "<b>   {{ notificationSuccess }}</b>",
+						type: "success",
+						position: "left",
+						width: 500,
+						height: 60,
+						autohide: true
+						});
+						}
+				</script>
+			{% endif %}
+		{% endif %}
+
+		{% if maSession.get('misAjour') is defined %}
+			<!-- NOTIFICATIONS js-->
+			<script src="{{ asset ('assets/js/notifications.js')}}"></script>
+
+			<!-- INTERNAL Notifications js -->
+			<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+			<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+			{# <script src="{{asset('assets/plugins/notify/js/jquery.growl.js')}}"></script> #}
+			<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+			
+			{% if maSession.get('misAjour') == 1 %}
+				{% set notificationSuccess = "" %}
+
+				{% for message in app.flashes('info') %}
+					{% set notificationSuccess = message %}
+				{% endfor %}
+
+				<script>
+
+					{# swal('Success !', '{{ notificationSuccess }}', 'success'); #}
+					window.onload = () => {
+						notif({
+						msg: "<b>   {{ notificationSuccess }}</b>",
+						type: "info",
+						position: "left",
+						width: 500,
+						height: 60,
+						autohide: true
+						});
+						}
+				</script>
+			{% endif %}
+		{% endif %}
+
+		{% if maSession.get('suppression') is defined %}
+			<!-- NOTIFICATIONS js-->
+			<script src="{{ asset ('assets/js/notifications.js')}}"></script>
+
+			<!-- INTERNAL Notifications js -->
+			<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+			<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+			{# <script src="{{asset('assets/plugins/notify/js/jquery.growl.js')}}"></script> #}
+			<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+			{% if maSession.get('suppression') == 1 %}
+				{% set notificationSuppression = "" %}
+
+				{% for message in app.flashes('info') %}
+					{% set notificationSuppression = message %}
+				{% endfor %}
+
+				<script>
+					{# swal({
+						title: "{% trans %}Suppression{% endtrans %}",
+						text: "{{ notificationSuccess }}",
+						type: "error",
+						showCancelButton: false,
+						confirmButtonText: 'OK',
+						cancelButtonText: 'Stay on the page'
+					}); #}
+
+					notif({
+						msg: "<b>{{ notificationSuppression }}</b>",
+						type: "error",
+						position: "center"
+					});
+				</script>
+			{% endif %}
+		{% endif %}
     </body>
 </html>

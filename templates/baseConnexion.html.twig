@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<!-- Meta data -->
+		<meta charset="UTF-8">
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+		<meta content="Pharmacy" name="description">
+		<meta content="Spruko Private Limited" name="author">
+		<meta name="keywords" content="admin, admin template, dashboard, admin dashboard, responsive, bootstrap, bootstrap 5, admin theme, admin themes, bootstrap admin template, scss, ui, crm, modern, flat">
+
+        <title>{% block title %}Bienvenue{% endblock %}</title>
+        
+		<!--Favicon -->
+		<link rel="icon" href="{{ asset('assets/images/brand/logoPharmacy.png')}}" type="image/x-icon"/>
+
+		<!--Bootstrap css -->
+		<link href="{{ asset ('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+
+		<!-- Style css -->
+		<link href="{{ asset ('assets/css/style.css') }}" rel="stylesheet" />
+		<link href="{{ asset ('assets/css/dark.css') }}" rel="stylesheet" />
+		<link href="{{ asset ('assets/css/skin-modes.css') }}" rel="stylesheet" />
+
+		<!-- Animate css -->
+		<link href="{{ asset ('assets/css/animated.css') }}" rel="stylesheet" />
+
+		<!---Icons css-->
+		<link href="{{ asset ('assets/css/icons.css') }}" rel="stylesheet" />
+
+		<!--- INTERNAL Sweetalert css-->
+		<link href="{{ asset ('assets/plugins/sweet-alert/jquery.sweet-modal.min.css') }}" rel="stylesheet" />
+		<link href="{{ asset ('assets/plugins/sweet-alert/sweetalert.css') }}" rel="stylesheet" />
+
+	    <!-- Color Skin css -->
+		<link id="theme" href="{{ asset ('assets/colors/color1.css') }}" rel="stylesheet" type="text/css"/>
+
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% endblock %}
+    </head>
+    <body class="h-100vh bg-light">
+		{% if motDePasse == 1 %}
+			{% if motDePasse == 1 %}
+				{% include "includes/_entete.html.twig" %}
+				{% include "includes/_menu.html.twig" %}
+			{% endif %}
+
+				{% else %}
+				<div class="box">
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</div>
+		{% endif %}
+
+		
+
+        
+        {% block body %}{% endblock %}
+
+		{% if motDePasse == 1 %}
+			{% include "includes/_footer.html.twig" %}
+		{% endif %}
+
+        <!-- Jquery js-->
+		<script src="{{ asset ('assets/js/jquery.min.js') }}"></script>
+
+		<!-- Bootstrap5 js-->
+		<script src="{{ asset ('assets/plugins/bootstrap/popper.min.js') }}"></script>
+		<script src="{{ asset ('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+
+		<!--Othercharts js-->
+		<script src="{{ asset ('assets/plugins/othercharts/jquery.sparkline.min.js') }}"></script>
+
+		<!-- Circle-progress js-->
+		<script src="{{ asset ('assets/js/circle-progress.min.js') }}"></script>
+
+		<!-- Jquery-rating js-->
+		<script src="{{ asset ('assets/plugins/rating/jquery.rating-stars.js') }}"></script>
+
+		<!-- Show Password -->
+		<script src="{{ asset ('assets/js/bootstrap-show-password.min.js') }}"></script>
+
+		<!--Form Validations js-->
+		<script src="{{ asset ('assets/js/form-vallidations.js') }}"></script>
+
+		<!-- INTERNAL Sweet alert js -->
+		<script src="{{ asset ('assets/plugins/sweet-alert/jquery.sweet-modal.min.js') }}"></script>
+		<script src="{{ asset ('assets/plugins/sweet-alert/sweetalert.min.js') }}"></script>
+		<script src="{{ asset ('assets/js/sweet-alert.js') }}"></script>
+
+		<!-- Custom js-->
+		<script src="{{ asset ('assets/js/custom.js') }}"></script>
+    </body>
+</html>

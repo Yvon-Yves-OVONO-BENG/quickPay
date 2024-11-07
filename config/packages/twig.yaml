@@ -1,6 +1,16 @@
 twig:
     file_name_pattern: '*.twig'
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    # On déclare ci-dessous le nom de la variable globale
+    form_themes:
+        - bootstrap_5_layout.html.twig
+    globals:
+        locales: '%app.locales%'
+        panierService: "@App\\Service\\PanierService"
 
 when@test:
     twig:
         strict_variables: true
+        

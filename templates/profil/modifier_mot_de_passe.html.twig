@@ -1,0 +1,81 @@
+{% extends 'baseConnexion.html.twig' %}
+
+{% block title %}{% trans %}Modification de mon mot de passe{% endtrans %} {% endblock %}
+
+{% block body %}
+ 
+<!-- App-Content -->
+<div class="hor-content main-content">
+    <div class="container">
+    
+        <!--Page header-->
+        <div class="page-header">
+            <div class="page-leftheader">
+                <h4 class="page-title mb-0 text-primary">
+                <i class="fa fa-key me-2"></i> {% trans %}Modification du mot de passe{% endtrans %}</h4>
+            </div>
+            <div class="page-rightheader">
+                <div class="btn-list">
+                    {% if is_granted('ROLE_CAISSIERE') or is_granted('ROLE_ADMINISTRATEUR') %}
+                        <a href="{{ path ('afficher_produit', {'a': 1 }) }}"  class="btn btn-outline-primary btn-pill">
+                            <i class="fa fa-database me-2 fs-14"></i> {% trans %}Produits{% endtrans %}
+                        </a>
+                        <a href="{{ path ('liste_facture') }}"  class="btn btn-outline-primary btn-pill">
+                            <i class="fa fa-file me-2 fs-14"></i> {% trans %}Factures{% endtrans %}
+                        </a>
+                    {% endif %}
+                        {% if is_granted('ROLE_PHARMACIEN') or is_granted('ROLE_ADMINISTRATEUR') %}
+                        <a href="{{ path ('afficher_produit', {'a': 1 }) }}"  class="btn btn-outline-primary btn-pill">
+                            <i class="fa fa-database me-2 fs-14"></i> {% trans %}Produits{% endtrans %}
+                        </a>
+                        <a href="{{ path ('liste_kit', {'a': 1 }) }}"  class="btn btn-outline-primary btn-pill">
+                            <i class="fa fa-file me-2 fs-14"></i> {% trans %}Kits{% endtrans %}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!--End Page header-->
+        
+        <div class="card border-primary">
+            <div class="card-header text-center header-perso h3" >
+                <i class="fa fa-key me-2"></i> 
+                {% trans %}Modification du mot de passe{% endtrans %}
+                  
+            </div>
+            <div class="card-body body-perso">
+                {{ form_start(userForm) }}
+                    <div class="row">
+                        <div class="col-md-2">
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="input-group" id="Password-toggle">
+                                <a href="" class="input-group-text">
+                                    <i class="fe fe-eye" aria-hidden="true"></i>
+                                </a>                    
+                                {{ form_widget(userForm.password, {'attr': {'id':'inputPassword'}}) }}
+                            </div>
+                        </div>
+                        {# <div class="col-md-4">
+                            <div class="form-group">
+                                {{ form_row(userForm.confirmPassword) }}
+                            </div>
+                        </div> #}
+                        <div class="col-md-4">
+                            <div class="">
+                                <button type="submit" class="btn btn-outline-primary btn-block form-control" name="modifierMotDePasse">
+                                    <i class="fa fa-save me-2"></i> {% trans %}Enregistrer{% endtrans %}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+                {{ form_end(userForm) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

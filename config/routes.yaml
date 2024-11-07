@@ -3,3 +3,23 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+ajout_produit_panier:
+    path: /ajout-produit-panier
+    controller: App\Controller\Panier\AjoutProduitPanierController::ajoutProduitPanier
+    methods: ['POST']
+
+terminer_patient:
+    path: /patient/terminer-patient
+    controller: App\Controller\Patient\TerminerPatientController::terminerPatient
+    methods: ['POST']
+
+activer_utilisateur:
+    path: /utilisateur/activer-utilisateur
+    controller: App\Controller\Utilisateur\ActiverUtilisateurController::activerUtilisateur
+    methods: ['POST']
+
+retirer_produit:
+    path: /produit/retirer-produit
+    controller: App\Controller\Produit\RetireProduitController::retirerProduit
+    methods: ['POST']

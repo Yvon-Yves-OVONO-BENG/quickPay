@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if slug == 0 %}
+        {% trans %}Ajouter un utilisateur{% endtrans %}
+        {% else %}
+        {% trans %}Modification d'un utilisateur{% endtrans %}
+    {% endif %}    
+{% endblock %}
+
+{% block body %}
+<!-- App-Content -->
+				<div class="hor-content main-content">
+					<div class="container">
+
+						<!--Page header-->
+						<div class="page-header">
+							<div class="page-leftheader">
+								<h4 class="page-title mb-0 text-primary">
+                                    {% if slug == 0 %}
+                                        <i class="si si-plus me-2"></i> {% trans %}Enregistrement d'un utilisateur{% endtrans %}
+                                        {% else %}
+                                        <i class="si si-note me-2"></i> {% trans %}Modification d'un utilisateur{% endtrans %}
+                                    {% endif %}
+                                </h4>
+							</div>
+							<div class="page-rightheader">
+								<div class="btn-list">
+                                    <a href="{{ path ('ajouter_utilisateur') }}" class="btn btn-outline-primary"><i class="si si-plus me-2"></i>
+                                        {% trans %}Ajouter un utilisateur{% endtrans %}
+                                    </a>
+									<a href="{{ path ('afficher_utilisateur', {'a': 1 }) }}" class="btn btn-outline-primary">
+										<i class="si si-people me-2"></i> {% trans %}Afficher les utilisateurs{% endtrans %}
+                                    </a>
+									
+								</div>
+							</div>
+						</div>
+
+                        {% if slug == 0 %}
+                            <div class="card border-primary">
+                            {% else %}
+                            <div class="card border-danger">
+                        {% endif %}
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    {% if slug == 0 %}
+                                        <i class="si si-plus me-2"></i> {% trans %}Ajouter un utilisateur{% endtrans %}
+                                        {% else %}
+                                            <i class="si si-note me-2"></i> {% trans %}Modification de l' utilisateur : {% endtrans %} 
+                                            <span class="tag tag-gray-dark">{{ utilisateur.nom }}</span>
+                                    {% endif %}
+                                    
+                                </h3>
+                            </div>
+                            <div class="card-body ">
+                                {{ form_start(formUtilisateur, {'attr': {'class':'row g-4 needs-validation', 'novalidate':""}})}}
+                                    <div class="row" style="margin-top: 15px !important;">
+                                        <div class="col-md-4 position-relative">
+                                            <label for="validationCustom04" class="form-label">{% trans %}Nom de connexion{% endtrans %}</label>
+                                            {{ form_widget(formUtilisateur.username, {'attr': {'id':'validationCustom04'}}) }}
+
+                                            <div class="invalid-tooltip">
+                                                {% trans %}Veuillez saisir un nom de connexion !{% endtrans %}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 position-relative">
+                                            <label for="validationCustom04" class="form-label">{% trans %}Nom complet{% endtrans %}</label>
+                                            {{ form_widget(formUtilisateur.nom, {'attr': {'id':'validationCustom04'}}) }}
+
+                                            <div class="invalid-tooltip">
+                                                {% trans %}Veuillez saisir un nom !{% endtrans %}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 position-relative">
+                                            <label for="validationCustom04" class="form-label">{% trans %}Adresse{% endtrans %}</label>
+                                            {{ form_widget(formUtilisateur.adresse, {'attr': {'id':'validationCustom04'}}) }}
+
+                                            <div class="invalid-tooltip">
+                                                {% trans %}Veuillez saisir un mot de passe !{% endtrans %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 15px !important;">
+                                        <div class="col-md-4 position-relative">
+                                            <label for="validationCustom04" class="form-label">{% trans %}Email{% endtrans %}</label>
+                                            {{ form_widget(formUtilisateur.email, {'attr': {'id':'validationCustom04'}}) }}
+
+                                            <div class="invalid-tooltip">
+                                                {% trans %}Veuillez saisir un mot de passe !{% endtrans %}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 position-relative">
+                                            <label for="validationCustom04" class="form-label">{% trans %}Mot de passe{% endtrans %}</label>
+                                            {{ form_widget(formUtilisateur.password, {'attr': {'id':'validationCustom04'}}) }}
+
+                                            <div class="invalid-tooltip">
+                                                {% trans %}Veuillez saisir un mot de passe !{% endtrans %}
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="col-md-4 position-relative">
+                                            <label for="validationCustom04" class="form-label">{% trans %}Contact{% endtrans %}</label>
+                                            {{ form_widget(formUtilisateur.contact, {'attr': {'id':'validationCustom04'}}) }}
+
+                                            <div class="invalid-tooltip">
+                                                {% trans %}Veuillez saisir un contact !{% endtrans %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top: 15px !important;">   
+                                        <div class="col-md-8 position-relative">
+                                            <label for="validationCustom04" class="form-label">{% trans %}Type utilisateur{% endtrans %}</label>
+                                            {{ form_widget(formUtilisateur.typeUtilisateur, {'attr': {'id':'validationCustom04'}}) }}
+
+                                            <div class="invalid-tooltip">
+                                                {% trans %}Veuillez sélectionner un type utilisateur !{% endtrans %}
+                                            </div>
+                                        </div>
+                                        
+
+                                        <div class="col-md-4 position-relative text-center" style="margin-top: 30px !important;">
+                                            <button type="submit" class="btn btn-outline-primary btn-md">
+                                                <i class="fe fe-save"></i> 
+                                                {% if slug == 0 %}
+                                                    {% trans %}Enregistrer{% endtrans %}
+                                                    {% else %}
+                                                    {% trans %}Enregistrer les modifications{% endtrans %}
+                                                {% endif %}
+                                            </button>
+                                        </div>
+                                    </div>
+                                        
+                                {{ form_end(formUtilisateur)}}
+
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

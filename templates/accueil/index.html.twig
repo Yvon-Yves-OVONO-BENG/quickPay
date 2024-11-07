@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Accueil{% endtrans %}{% endblock %}
+{% block stylesheets %}
+	<style>
+		th,
+		tfoot {
+			font-size: 15px !important;
+			text-align: center !important;
+			font-weight: bold !important;
+			background-color: #F1F1F1 !important;
+		}
+
+		.infoTable {
+			text-align: center !important;
+			vertical-align: middle !important;
+		}
+
+		tr:hover {
+			background-color: rgba(62, 128, 235, 0.2) !important;
+			color: #3e80eb !important;
+		}
+
+        td {
+			font-size: 12px !important;
+			text-align: center !important;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+
+<!-- App-Content -->
+
+    <div class="hor-content main-content">
+        <div class="container">
+
+		{% if licence == 1 %}
+			{% if is_granted('ROLE_CAISSIERE') %}
+                {% include "includes/_accueilCaissiere.html.twig" %}
+            {% endif %}
+
+			{% if is_granted('ROLE_REGIES_DES_RECETTES') %}
+                {% include "includes/_accueilRegiesDesRecettes.html.twig" %}
+            {% endif %}
+
+            {% if is_granted('ROLE_PHARMACIEN') or is_granted('ROLE_SECRETAIRE') %}
+                {% include "includes/_accueilPharmacien.html.twig" %}
+            {% endif %}
+
+			{% if is_granted('ROLE_DIRECTEUR') %}
+                {% include "includes/_accueilDirecteur.html.twig" %}
+            {% endif %}
+
+			{% if is_granted('ROLE_ADMINISTRATEUR') %}
+                {% include "includes/_accueilAdmin.html.twig" %}
+            {% endif %}
+			{% else %}
+			{% include "includes/_licence.html.twig" %}
+		{% endif %}
+            
+
+        </div>
+    </div>
+    <!-- End app-content-->
+
+{% endblock %}

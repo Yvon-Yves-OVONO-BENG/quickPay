@@ -1,0 +1,236 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Tableau de bord{% endtrans %}{% endblock %}
+{% block stylesheets %}
+	<style>
+		th,
+		tfoot {
+			font-size: 15px !important;
+			text-align: center !important;
+			font-weight: bold !important;
+			background-color: #F1F1F1 !important;
+		}
+
+		.infoTable {
+			text-align: center !important;
+			vertical-align: middle !important;
+		}
+
+		tr:hover {
+			background-color: rgba(62, 128, 235, 0.2) !important;
+			color: #3e80eb !important;
+		}
+
+        td {
+			font-size: 12px !important;
+			text-align: center !important;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+
+<!-- App-Content -->
+		<div class="hor-content main-content">
+			<div class="container">
+
+				<!--Page header-->
+				<div class="page-header">
+					<div class="page-leftheader">
+						<h4 class="page-title mb-0 text-primary"><i class="fa fa-dashboard me-2"></i>{% trans %}Tableau de bord{% endtrans %}</h4>
+					</div>
+					<div class="page-rightheader">
+						<div class="btn-list">
+							<a data-bs-effect="effect-super-scaled" data-bs-toggle="modal" href="#largemodal" class="btn btn-outline-primary btn-pill">
+								<div><strong><i class="fa fa-qrcode me-2 fs-14"></i> {% trans %}Afficher mon Code QR{% endtrans %}</strong></div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<!--End Page header-->
+
+				<!-- Row-1 -->
+				<div class="row">
+					
+					<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+						<div class="card overflow-hidden dash1-card border-0 dash2">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12 col-sm-12 col-12">
+										<div class="">
+											<span class="fs-14">{% trans %}Votre solde{% endtrans %}</span>
+											<h3 class="mb-2 mt-1 number-font carn2 font-weight-bold">{{ porteMonnaie.solde }} XAF</h3>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+						<div class="card overflow-hidden dash1-card border-0 dash1">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12 col-sm-12 col-12">
+										<div class="">
+											<span class="fs-14">{% trans %}Nombre de transactions : {% endtrans %} {{ statistiques.totalTransactionUtilisateur|number_format }}</span>
+											<h3 class="mb-2 mt-1 number-font carn1 font-weight-bold">{{ statistiques.montantTotalutilisateur|number_format }} XAF</h3>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+						<div class="card overflow-hidden dash1-card border-0 dash4">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12 col-sm-12 col-12">
+										<div class="">
+											<span class="fs-14">{% trans %}Transactions reçus : {% endtrans %} {{ statistiques.totalReception|number_format }}</span>
+											<h3 class="mb-2 mt-1 number-font carn1 font-weight-bold">{{ statistiques.montantRecu|number_format }} XAF</h3>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
+						<div class="card overflow-hidden dash1-card border-0 dash3">
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-12 col-sm-12 col-12">
+										<div class="">
+											<span class="fs-14">{% trans %}Transactions envoyées : {% endtrans %} {{ statistiques.totalEnvoie|number_format }}</span>
+											<h3 class="mb-2 mt-1 number-font carn1 font-weight-bold">{{ statistiques.montantEnvoye|number_format }} XAF</h3>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<!-- End Row-1 -->
+
+				<!-- Row-2 -->
+				<div class="row row-deck">
+					<div class="col-md-12 col-sm-12 col-lg-6 col-xl-4">
+						<div class="card border-primary">
+							<div class="card-header">
+								<h3 class="card-title">
+									{% trans %}Transactions reçues{% endtrans %}
+								</h3>
+								<div class="card-options">
+									<a href="{{ path ('transaction', {'r': 1 })}}" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye me-2"></i> {% trans %}Tout afficher{% endtrans %}</a>
+								</div>
+							</div>
+							<div class="card-body">
+
+								{% for transactionsRecu in transactionsRecus|slice(0, 6) %}
+									<div class="mb-3">
+										<div class="d-flex">
+											<div class="Recent-transactions-img brround bg-primary text-white font-weight-normal1">{{ transactionsRecu.expediteur.username|slice(0, 2)|upper }}</div>
+											<div class="">
+												<a href="javascript:void(0);" class="font-weight-normal1 mb-1 fs-13">{{ transactionsRecu.expediteur.username }}</a>
+												<p class="text-muted fs-11">{% trans %}Il y'a {% endtrans %} {{ transactionsRecu.createdAt|tempsPublication }}</p>
+											</div>
+											<span class="text-success font-weight-normal fs-12 ms-auto">{{ transactionsRecu.montant|number_format }} XAF</span>
+										</div>
+									</div>
+								{% endfor %}
+									
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12 col-lg-6 col-xl-4">
+						<div class="card border-primary">
+							<div class="card-header">
+								<h3 class="card-title">
+									{% trans %}Transactions envoyées{% endtrans %}
+								</h3>
+								<div class="card-options">
+									<a href="{{ path ('transaction', {'e': 1 })}}" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye me-2"></i> {% trans %}Tout afficher{% endtrans %}</a>
+								</div>
+							</div>
+							<div class="card-body">
+								{% for transactionsEnvoye in transactionsEnvoyes|slice(0, 6) %}
+									<div class="mb-3">
+										<div class="d-flex">
+											<div class="Recent-transactions-img brround bg-primary text-white font-weight-normal1">{{ transactionsEnvoye.destinataire.username|slice(0, 2)|upper }}</div>
+											<div class="">
+												<a href="javascript:void(0);" class="font-weight-normal1 mb-1 fs-13">{{ transactionsEnvoye.destinataire.username }}</a>
+												<p class="text-muted fs-11">{% trans %}Il y'a {% endtrans %} {{ transactionsEnvoye.createdAt|tempsPublication }}</p>
+											</div>
+											<span class="text-danger font-weight-normal fs-12 ms-auto">{{ transactionsEnvoye.montant|number_format }} XAF</span>
+										</div>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 col-sm-12 col-lg-6 col-xl-4">
+						<div class="card border-primary">
+							<div class="card-header">
+								<h3 class="card-title">
+									{% trans %}Toutes les transactions{% endtrans %}
+								</h3>
+								<div class="card-options">
+									<a href="{{ path ('transaction', {'t': 1 })}}" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye me-2"></i> {% trans %}Tout afficher{% endtrans %}</a>
+								</div>
+							</div>
+							<div class="card-body">
+								{% for toutesLesTransaction in toutesLesTransactions|slice(0, 6) %}
+									<div class="mb-3">
+										<div class="d-flex">
+											{% if toutesLesTransaction.expediteur == app.user %}
+												<div class="Recent-transactions-img brround bg-primary text-white font-weight-normal1">{{ toutesLesTransaction.destinataire.username|slice(0, 2)|upper }}</div>
+												{% else %}
+												<div class="Recent-transactions-img brround bg-primary text-white font-weight-normal1">{{ toutesLesTransaction.expediteur.username|slice(0, 2)|upper }}</div>
+											{% endif %}
+											<div class="">
+												{% if toutesLesTransaction.expediteur == app.user %}
+													<a href="javascript:void(0);" class="font-weight-normal1 mb-1 fs-13">{{ toutesLesTransaction.destinataire.username }}</a>
+													{% else %} 
+													<a href="javascript:void(0);" class="font-weight-normal1 mb-1 fs-13">{{ toutesLesTransaction.expediteur.username }}</a>
+												{% endif %}
+												<p class="text-muted fs-11">{% trans %}Il y'a {% endtrans %} {{ toutesLesTransaction.createdAt|tempsPublication }}</p>
+											</div>
+											{% if toutesLesTransaction.expediteur == app.user %}
+												<span class="text-danger font-weight-normal fs-12 ms-auto">{{ toutesLesTransaction.montant|number_format }} XAF</span>
+												{% else %}
+												<span class="text-success font-weight-normal fs-12 ms-auto">{{ toutesLesTransaction.montant|number_format }} XAF</span>
+											{% endif %}
+										</div>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End Row-2 -->
+			</div>
+		</div>
+	</div>
+		<!-- End app-content-->
+				                                      
+		<!-- Modal -->
+		<div class="modal fade" id="largemodal" tabindex="-1" role="dialog" aria-labelledby="largemodal" aria-hidden="true">
+			<div class="modal-dialog modal-lg " role="document">
+				<div class="modal-content border-danger">
+					<div class="modal-header">
+						<h5 class="modal-title" id="largemodal1"><i class="fa fa-qrcode me-2"></i><b>{% trans %}Code QR de : {% endtrans %} {{ app.user.username }}</b> </h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body text-center">
+						<h2 class="text-center"><b>{% trans %}SCANNE MOI{% endtrans %}</b></h2>
+						<img src="{{ asset ('images/qrCode/' ~ app.user.codeQr.qrCode )}}" class="text-center" alt="mon QRCode">             
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"><i class="fe fe-x-circle me-2"></i>{% trans %}Fermer{% endtrans %}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+{% endblock %}
+

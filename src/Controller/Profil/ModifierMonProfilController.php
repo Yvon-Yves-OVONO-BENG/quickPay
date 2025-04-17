@@ -28,7 +28,6 @@ class ModifierMonProfilController extends AbstractController
         protected EntityManagerInterface $em,
         protected UserRepository $userRepository,
         protected TranslatorInterface $translator,
-        protected ProfilRepository $profilRepository,
     )
     {}
     
@@ -37,6 +36,11 @@ class ModifierMonProfilController extends AbstractController
     {   
         # je récupère ma session
         $maSession = $request->getSession();
+
+        if(!$maSession)
+        {
+            return $this->redirectToRoute("app_logout");
+        }
         
         #mes variables témoin pour afficher les sweetAlert
         $maSession->set('ajout', null);
@@ -49,39 +53,16 @@ class ModifierMonProfilController extends AbstractController
         $user = $this->getUser();
 
         $user = $this->userRepository->find($user->getId());
-
-        $profil = $this->profilRepository->findOneByUser([
-            'user' => $user
-        ]);
         
-        if (!$profil) 
-        {
-            $profil = new Profil;
-        }
-
         #je crée mon formulaire et je le lie à mon instance
-        $form = $this->createForm(ProfilType::class, $profil);
+        $form = $this->createForm(ProfilType::class, $user);
 
         #je demande à mon formulaire de récupérer les donnéesqui sont dans le POST avec la $request
         $form->handleRequest($request);
 
         #je teste si mon formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) 
-        {
-            #je met le nom de l'utilisateur en CAPITAL LETTER
-            $profil->setNom($this->strService->strToUpper($profil->getNom()));
-            
-            $this->em->persist($profil);
-
-            $user->setUsername($profil->getUsername())
-                ->setNom($this->strService->strToUpper($profil->getNom()))
-                ->setContact($profil->getContact())
-                ->setAdresse($profil->getAdresse())
-                ->setEmail($profil->getEmail())
-                ->setGenre($profil->getGenre())
-                ->setPhoto($profil->getImageName())
-                ;
-            
+        {   
             # je prépare ma requête avec entityManager
             $this->em->persist($user);
 

@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if slug == null %}
+        {% trans %}Ajout d'un service{% endtrans %}
+    {% else %}
+        {% trans %}Modification du service: {% endtrans %} {{ service.service }}
+    {% endif %}
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="hor-content main-content">
+        <div class="container">
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    {% if slug == null %}
+                        <h4 class="page-title mb-0 text-primary"><i class="fa fa-gears me-2"></i>{% trans %}Ajout d'un service{% endtrans %}</h4>
+                        {% else %}
+                        <h4 class="page-title mb-0 text-primary"><i class="fa fa-edit me-2"></i>{% trans %}Modification d'un service{% endtrans %}</h4>
+                    {% endif %}
+                </div>
+                <div class="page-rightheader">
+                    <div class="btn-list">
+                        <a href="{{ path ('liste_service')}}" class="btn btn-outline-primary"><i class="fa fa-list me-2"></i>{% trans %}Liste des services{% endtrans %}</a>
+                    </div>
+                </div>
+            </div>
+            <!--End Page header-->
+        
+                {% if slug == null %}
+                    <div class="card border-primary">
+                    {% else %}
+                    <div class="card border-danger">
+                {% endif %}
+                <div class="card-header">
+                        <div class="col-md-8">
+                            <div class="card-title">
+                                {% if slug == null %}
+                                    <i class="fa fa-gears me-2"></i> {% trans %}Ajout d'un service{% endtrans %}
+                                {% else %}
+                                    <i class="fa fa-edit me-2"></i> {% trans %}Modification du service : {% endtrans %} 
+                                    <span class="badge badge-default">{{ service.service }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <button type="button" class="btn btn-primary  mt-1 mb-1 me-3 form-control-sm">
+                                <span class="badge bg-white text-dark rounded-pill">{{ services|length|number_format }}</span>
+                                <span>{% trans %}services enregistrés{% endtrans %}</span>
+                            </button>
+                        </div>
+                    {# Fin ligne afficher les services #}
+                </div>
+                <div class="card-body">
+                    <div class="col-md-12">
+                        {{ form_start(ajoutServiceForm, {'attr': {'class': 'row g-3 needs-validation', 'novalidate': ""}}) }}
+                            <div class="row mb-5">
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        {{ form_label(ajoutServiceForm.service)}}
+                                        {{ form_widget(ajoutServiceForm.service, {'attr': {'class': 'form-control form-control-sm bg-info-transparent', 'id':'validationCustom04'}}) }}
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir le nom du service !{% endtrans %}
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <input type="hidden" value="{{ csrfToken }}" name="csrfToken">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label style="color: #fff;">.</label>
+                                            {% if slug == null %}
+                                                <button type="submit" class="btn btn-outline-primary btn-medium w-100 br-7" name="addArmoire">
+                                                    <i class="fa fa-save me-2"></i> {% trans %}Enregistrer{% endtrans %}
+                                                </button>
+                                            {% else %}
+                                                <button type="submit" class="btn btn-outline-primary btn-medium w-100 br-7" name="editArmoire">
+                                                    <i class="fa fa-save me-2"></i>
+                                                    {% trans %}Enregistrer les modifications{% endtrans %}
+                                                </button>
+                                            {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                </div>
+                                
+                               
+                                
+                            </div>
+                            
+
+                        {{ form_end(ajoutServiceForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

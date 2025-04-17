@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lecture Message{% endblock %}
+
+{% block body %}
+<div class="hor-content main-content">
+    <div class="container">
+
+        <!--Page header-->
+        <div class="page-header">
+            <div class="page-leftheader">
+                <h4 class="page-title mb-0 text-primary"><i class="fa fa-envelope-open-o me-2"></i>{% trans %}Lecture d'un message{% endtrans %}</h4>
+            </div>
+           
+        </div>
+        <!--End Page header-->
+<div class="row">
+	{% include "includes/_menuGauche.html.twig" %}
+
+    <div class="col-md-12 col-lg-8 col-xl-9">
+								<div class="card border-primary">
+									<div class="card-body">
+										<div class="email-media">
+											<div class="mt-0 d-sm-flex">
+												<img class="me-2 rounded-circle avatar avatar-lg" src="{{ asset ('assets/images/brand/logo.png') }}" alt="avatar">
+												<div class="media-body pt-0">
+													<div class="float-end d-none d-md-flex fs-15">
+														<small class="me-3 mt-3 text-muted">{{ message.envoyeLeAt|date('d M Y / H:i')}}</small>
+														<a class="me-3 email-icon bg-danger-transparent" data-bs-toggle="tooltip" title="" data-original-title="Rated"><i class="text-danger fe fe-star fs-16"></i></a>
+														<a class="me-3 email-icon bg-success-transparent" data-bs-toggle="tooltip" title="" data-original-title="Reply"><i class="text-success fa fa-reply"></i></a>
+														<div class="">
+															<a href="javascript:void(0);" class="email-icon bg-primary-transparent" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="text-primary fe fe-more-vertical fs-16"></i></a>
+															<div class="dropdown-menu dropdown-menu-start">
+																<a class="dropdown-item" href="javascript:void(0);"><i class="fe fe-share me-2"></i> {% trans %}Répondre{% endtrans %}</a>
+																<a class="dropdown-item" href="javascript:void(0);"><i class="fe fe-alert-circle me-2"></i>Spam</a>
+																<a class="dropdown-item" href="javascript:void(0);"><i class="fe fe-trash me-2"></i>{% trans %}Supprimer{% endtrans %}</a>
+																<a class="dropdown-item" href="javascript:void(0);"><i class="fe fe-printer me-2"></i>{% trans %}Imprimer{% endtrans %}</a>
+																<a class="dropdown-item" href="javascript:void(0);"><i class="fe fe-filter me-2"></i>{% trans %}Filtrer{% endtrans %}</a>
+															</div>
+														</div>
+													</div>
+													<div class="media-title font-weight-semibold mt-1">{{ message.expediteur.username }} <span class="text-muted font-weight-semibold">( {{ message.expediteur.email }} )</span></div>
+													<small class="mb-0">A {{ app.user.username }} ( {{ app.user.email }} ) </small>
+													<small class="me-2 d-md-none">Dec 13 , 2018 12:45 pm</small>
+												</div>
+											</div>
+										</div>
+										<div class="eamil-body mt-5">
+											<p class="fs-20">{{ messageDechiffre }}</p>
+											
+											<hr class="fs-20">
+											<div class="email-attch">
+												<div class="float-end">
+													<a href="javascript:void(0);" class="email-icon" data-bs-toggle="tooltip" title="" data-original-title="Download"><i class="fe fe-download fs-18"></i></a>
+												</div>
+												<p class="font-weight-semibold">3 fichiers <a href="javascript:void(0);">{% trans %}Afficher{% endtrans %}</a></p>
+											</div>
+											<div class="row">
+												<div class="col-sm-6 col-lg-2 mt-4">
+													<a class="" href="javascript:void(0);">
+														<div class="border p-0 text-center">
+															<img src="{{ asset ('assets/images/files/xls.jpeg')}}" alt="img" class="w-80 mx-auto">
+														</div>
+														<div class="bg-light p-3">
+															<i class="fa fa-file-excel-o me-1"></i> document xls 
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-6 col-lg-2 mt-4">
+													<a class="" href="javascript:void(0);">
+														<div class="border p-0 text-center">
+															<img src="{{ asset ('assets/images/files/word.jpeg')}}" alt="img" class="w-80 mx-auto">
+														</div>
+														<div class="bg-light p-3">
+															<i class="fa fa-file-word-o me-1"></i> document word
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-6 col-lg-2 mt-4">
+													<a class="" href="javascript:void(0);">
+														<div class="border p-0 text-center">
+															<img src="{{ asset ('assets/images/files/pdf.png')}}" alt="img" class="w-80 mx-auto">
+														</div>
+														<div class="bg-light p-3">
+															<i class="fa fa-file-pdf-o me-1"></i> document pdf
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-6 col-lg-2 mt-4">
+													<a class="" href="javascript:void(0);">
+														<div class="border p-0 text-center">
+															<img src="{{ asset ('assets/images/files/powerpoint.png')}}" alt="img" class="w-80 mx-auto">
+														</div>
+														<div class="bg-light p-3">
+															<i class="fa fa-file-pdf-o me-1"></i> document powerpoint
+														</div>
+													</a>
+												</div>
+												<div class="col-sm-6 col-lg-2 mt-4">
+													<a class="" href="javascript:void(0);">
+														<div class="border p-0 text-center">
+															<img src="{{ asset ('assets/images/files/zip.jpeg')}}" alt="img" class="w-80 mx-auto">
+														</div>
+														<div class="bg-light p-3">
+															<i class="fa fa-file-pdf-o me-1"></i> document zip
+														</div>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="card-footer">
+										<div class="bth-list text-end">
+											<a class="btn btn-outline-light text-primary" href="javascript:void(0);"><i class="fa fa-reply"></i> {% trans %}Réponder{% endtrans %}</a>
+											<a class="btn btn-outline-light text-primary" href="javascript:void(0);"><i class="fa fa-share"></i> {% trans %}Transférer{% endtrans %}</a>
+										</div>
+									</div>
+								</div>
+							</div>
+</div>
+</div>
+
+{% endblock %}

@@ -4,19 +4,17 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
-#[UniqueEntity(fields: ['username'], message: 'Un compte existant utilise déjà ce nom de connexion')]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'Un compte existant utilise déjà cette adresse email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -43,16 +41,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $nom = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $contact = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug = null;
-
-    #[ORM\OneToMany(targetEntity: Facture::class, mappedBy: 'caissiere')]
-    private Collection $factures;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
@@ -60,41 +52,73 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?bool $etat = null;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    private ?TypeUtilisateur $typeUtilisateur = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adresse = null;
 
-    #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: 'enregistrePar')]
-    private Collection $produits;
-
-    #[ORM\OneToMany(targetEntity: Lot::class, mappedBy: 'enregistrePar')]
-    private Collection $lots;
-
-    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'secretaire')]
-    private Collection $commandes;
-
     #[ORM\OneToMany(targetEntity: ReponseQuestion::class, mappedBy: 'user')]
     private Collection $reponseQuestions;
-
-    #[ORM\OneToMany(targetEntity: HistoriquePaiement::class, mappedBy: 'recuPar')]
-    private Collection $historiquePaiements;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Genre $genre = null;
 
+    #[ORM\OneToMany(targetEntity: AuditLog::class, mappedBy: 'user')]
+    private Collection $auditLogs;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cleRsaPublique = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cleRsaPrivee = null;
+
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'expediteur')]
+    private Collection $expediteur;
+
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'destinataire')]
+    private Collection $destinataire;
+
+    #[ORM\OneToMany(targetEntity: Message::class, mappedBy: 'supprimePar')]
+    private Collection $supprimePar;
+
+    #[ORM\OneToMany(targetEntity: Transaction::class, mappedBy: 'expediteur')]
+    private Collection $expediteurTransactions;
+
+    #[ORM\OneToMany(targetEntity: Transaction::class, mappedBy: 'destinataire')]
+    private Collection $destinataireTransaction;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?PorteMonnaie $porteMonnaie = null;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?CodeQr $codeQr = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $code = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $numCni = null;
+
+    #[ORM\OneToMany(targetEntity: DemandeModificationMotDePasse::class, mappedBy: 'user')]
+    private Collection $demandeModificationMotDePasses;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?TypeUser $typeUser = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?CategorieUser $categorieUser = null;
+
     public function __construct()
     {
-        $this->factures = new ArrayCollection();
-        $this->produits = new ArrayCollection();
-        $this->lots = new ArrayCollection();
-        $this->commandes = new ArrayCollection();
         $this->reponseQuestions = new ArrayCollection();
-        $this->historiquePaiements = new ArrayCollection();
+        $this->auditLogs = new ArrayCollection();
+        $this->expediteur = new ArrayCollection();
+        $this->destinataire = new ArrayCollection();
+        $this->supprimePar = new ArrayCollection();
+        $this->expediteurTransactions = new ArrayCollection();
+        $this->destinataireTransaction = new ArrayCollection();
+        $this->demandeModificationMotDePasses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -121,7 +145,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return (string) $this->email;
     }
 
     /**
@@ -184,18 +208,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): static
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
     public function getContact(): ?string
     {
         return $this->contact;
@@ -220,36 +232,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, Facture>
-     */
-    public function getFactures(): Collection
-    {
-        return $this->factures;
-    }
-
-    public function addFacture(Facture $facture): static
-    {
-        if (!$this->factures->contains($facture)) {
-            $this->factures->add($facture);
-            $facture->setCaissiere($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFacture(Facture $facture): static
-    {
-        if ($this->factures->removeElement($facture)) {
-            // set the owning side to null (unless already changed)
-            if ($facture->getCaissiere() === $this) {
-                $facture->setCaissiere(null);
-            }
-        }
-
-        return $this;
-    }
     
     public function getPhoto(): ?string
     {
@@ -271,18 +253,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEtat(?bool $etat): static
     {
         $this->etat = $etat;
-
-        return $this;
-    }
-
-    public function getTypeUtilisateur(): ?TypeUtilisateur
-    {
-        return $this->typeUtilisateur;
-    }
-
-    public function setTypeUtilisateur(?TypeUtilisateur $typeUtilisateur): static
-    {
-        $this->typeUtilisateur = $typeUtilisateur;
 
         return $this;
     }
@@ -323,96 +293,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Produit>
-     */
-    public function getProduits(): Collection
-    {
-        return $this->produits;
-    }
-
-    public function addProduit(Produit $produit): static
-    {
-        if (!$this->produits->contains($produit)) {
-            $this->produits->add($produit);
-            $produit->setEnregistrePar($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduit(Produit $produit): static
-    {
-        if ($this->produits->removeElement($produit)) {
-            // set the owning side to null (unless already changed)
-            if ($produit->getEnregistrePar() === $this) {
-                $produit->setEnregistrePar(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Lot>
-     */
-    public function getLots(): Collection
-    {
-        return $this->lots;
-    }
-
-    public function addLot(Lot $lot): static
-    {
-        if (!$this->lots->contains($lot)) {
-            $this->lots->add($lot);
-            $lot->setEnregistrePar($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLot(Lot $lot): static
-    {
-        if ($this->lots->removeElement($lot)) {
-            // set the owning side to null (unless already changed)
-            if ($lot->getEnregistrePar() === $this) {
-                $lot->setEnregistrePar(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Commande>
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commande $commande): static
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->setSecretaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            // set the owning side to null (unless already changed)
-            if ($commande->getSecretaire() === $this) {
-                $commande->setSecretaire(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, ReponseQuestion>
      */
     public function getReponseQuestions(): Collection
@@ -442,36 +322,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, HistoriquePaiement>
-     */
-    public function getHistoriquePaiements(): Collection
-    {
-        return $this->historiquePaiements;
-    }
-
-    public function addHistoriquePaiement(HistoriquePaiement $historiquePaiement): static
-    {
-        if (!$this->historiquePaiements->contains($historiquePaiement)) {
-            $this->historiquePaiements->add($historiquePaiement);
-            $historiquePaiement->setRecuPar($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHistoriquePaiement(HistoriquePaiement $historiquePaiement): static
-    {
-        if ($this->historiquePaiements->removeElement($historiquePaiement)) {
-            // set the owning side to null (unless already changed)
-            if ($historiquePaiement->getRecuPar() === $this) {
-                $historiquePaiement->setRecuPar(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getGenre(): ?Genre
     {
         return $this->genre;
@@ -483,4 +333,311 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Log>
+     */
+    public function getAuditLogs(): Collection
+    {
+        return $this->auditLogs;
+    }
+
+    public function addAuditLog(AuditLog $auditLog): static
+    {
+        if (!$this->auditLogs->contains($auditLog)) {
+            $this->auditLogs->add($auditLog);
+            $auditLog->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAuditLog(AuditLog $auditLog): static
+    {
+        if ($this->auditLogs->removeElement($auditLog)) {
+            // set the owning side to null (unless already changed)
+            if ($auditLog->getUser() === $this) {
+                $auditLog->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getCleRsaPublique(): ?string
+    {
+        return $this->cleRsaPublique;
+    }
+
+    public function setCleRsaPublique(string $cleRsaPublique): static
+    {
+        $this->cleRsaPublique = $cleRsaPublique;
+
+        return $this;
+    }
+
+    public function getCleRsaPrivee(): ?string
+    {
+        return $this->cleRsaPrivee;
+    }
+
+    public function setCleRsaPrivee(string $cleRsaPrivee): static
+    {
+        $this->cleRsaPrivee = $cleRsaPrivee;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getExpediteur(): Collection
+    {
+        return $this->expediteur;
+    }
+
+    public function addExpediteur(Message $expediteur): static
+    {
+        if (!$this->expediteur->contains($expediteur)) {
+            $this->expediteur->add($expediteur);
+            $expediteur->setExpediteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpediteur(Message $expediteur): static
+    {
+        if ($this->expediteur->removeElement($expediteur)) {
+            // set the owning side to null (unless already changed)
+            if ($expediteur->getExpediteur() === $this) {
+                $expediteur->setExpediteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getDestinataire(): Collection
+    {
+        return $this->destinataire;
+    }
+
+    public function addDestinataire(Message $destinataire): static
+    {
+        if (!$this->destinataire->contains($destinataire)) {
+            $this->destinataire->add($destinataire);
+            $destinataire->setDestinataire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDestinataire(Message $destinataire): static
+    {
+        if ($this->destinataire->removeElement($destinataire)) {
+            // set the owning side to null (unless already changed)
+            if ($destinataire->getDestinataire() === $this) {
+                $destinataire->setDestinataire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getSupprimePar(): Collection
+    {
+        return $this->supprimePar;
+    }
+
+    public function addSupprimePar(Message $supprimePar): static
+    {
+        if (!$this->supprimePar->contains($supprimePar)) {
+            $this->supprimePar->add($supprimePar);
+            $supprimePar->setSupprimePar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSupprimePar(Message $supprimePar): static
+    {
+        if ($this->supprimePar->removeElement($supprimePar)) {
+            // set the owning side to null (unless already changed)
+            if ($supprimePar->getSupprimePar() === $this) {
+                $supprimePar->setSupprimePar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Transaction>
+     */
+    public function getExpediteurTransactions(): Collection
+    {
+        return $this->expediteurTransactions;
+    }
+
+    public function addExpediteurTransactions(Transaction $expediteurTransactions): static
+    {
+        if (!$this->expediteurTransactions->contains($expediteurTransactions)) {
+            $this->expediteurTransactions->add($expediteurTransactions);
+            $expediteurTransactions->setExpediteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExpediteurTransaction(Transaction $expediteurTransactions): static
+    {
+        if ($this->expediteurTransactions->removeElement($expediteurTransactions)) {
+            // set the owning side to null (unless already changed)
+            if ($expediteurTransactions->getExpediteur() === $this) {
+                $expediteurTransactions->setExpediteur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Transaction>
+     */
+    public function getDestinataireTransaction(): Collection
+    {
+        return $this->destinataireTransaction;
+    }
+
+    public function addDestinataireTransaction(Transaction $destinataireTransaction): static
+    {
+        if (!$this->destinataireTransaction->contains($destinataireTransaction)) {
+            $this->destinataireTransaction->add($destinataireTransaction);
+            $destinataireTransaction->setDestinataire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDestinataireTransaction(Transaction $destinataireTransaction): static
+    {
+        if ($this->destinataireTransaction->removeElement($destinataireTransaction)) {
+            // set the owning side to null (unless already changed)
+            if ($destinataireTransaction->getDestinataire() === $this) {
+                $destinataireTransaction->setDestinataire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getPorteMonnaie(): ?PorteMonnaie
+    {
+        return $this->porteMonnaie;
+    }
+
+    public function setPorteMonnaie(?PorteMonnaie $porteMonnaie): static
+    {
+        $this->porteMonnaie = $porteMonnaie;
+
+        return $this;
+    }
+
+    public function getCodeQr(): ?CodeQr
+    {
+        return $this->codeQr;
+    }
+
+    public function setCodeQr(?CodeQr $codeQr): static
+    {
+        $this->codeQr = $codeQr;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): static
+    {
+        $this->code = $code;
+
+        return $this;
+    }
+
+    public function getNumCni(): ?string
+    {
+        return $this->numCni;
+    }
+
+    public function setNumCni(?string $numCni): static
+    {
+        $this->numCni = $numCni;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DemandeModificationMotDePasse>
+     */
+    public function getDemandeModificationMotDePasses(): Collection
+    {
+        return $this->demandeModificationMotDePasses;
+    }
+
+    public function addDemandeModificationMotDePass(DemandeModificationMotDePasse $demandeModificationMotDePass): static
+    {
+        if (!$this->demandeModificationMotDePasses->contains($demandeModificationMotDePass)) {
+            $this->demandeModificationMotDePasses->add($demandeModificationMotDePass);
+            $demandeModificationMotDePass->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDemandeModificationMotDePass(DemandeModificationMotDePasse $demandeModificationMotDePass): static
+    {
+        if ($this->demandeModificationMotDePasses->removeElement($demandeModificationMotDePass)) {
+            // set the owning side to null (unless already changed)
+            if ($demandeModificationMotDePass->getUser() === $this) {
+                $demandeModificationMotDePass->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTypeUser(): ?TypeUser
+    {
+        return $this->typeUser;
+    }
+
+    public function setTypeUser(?TypeUser $typeUser): static
+    {
+        $this->typeUser = $typeUser;
+
+        return $this;
+    }
+
+    public function getCategorieUser(): ?CategorieUser
+    {
+        return $this->categorieUser;
+    }
+
+    public function setCategorieUser(?CategorieUser $categorieUser): static
+    {
+        $this->categorieUser = $categorieUser;
+
+        return $this;
+    }
+
 }

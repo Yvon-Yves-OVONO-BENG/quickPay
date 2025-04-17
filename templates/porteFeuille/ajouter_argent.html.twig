@@ -1,0 +1,285 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Ajouter l'rgent{% endtrans %}{% endblock %}
+
+{% block body %}
+<div class="hor-content main-content">
+        <div class="container">
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title mb-0 text-primary"><i class="fa fa-plus me-2"></i> {% trans %}Créditer votre compte{% endtrans %}</h4>
+                </div>
+                <div class="page-rightheader">
+                    <div class="btn-list">
+                        <a href="{{ path ('retirer_argent')}}"  class="btn btn-outline-primary btn-pill">
+                            <i class="fa fa-money me-2 fs-14"></i> {% trans %}Retirer l'argent{% endtrans %}
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+            <!--End Page header-->
+
+           <div class="row">
+							
+                <div class="col-md-12 col-lg-12">
+                    <div class="card border-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fa fa-check me-2"></i> {% trans %}Choisir le mode de recharge{% endtrans %}</h3>
+                        </div>
+                        <div class="card-body p-6">
+                            <div class="panel panel-primary">
+                                <div class="tab-menu-heading p-0">
+                                    <div class="tabs-menu ">
+                                        <!-- Tabs -->
+                                        <ul class="nav panel-tabs">
+                                            <li class=""><a href="#quickPay" class="active" data-bs-toggle="tab">QuickPay</a></li>
+                                            <li class=""><a href="#momo" data-bs-toggle="tab">MOMO</a></li>
+                                            <li><a href="#om" data-bs-toggle="tab">OM</a></li>
+                                            <li><a href="#virement" data-bs-toggle="tab">Virement</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="panel-body tabs-menu-body">
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="quickPay">
+                                        
+                                            <form class="row g-3 needs-validation" novalidate>
+											
+                                                <div class="col-md-3">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="validationCustom03" class="form-label">{% trans %}Numéro de téléphone QuickPay{% endtrans %}</label>
+                                                    <input type="text" class="form-control" placeholder="{% trans %}Numéro de téléphone{% endtrans %}" id="validationCustom03" required>
+                                                    <div class="invalid-feedback">
+                                                        {% trans %}Veuillez saisir le numéro de téléphone QuickPay{% endtrans %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="validationCustom03" class="form-label">{% trans %}Montant{% endtrans %}</label>
+                                                    <input type="text" class="form-control" placeholder="{% trans %}Montant{% endtrans %}" id="validationCustom03" required>
+                                                    <div class="invalid-feedback">
+                                                        {% trans %}Veuillez saisir le montant{% endtrans %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                </div>
+                                                <div class="col-12 text-center">
+                                                    <button class="btn btn-outline-primary mt-5" type="submit"><i class="fa fa-plus me-2"></i> {% trans %}Ajouter{% endtrans %}</button>
+                                                </div>
+                                                
+                                                
+										    </form>
+                                        
+                                        </div>
+                                        <div class="tab-pane active " id="momo">
+                                        
+                                            <form class="row g-3 needs-validation" novalidate>
+											
+                                                <div class="col-md-3">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="validationCustom03" class="form-label">{% trans %}Numéro MOMO expéditeur{% endtrans %}</label>
+                                                    <input type="text" class="form-control" placeholder="{% trans %}Numéro MOMO expéditeur{% endtrans %}" id="validationCustom03" required>
+                                                    <div class="invalid-feedback">
+                                                        {% trans %}Veuillez saisir le numéro MOMO{% endtrans %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="validationCustom03" class="form-label">{% trans %}Montant{% endtrans %}</label>
+                                                    <input type="text" class="form-control" placeholder="{% trans %}Montant{% endtrans %}" id="validationCustom03" required>
+                                                    <div class="invalid-feedback">
+                                                        {% trans %}Veuillez saisir le montant{% endtrans %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                </div>
+                                                <div class="col-12 text-center">
+                                                    <button class="btn btn-outline-primary mt-5" type="submit"><i class="fa fa-plus me-2"></i> {% trans %}Ajouter{% endtrans %}</button>
+                                                </div>
+                                                
+                                                
+										    </form>
+                                        
+                                        </div>
+                                        <div class="tab-pane  " id="om">
+                                        
+                                            <form class="row g-3 needs-validation" novalidate>
+											
+                                                <div class="col-md-3">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="validationCustom03" class="form-label">{% trans %}Numéro OM expéditeur{% endtrans %}</label>
+                                                    <input type="text" class="form-control" placeholder="{% trans %}Numéro OM expéditeur{% endtrans %}" id="validationCustom03" required>
+                                                    <div class="invalid-feedback">
+                                                        {% trans %}Veuillez saisir le numéro OM{% endtrans %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="validationCustom03" class="form-label">{% trans %}Montant{% endtrans %}</label>
+                                                    <input type="text" class="form-control" placeholder="{% trans %}Montant{% endtrans %}" id="validationCustom03" required>
+                                                    <div class="invalid-feedback">
+                                                        {% trans %}Veuillez saisir le montant{% endtrans %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                </div>
+                                                <div class="col-12 text-center">
+                                                    <button class="btn btn-outline-primary mt-5" type="submit"><i class="fa fa-plus me-2"></i> {% trans %}Ajouter{% endtrans %}</button>
+                                                </div>
+                                                
+                                                
+										    </form>
+                                        
+                                        </div>
+                                        <div class="tab-pane " id="virement">
+                                        
+                                            <div class="card-pay">
+                                                <ul class="tabs-menu nav">
+                                                    <li class=""><a href="#carteCredit" class="active" data-bs-toggle="tab"><i class="fa fa-credit-card"></i> {% trans %}Carte de crédit{% endtrans %}</a></li>
+                                                    <li><a href="#paypal" data-bs-toggle="tab" class=""><i class="fa fa-paypal"></i>  Paypal</a></li>
+                                                    <li><a href="#transfert" data-bs-toggle="tab" class=""><i class="fa fa-university"></i>  {% trans %}Virement bancaire{% endtrans %}</a></li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active show" id="carteCredit">
+                                                        <div class="row">
+                                                            <div class="col-3"></div>
+                                                            <div class="col-6">
+                                                                <div class="bg-danger-transparent text-danger px-4 py-2 br-7 mb-4" role="alert">{% trans %}Bien vouloir saisir les données valides{% endtrans %}</div>
+                                                            
+                                                                <form class="row g-3 needs-validation" novalidate>
+
+                                                                    <div class="form-group">
+                                                                        <label for="validationCustom03" class="form-label">{% trans %}Montant{% endtrans %}</label>
+                                                                        <input type="text" class="form-control" placeholder="{% trans %}Montant{% endtrans %}" id="validationCustom03" required>
+                                                                        <div class="invalid-feedback">
+                                                                            {% trans %}Veuillez saisir le montant{% endtrans %}
+                                                                        </div>
+                                                                    </div>
+                                                                    
+
+                                                                    <div class="form-group">
+                                                                        <label for="validationCustom03" class="form-label">{% trans %}Nom de la carte{% endtrans %}</label>
+                                                                        <input type="text" class="form-control" placeholder="{% trans %}Nom de la carte{% endtrans %}" id="validationCustom03" required>
+                                                                        <div class="invalid-feedback">
+                                                                            {% trans %}Veuillez saisir le nom de la carte{% endtrans %}
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="validationCustom03" class="form-label">{% trans %}Numéro de la carte{% endtrans %}</label>
+                                                                        <div class="input-group">
+                                                                            <input type="text" class="form-control" placeholder="{% trans %}Numéro de la carte{% endtrans %}" id="validationCustom03" required>
+                                                                            <span class="input-group-append">
+                                                                                <button class="btn btn-primary box-shadow-0" type="button"><i class="fa fa-cc-visa"></i> &nbsp; <i class="fa fa-cc-amex"></i> &nbsp;
+                                                                                <i class="fa fa-cc-mastercard"></i></button>
+                                                                            </span>
+                                                                            <div class="invalid-feedback">
+                                                                                {% trans %}Veuillez saisir le numéro de la carte{% endtrans %}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-sm-8">
+                                                                            <div class="form-group">
+                                                                                <label for="validationCustom03" class="form-label">Expiration</label>
+                                                                                <div class="input-group">
+                                                                                    <input type="number" class="form-control" placeholder="MM" name="Month" id="validationCustom03" required="">
+                                                                                    <div class="invalid-feedback">
+                                                                                        {% trans %}Veuillez saisir le mois{% endtrans %}
+                                                                                    </div>
+                                                                                    <input type="number" class="form-control" placeholder="YY" name="Year" id="validationCustom03" required="">
+                                                                                    <div class="invalid-feedback">
+                                                                                        {% trans %}Veuillez saisir l'année{% endtrans %}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-sm-4">
+                                                                            <div class="form-group">
+                                                                                <label for="validationCustom03" class="form-label">CVV <i class="fa fa-question-circle" data-bs-placement="top" data-bs-toggle="tooltip" data-bs-original-title="{% trans %}Le CVV est le code à 3 chiffres derrière la carte{% endtrans %}"></i></label>
+                                                                                <input type="number" class="form-control" required="" id="validationCustom03">
+                                                                                <div class="invalid-feedback">
+                                                                                        {% trans %}Veuillez saisir le CVV{% endtrans %}
+                                                                                    </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12 text-center">
+                                                                        <button class="btn btn-outline-primary mt-5" type="submit"><i class="fa fa-plus me-2"></i> {% trans %}Ajouter{% endtrans %}</button>
+                                                                    </div>
+                                                                    
+                                                                    
+                                                                </form>
+                                                            </div>
+                                                            <div class="col-3"></div>
+                                                        </div>
+                                                        
+
+                                                    </div>
+                                                    <div class="tab-pane" id="paypal">
+                                                        <p class="mt-4">Paypal est le moyen le plus simple de payer en ligne.</p>
+                                                        <p><a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-paypal"></i> Se connecter à mon compte Paypal</a></p>
+                                                    </div>
+                                                    <div class="tab-pane" id="transfert">
+                                                        <p class="mt-4">{% trans %}Détails du compte bancaire{% endtrans %}</p>
+                                                        <form class="row g-3 needs-validation" novalidate>
+                                                            <div class="col-md-4">
+                                                                <dl class="card-text">
+                                                                    <dt for="validationCustom04" class="form-label">{% trans %}Sélectionner la banque :{% endtrans %} </dt>
+                                                                    <select class="form-select border" id="validationCustom04" required>
+                                                                        <option selected disabled value="">Choose...</option>
+                                                                        <option>...</option>
+                                                                        <option>Banque 1</option>
+                                                                        <option>Banque 2</option>
+                                                                        <option>Banque 3</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">
+                                                                        {% trans %}Veuillez sélectionner la banque{% endtrans %}
+                                                                    </div>
+                                                                </dl>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <dl class="card-text">
+                                                                    <dt for="validationCustom03" class="form-label">{% trans %}Numéro de compte : {% endtrans %} </dt>
+
+                                                                    <input type="text" class="form-control" placeholder="{% trans %}Numéro de compte{% endtrans %}" id="validationCustom03" required>
+                                                                    <div class="invalid-feedback">
+                                                                        {% trans %}Veuillez saisir le numéro de compte{% endtrans %}
+                                                                    </div>
+                                                                </dl>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <dl class="card-text">
+                                                                    <dt for="validationCustom03" class="form-label">{% trans %}IBAN du compte: {% endtrans %} </dt>
+
+                                                                    <input type="text" class="form-control" placeholder="{% trans %}IBAN du compte{% endtrans %}" id="validationCustom03" required>
+                                                                    <div class="invalid-feedback">
+                                                                        {% trans %}Veuillez saisir le numéro IBAN du compte{% endtrans %}
+                                                                    </div>
+                                                                </dl>
+                                                            </div>
+
+                                                            <div class="col-12 text-center">
+                                                                <button class="btn btn-outline-primary mt-5" type="submit"><i class="fa fa-plus me-2"></i> {% trans %}Ajouter{% endtrans %}</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </div><!-- right app-content-->
+</div>
+{% endblock %}

@@ -3,11 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\ConstantsClass;
+use App\Entity\TypeUtilisateur;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -37,6 +39,33 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    
+    public function findUserByType(): array
+    {
+        return $this->createQueryBuilder('u')
+        ->where('JSON_CONTAINS(u.roles, :role) = 1')
+        ->setParameter('role', '"ROLE_GARDE"')
+        ->getQuery()
+        ->getResult();
+    }
+
+    /**
+     * je cherche les utilisateurs dont le type utilisateur est garde
+     *
+     * @return array
+     */
+    public function findUserByTypeGarde(): array
+    {
+        return $this->createQueryBuilder('u')
+        ->innerJoin('u.typeUtilisateur', 't')
+        ->where('t.typeUtilisateur = :typeUtilisateur')
+        ->andWhere('u.etat = 0')
+        ->setParameter('typeUtilisateur', ConstantsClass::GARDE)
+        ->getQuery()
+        ->getResult();
+    }
+
 
     //    /**
     //     * @return User[] Returns an array of User objects

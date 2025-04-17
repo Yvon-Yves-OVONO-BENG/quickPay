@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement / Payment{% endblock %}
+
+{% block body %}
+<!-- App-Content -->
+    <div class="hor-content main-content">
+        <div class="container">
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h3><i class="fa fa-qrcode me-3"></i>QuickPay</h3>
+                </div>
+                <div class="page-rightheader">
+                    <div class="btn-list">
+                        
+                    </div>
+                </div>
+            </div>
+            <!--End Page header-->
+            <!-- Row -->
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card custom-card border-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <label class="main-content-label mb-2">Versement dans le compte de : {{ destinataire.username }}</label>
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-xl-6 mx-auto">
+                                    <div class="checkout-steps wrapper">
+                                        <div id="checkoutsteps">
+                                            
+                                            <!-- SECTION 2 -->
+                                            <section>
+                                                {% for message in app.flashes('error')  %}
+
+                                                    <div class="alert alert-light-danger" role="alert">
+                                                        <button type="button" class="btn-close text-danger mr-negative-16" data-bs-dismiss="alert" aria-hidden="true">×</button>
+                                                        <strong><i class="fa fa-frown-o me-2" aria-hidden="true"></i>{{ message }}</strong>
+                                                    </div>
+
+                                                {% endfor %}
+
+                                                {% for message in app.flashes('info')  %}
+
+                                                    <div class="alert alert-light-info" role="alert">
+                                                        <button type="button" class="btn-close text-info mr-negative-16" data-bs-dismiss="alert" aria-hidden="true">×</button>
+                                                        <strong><i class="fa fa-frown-o me-2" aria-hidden="true"></i>{{ message }}</strong>
+                                                    </div>
+
+                                                {% endfor %}
+
+                                                {% for message in app.flashes('success')  %}
+
+                                                    <div class="alert alert-light-success" role="alert">
+                                                        <button type="button" class="btn-close text-success mr-negative-16" data-bs-dismiss="alert" aria-hidden="true">×</button>
+                                                        <strong><i class="fa fa-frown-o me-2" aria-hidden="true"></i>{{ message }}</strong>
+                                                    </div>
+
+                                                {% endfor %}
+                                                {# <form class="needs-validation" novalidate=""> #}
+                                                 {{ form_start(paiementForm) }}
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-3">
+                                                            {# <label for="firstName">First name</label> #}
+                                                            {{ form_label(paiementForm.montant)}}
+                                                            {# <input type="text" class="form-control" id="firstName" placeholder="" value="" required=""> #}
+                                                            {{ form_widget(paiementForm.montant)}}
+                                                            <div class="invalid-feedback">Valid first name is required.</div>
+                                                        </div>
+                                                        <div class="col-md-6 mb-3">
+                                                            {# <label for="lastName">Last name</label> #}
+                                                            {{ form_label(paiementForm.code)}}
+                                                            {# <input type="text" class="form-control" id="lastName" placeholder="" value="" required=""> #}
+                                                            {{ form_widget(paiementForm.code)}}
+                                                            <div class="invalid-feedback">Valid last name is required.</div>
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" value="{{ csrfToken }}" name="csrfToken">
+                                                    {# <hr class="mb-4"> #}
+                                                    <button class="btn btn-outline-primary btn-md btn-block mt-4" type="submit"><i class="fa fa-send-o me-2"></i>{% trans %}Envoyer{% endtrans %}</button>
+                                                {# </form> #}
+                                                {{ form_end(paiementForm)}}
+                                            </section> <!-- SECTION 3 -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Row -->
+
+        </div>
+    </div>
+</div>
+<!-- right app-content-->
+{% endblock %}

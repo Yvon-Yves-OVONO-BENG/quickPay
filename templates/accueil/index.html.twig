@@ -1,66 +1,119 @@
-{% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Accueil{% endtrans %}{% endblock %}
-{% block stylesheets %}
-	<style>
-		th,
-		tfoot {
-			font-size: 15px !important;
-			text-align: center !important;
-			font-weight: bold !important;
-			background-color: #F1F1F1 !important;
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+		<meta content="QuickPay" name="description">
+		<meta content="OVONO BENG Yvon Yves Noël" name="author">
+		<meta name="keywords" content="Paiement, Securité, Sécurisé, Qr, Code">
+
+		<!-- Title -->
+		<title>QuickPay</title>
+
+		<!--Favicon -->
+		<link rel="icon" href="{{ asset ('assets/images/brand/logo.png')}}" type="image/x-icon"/>
+		<link rel="stylesheet" href="{{ asset ('css/style.css') }}" />
+		<link href="{{ asset ('assets/css/icons.css')}}" rel="stylesheet" />
+		<link href="{{ asset ('assets/css/animated.css')}}" rel="stylesheet" />
+	</head>
+	<body>
+	<header>
+		<div class="container">
+			<div class="logo">
+				<img src="{{ asset ('assets/images/brand/logo-banniere.png')}}" alt="logo QuickPay">
+				
+			</div>
+			<nav id="navbar">
+				<a href="#">Accueil</a>
+				<a href="#">À propos</a>
+				<a href="#">Fonctionnalités</a>
+				<a href="#">Tarifs</a>
+				<a href="#">Agents</a>
+				<a href="#">Sécurité</a>
+				<a href="#">Support / Aide</a>
+			</nav>
+			<div class="hamburger" onclick="toggleMenu()">☰</div>
+		</div>
+	</header>
+
+	<main>
+		<section class="hero">
+			<h1>Payez en un scan avec QuickPay</h1>
+			<p>Une solution simple, rapide et sécurisée pour vos paiements via QR code, en boutique ou en ligne.</p>
+			<div class="buttons">
+				<a href="{{ path ('app_register')}}" class="btn btn-outline-primary mb-5"> <i class="fa fa-user-plus me-2"></i>  Créer un compte</a>
+				<a href="{{ path ('app_login')}}" class="btn btn-outline-primary mb-5"><i class="fa fa-unlock me-2"></i>  Se connecter</a>
+				<a href="#" class="btn btn-outline-danger"><i class="fa fa-search me-2"></i>  Chercher un agent</a>
+			</div>
+		</section>
+
+		<!-- Features Section -->
+		<section class="features" id="features">
+			<div class="feature">
+				<h3>Scan rapide</h3>
+				<p>Scannez un QR code et validez en quelques secondes, sans friction.</p>
+			</div>
+			<div class="feature">
+				<h3>Transactions sécurisées</h3>
+				<p>Chiffrement avancé AES et validation à double facteur pour une sécurité maximale.</p>
+			</div>
+			<div class="feature">
+				<h3>Suivi en temps réel</h3>
+				<p>Consultez vos paiements en direct depuis l’application mobile ou web.</p>
+			</div>
+		</section>
+	</main>
+
+	<script>
+		function toggleMenu() {
+		document.getElementById("navbar").classList.toggle("show");
 		}
+	</script>
 
-		.infoTable {
-			text-align: center !important;
-			vertical-align: middle !important;
-		}
-
-		tr:hover {
-			background-color: rgba(62, 128, 235, 0.2) !important;
-			color: #3e80eb !important;
-		}
-
-        td {
-			font-size: 12px !important;
-			text-align: center !important;
-		}
-	</style>
-{% endblock %}
-{% block body %}
-
-<!-- App-Content -->
-
-    <div class="hor-content main-content">
-        <div class="container">
-
-		{% if licence == 1 %}
-			{% if is_granted('ROLE_CAISSIERE') %}
-                {% include "includes/_accueilCaissiere.html.twig" %}
-            {% endif %}
-
-			{% if is_granted('ROLE_REGIES_DES_RECETTES') %}
-                {% include "includes/_accueilRegiesDesRecettes.html.twig" %}
-            {% endif %}
-
-            {% if is_granted('ROLE_PHARMACIEN') or is_granted('ROLE_SECRETAIRE') %}
-                {% include "includes/_accueilPharmacien.html.twig" %}
-            {% endif %}
-
-			{% if is_granted('ROLE_DIRECTEUR') %}
-                {% include "includes/_accueilDirecteur.html.twig" %}
-            {% endif %}
-
-			{% if is_granted('ROLE_ADMINISTRATEUR') %}
-                {% include "includes/_accueilAdmin.html.twig" %}
-            {% endif %}
-			{% else %}
-			{% include "includes/_licence.html.twig" %}
-		{% endif %}
-            
-
-        </div>
-    </div>
-    <!-- End app-content-->
-
-{% endblock %}
+		<footer class="footer-style-03">
+			<div class="footer-content">
+				<!-- Réseaux sociaux -->
+				<div class="social-icons">
+					<a href="#"><i class="fa fa-facebook-f"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-rss"></i></a>
+					<a href="#"><i class="fa fa-youtube"></i></a>
+					<a href="#"><i class="fa fa-linkedin"></i></a>
+					<a href="#"><i class="fa fa-google-plus"></i></a>
+				</div>
+					
+				<!-- Boutons de téléchargement -->
+				<div class="store-link">
+					<a href="#" class="store-btn me-2 mb-2">
+						<img src="{{ asset ('images/apple-logo.png')}}" alt="App Store" />
+						<span>App Store</span>
+					</a>
+					<a href="#" class="store-btn mb-2">
+						<img src="{{ asset ('images/google-play.png')}}" alt="Play Store" />
+						<span>Play Store</span>
+					</a>
+				</div>
+				
+				<!-- Mentions légales -->
+				<div class="footer-links">
+					<a href="#" class="me-md-3 mb-2 mb-md-0">Confidentialité</a>
+					<a href="#" class="me-md-3 mb-2 mb-md-0">Conditions</a>
+					<a href="#">À propos</a>
+				</div>
+					
+				<div class="footer-copy">
+					<!-- Copyright -->
+					<p class="copyright">
+						© 2025 - 
+						<script>
+							document.write(new Date().getFullYear());
+						</script>. QuickPay. 
+						Tous droits réservés.
+					</p>
+				</div>
+				
+			</div>
+		</footer>
+	</body>
+</html>

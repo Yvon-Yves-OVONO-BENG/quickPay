@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>QuickPay</title>
+	<!--Favicon -->
+	<link rel="icon" href="{{ asset ('assets/images/brand/logo.png')}}" type="image/x-icon"/>
+	<style>
+		* {
+			margin: 0; padding: 0; box-sizing: border-box;
+			font-family: 'Segoe UI', sans-serif;
+		}
+
+		body {
+			background: #f9f9f9;
+			color: #333;
+		}
+
+		header {
+			background-color: #1a73e8;
+			color: white;
+			padding: 1rem 2rem;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			position: sticky;
+			top: 0;
+			z-index: 1000;
+		}
+
+		header h1 {
+			font-size: 1.8rem;
+		}
+
+		nav ul {
+			list-style: none;
+			display: flex;
+			gap: 1.5rem;
+		}
+
+		nav ul li a {
+			color: white;
+			text-decoration: none;
+			font-weight: 500;
+			transition: opacity 0.3s;
+		}
+
+		nav ul li a:hover {
+			opacity: 0.8;
+		}
+
+		.hero {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 4rem 2rem;
+			text-align: center;
+			background: linear-gradient(to right, #e0ecff, #ffffff);
+		}
+
+		.hero h2 {
+			font-size: 2.5rem;
+			margin-bottom: 1rem;
+		}
+
+		.hero p {
+			font-size: 1.2rem;
+			max-width: 600px;
+			margin-bottom: 2rem;
+		}
+
+		.hero button {
+			padding: 1rem 2rem;
+			background-color: #1a73e8;
+			border: none;
+			border-radius: 8px;
+			color: white;
+			font-size: 1rem;
+			cursor: pointer;
+			transition: background 0.3s;
+		}
+
+		.hero button:hover {
+			
+		}
+
+		.features {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 2rem;
+			padding: 3rem 2rem;
+		}
+
+		.feature {
+			background: white;
+			border-radius: 10px;
+			padding: 2rem;
+			box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+			text-align: center;
+		}
+
+		.feature h3 {
+			margin-bottom: 1rem;
+			color: #1a73e8;
+		}
+
+		footer {
+			text-align: center;
+			padding: 2rem;
+			background-color: #f0f0f0;
+			font-size: 0.9rem;
+			color: #777;
+		}
+
+		@media (max-width: 600px) {
+			.hero h2 {
+				font-size: 2rem;
+			}
+
+			.hero p {
+				font-size: 1rem;
+			}
+		}
+
+		.branding {
+			display: flex;
+			align-items: center;
+			gap: 10px; /* espace entre le logo et le texte*/
+		}
+
+		.branding h1 {
+			margin: 0;
+			font-size: 24px;
+			color: white;
+		}
+
+		.branding img {
+			height: 50px;
+		}
+	</style>
+	</head>
+	<body>
+
+		<header>
+			<div class="branding">
+				<h1>
+					<img src="{{ asset ('assets/images/brand/logo.png')}}" alt="logo QuickPay" height="50"> 
+					QuickPay
+				</h1>
+			</div>
+			<nav>
+				<ul>
+				<li><a href="#">Accueil</a></li>
+				<li><a href="#features">Fonctionnalités</a></li>
+				<li><a href="#contact">Contact</a></li>
+				</ul>
+			</nav>
+		</header>
+
+	<section class="hero">
+		<h2>Payez en un scan avec QPay</h2>
+		<p>Une solution simple, rapide et sécurisée pour vos paiements via QR code, en boutique ou en ligne.</p>
+		<button onclick="startPayment()">Démarrer un paiement</button>
+	</section>
+
+	<section class="features" id="features">
+		<div class="feature">
+			<h3>Scan rapide</h3>
+			<p>Scannez un QR code et validez en quelques secondes, sans friction.</p>
+		</div>
+		<div class="feature">
+			<h3>Transactions sécurisées</h3>
+			<p>Chiffrement avancé AES et validation à double facteur pour une sécurité maximale.</p>
+		</div>
+		<div class="feature">
+			<h3>Suivi en temps réel</h3>
+			<p>Consultez vos paiements en direct depuis l’application mobile ou web.</p>
+		</div>
+	</section>
+
+	<footer id="contact">
+	© 2025 QPay. Tous droits réservés.
+	</footer>
+
+	<script>
+	function startPayment() {
+		alert("Fonction de paiement en cours de développement...");
+		// Ici tu pourras rediriger vers ta page de génération de QR code ou de scan
+		// window.location.href = "/paiement.html";
+	}
+	</script>
+
+	</body>
+</html>

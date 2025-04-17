@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Envoie Message!{% endblock %}
+
+{% block body %}
+
+<div class="hor-content main-content">
+    <div class="container">
+
+        <!--Page header-->
+        <div class="page-header">
+            <div class="page-leftheader">
+                <h4 class="page-title mb-0 text-primary"><i class="fa fa-send-o me-2"></i>{% trans %}Envoie d'un message{% endtrans %}</h4>
+            </div>
+           
+        </div>
+        <!--End Page header-->
+<div class="row">
+	{% include "includes/_menuGauche.html.twig" %}
+
+        
+        <div class="col-lg-8 col-xl-9 col-md-12 col-sm-12">
+            <div class="card border-danger">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa fa-send-o me-2"></i>Envoie d'un message</h3>
+                </div>
+                <div class="card-body">
+                    {% for message in app.flashes('error')  %}
+
+                        <div class="alert alert-light-danger" role="alert">
+                            <button type="button" class="btn-close text-danger mr-negative-16" data-bs-dismiss="alert" aria-hidden="true">×</button>
+                            <strong><i class="fa fa-frown-o me-2" aria-hidden="true"></i>{{ message }}</strong>
+                        </div>
+
+                    {% endfor %}
+                    {{ form_start(envoieMessageForm, {'attr': {'class': 'row g-3 needs-validation', 'novalidate': ""}}) }}
+                        <div class="form-group">
+                            <div class="row align-items-center">
+                                <label class="col-sm-2 form-label">{% trans %}Destinataire :{% endtrans %}</label>
+                                <div class="col-sm-10">
+                                    <input type="email" name="emailDestinataire" class="form-control" id="validationCustom03" required>
+                                </div>
+                                <div class="invalid-feedback">
+                                    {% trans %}Veuillez sélectionner une cryptographie !{% endtrans %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row align-items-center">
+                                
+                                <label for="validationCustom04" class="col-sm-2 form-label">{% trans %}Cryptographie :{% endtrans %}</label>
+                                <div class="col-sm-5">
+                                    {{ form_widget(envoieMessageForm.cryptographie, {'attr': {'id':'validationCustom04'}}) }}
+                                </div>
+                                <div class="invalid-feedback">
+                                    {% trans %}Veuillez sélectionner une cryptographie !{% endtrans %}
+                                </div>
+
+                                <div class="col-sm-5">
+                                    <div class="form-check form-switch">
+                                        {{ form_label(envoieMessageForm.important) }} 
+                                        {{ form_widget(envoieMessageForm.important, {'attr': {'class': 'form-check-input'}}) }}
+                                    </div>
+                                    
+                                    <div id="aes-key-field" style="display: none">
+                                        <div class="row">
+                                            <label class="col-sm-3 form-label mt-2">Clé AES :</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" name="aes_key" class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row ">
+                                <label class="col-sm-2 form-label">Message</label>
+                                <div class="col-sm-10">
+                                    {{ form_widget(envoieMessageForm.messageCrypte, {'attr': {'id':'validationCustom04'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" value="{{ csrfToken }}" name="csrfToken">
+
+                        <div class="card-footer d-sm-flex">
+                            <div class="mt-2 mb-2">
+                                <a href="javascript:void(0)" class="btn btn-icon btn-light btn-svg bg-primary-transparent" data-bs-toggle="tooltip" title="" data-bs-original-title="Fichier"><i class="fe fe-paperclip text-primary"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-icon btn-light btn-svg bg-primary-transparent" data-bs-toggle="tooltip" title="" data-bs-original-title="Lien"><i class="fe fe-link text-primary"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-icon btn-light btn-svg bg-primary-transparent" data-bs-toggle="tooltip" title="" data-bs-original-title="Photos"><i class="fe fe-image text-primary"></i></a>
+                                <a href="javascript:void(0)" class="btn btn-icon btn-light btn-svg bg-primary-transparent" data-bs-toggle="tooltip" title="" data-bs-original-title="Supprimer"><i class="fe fe-trash-2 text-primary"></i></a>
+                            </div>
+                            <div class="btn-list ms-auto">
+                                <button type="button" class="btn text-primary btn-outline-light btn-space br-7">{% trans %}Annuler{% endtrans %}</button>
+                                <button type="submit" class="btn text-primary btn-outline-light br-7">{% trans %}Envoyer{% endtrans %} <i class="fa fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    {{ form_end(envoieMessageForm) }}
+                    
+                </div>
+            </div>
+            <script>
+                document.getElementById('algo-select').addEventListener('change', function () {
+                    document.getElementById('aes-key-field').style.display = (this.value === 'AES') ? 'block' : 'none';
+                });
+            </script>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

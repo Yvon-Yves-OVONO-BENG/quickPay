@@ -8,7 +8,6 @@ twig:
         - bootstrap_5_layout.html.twig
     globals:
         locales: '%app.locales%'
-        panierService: "@App\\Service\\PanierService"
 
 when@test:
     twig:

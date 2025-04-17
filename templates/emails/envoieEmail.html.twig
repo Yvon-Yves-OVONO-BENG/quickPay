@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>{% trans %}Email de confirmation de création de compte{% endtrans %}</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                            line-height: 1.6;
+                color: #333;
+            }
+            .header {
+                background-color: #f4f4f4;
+                padding: 20px;
+                text-align: center;
+            }
+            .content {
+                margin: 20px;
+            }
+            .footer {
+                margin-top: 30px;
+                font-size: 0.9em;
+                text-align: center;
+                color: #888;
+            }
+        </style>
+    </head>     
+    <body>
+        <div class="header">
+            <h1>Bonjour {{ user.username }}</h1>
+        </div>
+        <div class="content">
+            <p>Bienvenue chez <b>QuickPay</b></p>
+            <br>
+            <p>Votre compte a été créee avec succès. Vous pouvez dès maintenant accéder à votre espace personnel, consulter votre solde, générer votre QR Code de paiement et effectuer des transactions en toute sécurité.</p>
+            <br>
+            <p><b>Voici un récapitulatif de vos informations de connexion :</b></p>
+            <ul>
+                <li><b>Adresse e-mail : </b>{{ user.email }}</li>
+                <li><b>Date de création du compte : </b>{{ "now"|date('d/m/Y H:i') }}</li>
+            </ul>
+
+            <br>
+            <p><b>Nous avons également créé automatiquement pour vous : </b></p>
+            <ul>
+                <li>Un <b>porte fueille électronique</b> avec un sole initial de <b>0 XAF</b></li>
+                <li>Un <b>QR code personnel</b>, prêt à être utilisé pour recevoir des paiements ou des dépôts instantanément.</li>
+            </ul>
+                
+            <br>
+            <p><b>Commencez dès maintenant : </b> <a href="https://quickPay.freedomsoftwarepro.com/tableau-de-bord" target="_blank">Tableau de bord</a></p>
+            <br>
+            <p>Si vous avez la moindre question, notre équipe est là pour vous aider : <a href="https://quickPay.freedomsoftwarepro.com/tableau-de-bord" target="_blank">Contact et support</a></p>
+            <br>
+            <br>
+            <p>Merci pour votre confiance,</p>
+            <p>L'équipe <b>QuickPay</b></p>
+            <br><br>
+
+            <hr>
+        </div>
+        <br>
+
+        <div class="header">
+            <h1>Hello {{ user.username }}</h1>
+        </div>
+        <div class="content">
+            <p>Welcome to <b>QuickPay</b></p>
+            <br>
+            <p>Your account has been successfully created. You can now log in to your personnel dashboard, check your balance, generate your payment QRcode, and make secure transactions.</p>
+            <br>
+            <p><b>Here's summary of your login :</b></p>
+            <ul>
+                <li><b>Email Adress : </b>{{ user.email }}</li>
+                <li><b>Account creation date: </b>{{ "now"|date('d/m/Y H:i') }}</li>
+            </ul>
+
+            <br>
+            <p><b>We've also automatically set up for you : </b></p>
+            <ul>
+                <li>A <b>digital wallet</b> with an initial balance of<b>0 XAF</b></li>
+                <li>A <b>personnal QR code</b>, ready to use for receiving payments instantly.</li>
+            </ul>
+                
+            <br>
+            <p><b>get started now : </b> <a href="https://quickPay.freedomsoftwarepro.com/tableau-de-bord" target="_blank">Tableau de bord</a></p>
+            <br>
+            <p>If you have any questions, our support team is here to help : <a href="https://quickPay.freedomsoftwarepro.com/tableau-de-bord" target="_blank">Contact and support</a></p>
+            <br>
+            <br>
+            <p>Thank you for choosing QuickPay,</p>
+            <p>The <b>QuickPay</b> Team</p>
+            <br><br>
+
+        </div>
+        <div class="footer">
+            <p>&copy; {{ "now"|date("Y") }} | QuickPay | Tous droits réservés / All rights reserved.</p>
+        </div>
+    </body>
+</html>

@@ -3,10 +3,12 @@
 namespace App\Form;
 
 use App\Entity\User;
-use App\Entity\ConstantsClass;
 use App\Entity\Genre;
+use App\Entity\Grade;
+use App\Entity\ConstantsClass;
 use App\Entity\TypeUtilisateur;
 use App\Repository\GenreRepository;
+use App\Repository\GradeRepository;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
@@ -14,11 +16,11 @@ use App\Repository\TypeUtilisateurRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -83,19 +85,6 @@ class AjoutUtilisateurType extends AbstractType
                 ]
             ])
 
-            ->add('typeUtilisateur', EntityType::class, [
-                'class' => TypeUtilisateur::class,
-                'choice_label' => 'typeUtilisateur',
-                'required' => true,
-                'attr' => [
-                    'class' => 'form-control select2-show-search',
-                    'placeholder' => $this->translator->trans('- - -'),
-                ],
-                'query_builder' => function(TypeUtilisateurRepository $typeUtilisateurRepository){
-                    
-                    return $typeUtilisateurRepository->createQueryBuilder('t')->orderBy('t.typeUtilisateur');
-                },
-            ])
             ->add('genre', EntityType::class, [
                 'class' => Genre::class,
                 'choice_label' => 'genre',
@@ -109,11 +98,8 @@ class AjoutUtilisateurType extends AbstractType
                     return $genreRepository->createQueryBuilder('g')->orderBy('g.genre');
                 },
             ])
-           
-
-        ;
-
         
+        ;
 
         
     }

@@ -1,0 +1,142 @@
+<!DOCTYPE html><html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solution de Paiement QR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(145deg, #2c3e50, #8e44ad);
+  color: white;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #2ecc71;
+}
+
+.hero {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  padding: 12px 25px;
+  background-color: #2ecc71;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #27ae60;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.card img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.card p {
+  font-size: 0.9rem;
+}
+
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#">Formule</a>
+    <a href="#">Fonctionnalités</a>
+    <a href="#">Prix</a>
+    <a href="#">Support</a>
+    <a href="#">Connexion</a>
+  </nav>  <header class="hero">
+    <h1>Lancez votre solution de paiement QR</h1>
+    <p>Paiement instantané, sécurisé et moderne via QR Code</p>
+    <button class="btn-primary">Commencer maintenant</button>
+  </header>  <section class="features">
+    <div class="card">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=PRO" alt="QR Code PRO">
+      <h3>Formule PRO</h3>
+      <p>2,99 €/mois - Statistiques, QR illimités</p>
+    </div>
+    <div class="card">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=NOTIF" alt="Notifications">
+      <h3>Notifications</h3>
+      <p>Suivi en temps réel</p>
+    </div>
+    <div class="card">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=SUPPORT" alt="Support">
+      <h3>Support 24/7</h3>
+      <p>Assistance rapide et dédiée</p>
+    </div>
+    <div class="card">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=DEBUTANT" alt="Formule Débutant">
+      <h3>Formule Débutant</h3>
+      <p>1,99 €/mois - Paiement simple</p>
+    </div>
+  </section>
+</body>
+</html>

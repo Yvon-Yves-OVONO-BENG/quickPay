@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AfficherUtilisateurController extends AbstractController
 {
     public function __construct(
-        protected ProfilRepository $profilRepository
+        protected UserRepository $userRepository
     )
     {}
 
@@ -26,6 +26,11 @@ class AfficherUtilisateurController extends AbstractController
     {
         # je récupère ma session
         $maSession = $request->getSession();
+
+        if(!$maSession)
+        {
+            return $this->redirectToRoute("app_logout");
+        }
 
         if ($a == 1 || $m == 0 || $s == 0) 
         {
@@ -58,7 +63,12 @@ class AfficherUtilisateurController extends AbstractController
         }
         
         # je récupère tous les utilisateurs
-        $utilisateurs = $this->profilRepository->findAll();
+        $tousLesUtilisateurs = $this->userRepository->findAll();
+
+        $utilisateurs = array_filter($tousLesUtilisateurs, function($utilisateur)
+        {
+            return !in_array('ROLE_SUPER_ADMINISTRATEUR', $utilisateur->getRoles());
+        });
         
         return $this->render('utilisateur/afficherUtilisateur.html.twig', [
             'licence' => 1,

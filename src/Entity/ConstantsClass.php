@@ -5,45 +5,39 @@ namespace App\Entity;
 class ConstantsClass
 {
     public const ROLE_ADMINISTRATEUR = 'ROLE_ADMINISTRATEUR';
-    public const ROLE_DIRECTEUR = 'ROLE_DIRECTEUR';
-    public const ROLE_PHARMACIEN = 'ROLE_PHARMACIEN';
-    public const ROLE_REGIES_DES_RECETTES = 'ROLE_REGIES_DES_RECETTES';
-    public const ROLE_SECRETAIRE = 'ROLE_SECRETAIRE';
-    public const ROLE_CAISSIERE = 'ROLE_CAISSIERE';
+    public const ROLE_SUPER_ADMINISTRATEUR = 'ROLE_SUPER_ADMINISTRATEUR';
+    public const ROLE_UTILISATEUR = 'ROLE_UTILISATEUR';
 
+    public const GESTIONNAIRE = 'GESTIONNAIRE';
+    public const UTILISATEUR = 'UTILISATEUR';
     public const ADMINISTRATEUR = 'ADMINISTRATEUR';
-    public const DIRECTEUR = 'DIRECTEUR';
-    public const PHARMACIEN = 'PHARMACIEN';
-    public const REGIES_DES_RECETTES = 'RÉGIES DES RECETTES';
-    public const SECRETAIRE = 'SECRÉTAIRE';
-    public const CAISSIERE = 'CAISSIÈRE';
+    public const SUPER_ADMINISTRATEUR = 'SUPER ADMINISTRATEUR';
 
+    #ETAT TRANSACTION
     public const ERROR = 'ERROR';
-    public const SUCCESS = 'SUCCESS';
+    public const EN_ATTENTE = 'EN ATTENTE';
+    public const EFFECTUEE = 'EFFECTUEE';
+    public const ECHOUEE = 'ECHOUEE';
     public const ANNULEE = 'ANNULEE';
-    public const EN_COURS = 'EN_COURS';
-    public const VALIDEE = 'VALIDEE';
-    public const FICHIER = 'produit.png';
+    public const REMBOURSEE = 'REMBOURSEE';
+    public const EN_COURS = 'EN COURS';
+    public const EXPIREE = 'EXPIREE';
 
-    public const CASH = 'CASH';
-    public const CREDIT = 'CRÉDIT';
-    public const PRIS_EN_CHARGE = 'PRIS EN CHARGE';
+    public const CONNEXION = 'CONNEXION';
+    public const DECONNEXION = 'DECONNEXION';
 
-    public const SOLDE = 'SOLDE';
-    public const NON_SOLDE = 'NON SOLDE';
+    #CATEOGORIE USER
+    public const AGENCE_VOYAGE = 'AGENCE DE VOYAGE';
+    public const FACTURIER = 'FACTURIER';
+    public const ABONNEMENT = 'ABONNEMENT';
+
+    #TYPE USER
+    public const PERSONNE_MORALE = 'PERSONNE MORALE';
+    public const PERSONNE_PHYSIQUE = 'PERSONNE PHYSIQUE';
+
 
     #######  nom de la photo par defaut
     public const NOM_PHOTO = 'user.png';
-
-    public const NOM_PRODUIT = 'produit.png';
-
-    public const NOM_PATIENT = 'Client';
-    public const CONTACT_PATIENT = '+237 xxx xxx xxx';
-
-    #####################"
-    public const ACTE = 'Acte'; 
-    public const EXAMEN = 'Examen'; 
-    public const MEDICAMENT = 'Médicament'; 
 
     public const FEMININ = 'F';
     public const MASCULIN = 'M';

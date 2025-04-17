@@ -11,7 +11,7 @@
         <title>{% block title %}Bienvenue{% endblock %}</title>
         
 		<!--Favicon -->
-		<link rel="icon" href="{{ asset('assets/images/brand/logoPharmacy.png')}}" type="image/x-icon"/>
+		<link rel="icon" href="{{ asset('assets/images/brand/logo.png')}}" type="image/x-icon"/>
 
 		<!--Bootstrap css -->
 		<link href="{{ asset ('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -65,9 +65,6 @@
 				</div>
 		{% endif %}
 
-		
-
-        
         {% block body %}{% endblock %}
 
 		{% if motDePasse == 1 %}

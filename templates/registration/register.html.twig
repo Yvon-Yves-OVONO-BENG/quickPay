@@ -1,9 +1,9 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseConnexion.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Création de compte{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    {# <h1>Register</h1>
 
     {{ form_errors(registrationForm) }}
 
@@ -15,5 +15,120 @@
         {{ form_row(registrationForm.agreeTerms) }}
 
         <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    {{ form_end(registrationForm) }} #}
+<body class="register1">
+    <div class="page">
+        <div class="page-single">
+            <div class="container">
+                <div class="row">
+                    <div class="col mx-auto">
+                        {% for message in app.flashes('error')  %}
+
+                            <div class="alert alert-light-danger" role="alert">
+                                <button type="button" class="btn-close text-danger mr-negative-16" data-bs-dismiss="alert" aria-hidden="true">×</button>
+                                <strong><i class="fa fa-frown-o me-2" aria-hidden="true"></i>{{ message }}</strong>
+                            </div>
+
+                        {% endfor %}
+                        <div class="row justify-content-center">
+                            <div class="col-xl-7 col-lg-12">
+                                <div class="row p-0 m-0">
+                                    <div class="col-lg-6 p-0">
+                                        <div class="text-justified text-white p-5 register-1 overflow-hidden">
+                                            <div class="custom-content">
+                                                <div class="mb-5 br-7 text-center">
+                                                    <img src="{{ asset ('assets/images/brand/logo.png')}}" height="140" weight="140" alt="logo">
+                                                </div>
+                                                <div class="ms-5">
+                                                    <div class="fs-18 mb-6 font-weight-bold text-white text-center">QuickPay</div>
+                                                    <div class="mb-6 text-white text-center font-weight-bold">
+                                                        {% trans %}	La sécurité et la vitesse au service de vos paiements.
+                                                    {% endtrans %}
+                                                    </div>
+                                                    
+                                                    <div class="fs-18 mb-6 font-weight-bold text-white text-center">
+                                                        <h6 class="text-white fs-18 text-center">{% trans %}Vous avez déjà un compte{% endtrans %} ?</h6>
+                                                        <a href="{{ path ('app_login') }}" class="btn btn-white text-primary font-weight-bold text-center"><i class="fe fe-unlock me-2"></i> {% trans %}Connectez-vous{% endtrans %}</a>
+                                                    </div>
+                                                    <div class="fs-18 mb-4 font-weight-bold text-white text-center">
+                                                        <a href="{{ path ('accueil') }}" class="btn btn-white text-primary font-weight-bold text-center"><i class="fe fe-home me-2"></i> {% trans %}Accueil{% endtrans %}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 col-lg-6 p-0 mx-auto">
+                                        <div class="bg-white  text-dark br-7 br-tl-0 br-bl-0 border-primary">
+                                            <div class="card-body">
+                                                <div class="text-center mb-3">
+                                                    <h1 class="mb-2">Création de compte</h1>
+                                                    <a href="javascript:void(0);" class="text-white">Create New Account</a>
+                                                </div>
+                                                {{ form_errors(registrationForm) }}
+                                                {{ form_start(registrationForm) }}
+                                                    <div class="input-group mb-4">
+                                                            <div class="input-group-text">
+                                                                <i class="fe fe-user"></i>
+                                                            </div>
+                                                        {# <input type="text" class="form-control" placeholder="Username"> #}
+                                                        {{ form_widget(registrationForm.username) }}
+                                                    </div>
+                                                    <div class="input-group mb-4">
+                                                            <div class="input-group-text">
+                                                                <i class="fe fe-mail"></i>
+                                                            </div>
+                                                        {# <input type="text" class="form-control" placeholder="Email"> #}
+                                                        {{ form_widget(registrationForm.email) }}
+                                                        {{ form_errors(registrationForm.email) }}
+                                                    </div>
+                                                    <div class="input-group mb-4">
+                                                        <div class="input-group" id="Password-toggle">
+                                                                <a href="" class="input-group-text">
+                                                                <i class="fe fe-eye" aria-hidden="true"></i>
+                                                                </a>
+                                                            {# <input class="form-control" type="password" placeholder="Password"> #}
+                                                            {{ form_widget(registrationForm.password, {
+                                                                label: 'Password'
+                                                            }) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group mb-4">
+                                                        <div class="input-group" id="Password-toggle1">
+                                                            <a href="" class="input-group-text">
+                                                            <i class="fe fe-eye" aria-hidden="true"></i>
+                                                            </a>
+                                                            {# <input class="form-control" type="password" placeholder="Confirm Password"> #}
+                                                            {{ form_widget(registrationForm.confirmPassword, {
+                                                                label: 'Password'
+                                                            }) }}
+                                                        </div>
+                                                        {{ form_errors(registrationForm.confirmPassword) }}
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="custom-control custom-checkbox">
+                                                            {# <input type="checkbox" class="custom-control-input" /> #}
+                                                            {{ form_row(registrationForm.agreeTerms) }}
+                                                            {# <span class="custom-control-label">I Agree For<a href="javascript:void(0);" class="font-weight-bold">  Terms & Conditions.</a></span> #}
+                                                        </label>
+                                                    </div>
+                                                    <input type="hidden" value="{{ csrfToken }}" name="csrfToken">
+                                                    <div class="form-group text-center mb-3">
+                                                        {# <button class="btn btn-primary btn-lg w-100 br-7">Sign Up</button> #}
+                                                        <button type="submit" class="btn btn-outline-primary btn-md w-100 br-7"><i class="fe fe-user me-2"></i> {% trans %}Créer mon compte{% endtrans %}</button>
+                                                    </div>
+                                                    <div class="form-group fs-12 text-center">
+                                                        En cliquant sur "Créer mon compte", vous accepter nos  <a href="javascript:void(0);" class="font-weight-bold">Termes & Conditions</a> et vous avez pris connaissance de nos <a href="javascript:void(0);" class="font-weight-bold">Politiques et confidentialités</a>
+                                                    </div>
+                                                {{ form_end(registrationForm) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

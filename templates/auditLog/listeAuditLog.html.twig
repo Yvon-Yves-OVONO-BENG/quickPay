@@ -1,0 +1,220 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+   {% trans %}Liste des audits logss{% endtrans %}
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+		th,
+		tfoot {
+			font-size: 15px !important;
+			text-align: center !important;
+			font-weight: bold !important;
+			background-color: #F1F1F1 !important;
+		}
+
+		tr:hover {
+			background-color: rgba(62, 128, 235, 0.2) !important;
+			color: #3e80eb !important;
+		}
+
+        td {
+			font-size: 12px !important;
+			text-align: center !important;
+		}
+	</style>
+{% endblock %}
+
+
+
+{% block body %}
+<!-- App-Content -->
+<div class="hor-content main-content">
+	<div class="container">
+
+		<!--Page header-->
+		<div class="page-header">
+			<div class="page-leftheader">
+				<h4 class="page-title mb-0 text-primary"><i class="si si-people me-2"></i>{% trans %}Les audits logs{% endtrans %}</h4>
+			</div>
+			<div class="page-rightheader">
+				<div class="btn-list">
+					<a href="{{ path ('impression_audit_log_periode')}}" target="_blank" class="btn btn-outline-primary">
+                        <i class="fe fe-printer me-2"></i>
+						{% trans %}Tout imprimer{% endtrans %}
+					</a>
+					
+				</div>
+			</div>
+		</div>
+		<!--End Page header-->
+
+		<!--Row-->
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12">
+				<div class="card border-primary">
+					<div class="card-header">
+						<div class="col-xl-3 col-lg-3 col-md-3 text-right">
+							<h3 class="card-title">
+								<i class="si si-print me-2"></i>{% trans %}Audits logs d'un utilisateur{% endtrans %}
+							</h3>
+						</div>
+						<div class="col-xl-9 col-lg-9 col-md-9 mt-4">
+							<form method="post" action="{{ path ('impression_audit_log_user') }}" target="_blank" class="row g-3 needs-validation" novalidate>
+												
+								<div class="row">
+									<div class="col-md-3">
+										{# <label for="user" class="form-label">{% trans %}Gardes{% endtrans %}</label> #}
+										<select name="user" class="form-control select2-show-search" id="user" data-placeholder="Choisir une garde si besoin" required>
+											<option value="">{% trans %}Utilisateur{% endtrans %}</option>
+
+											{% for user in users %}
+												<option value="{{ user.id }}">{{ user.nom }}</option>
+											{% endfor %}
+
+										</select>
+										<div class="invalid-feedback">
+										{% trans %}Sélectionner un utilisateur !{% endtrans %}
+										</div>
+									</div>
+									<div class="col-md-3">
+										<input type="date" name="dateDebut" class="form-control" id="validationCustom01" required>
+										<div class="invalid-feedback">
+											{% trans %}Champ requis (Date de début){% endtrans %}
+										</div>
+									</div>
+									<div class="col-md-3">
+										<input type="date" name="dateFin" class="form-control" id="validationCustom01" required>
+										<div class="invalid-feedback">
+											{% trans %}Champ requis (Date de fin){% endtrans %}
+										</div>
+									</div>
+									<div class="col-md-3">
+										<button class="btn btn-outline-primary" type="submit" name="impressionAuditLogUser"><i class="fe fe-printer me-2"></i>{% trans %}Imprimer{% endtrans %}</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--Row-->
+		<div class="row">
+			<div class="col-xl-12 col-lg-12 col-md-12">
+				<div class="card border-primary">
+					<div class="card-header">
+						<div class="col-xl-4 col-lg-4 col-md-4 text-right">
+							<h3 class="card-title">
+								<i class="si si-print me-2"></i>{% trans %}Imprimer les audits logs d'une période{% endtrans %}
+							</h3>
+						</div>
+						<div class="col-xl-8 col-lg-8 col-md-8 mt-4">
+							<form method="post" action="{{ path ('impression_audit_log_periode') }}" target="_blank" class="row g-3 needs-validation" novalidate>
+												
+								<div class="row">
+									<div class="col-md-4">
+										<input type="date" name="dateDebut" class="form-control" id="validationCustom01" required>
+										<div class="invalid-feedback">
+											{% trans %}Champ requis (Date de début){% endtrans %}
+										</div>
+									</div>
+									<div class="col-md-4">
+										<input type="date" name="dateFin" class="form-control" id="validationCustom01" required>
+										<div class="invalid-feedback">
+											{% trans %}Champ requis (Date de fin){% endtrans %}
+										</div>
+									</div>
+									<div class="col-md-4">
+										<button class="btn btn-outline-primary" type="submit" name="impressionAuditLogPeriode"><i class="fe fe-printer me-2"></i>{% trans %}Imprimer{% endtrans %}</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped card-table table-vcenter text-nowrap key-buttons" id="example">
+								<thead>
+									<tr>
+										<th>{% trans %}N°{% endtrans %}</th>
+										<th>{% trans %}Nom complet{% endtrans %}</th>
+										<th>{% trans %}Action audit{% endtrans %}</th>
+										<th>{% trans %}Date{% endtrans %}</th>
+										<th>{% trans %}Opérations{% endtrans %}</th>
+										
+									</tr>
+								</thead>
+								<tfoot>
+									<tr>
+										<th>{% trans %}N°{% endtrans %}</th>
+										<th>{% trans %}Nom complet{% endtrans %}</th>
+										<th>{% trans %}Action audit{% endtrans %}</th>
+										<th>{% trans %}Date{% endtrans %}</th>
+										<th>{% trans %}Opérations{% endtrans %}</th>
+									</tr>
+								</tfoot>
+								<tbody>
+									{% set i = 1 %}
+									{% for auditLog in auditLogs %}
+										{# {% if visiteur.user.roles[0] != 'ROLE_ADMINISTRATEUR' %} #}
+											<tr>
+												<td>
+													<h5 class="text-blue"><span class="badge bg-primary">{{ i }}</span></h5>
+												</td>
+												
+												<td>
+													<span class="tag tag-gray mt-2">{{ auditLog.user.grade.grade }} {{ auditLog.user.nom }}</span> <br>
+													<span class="tag tag-gray mt-2">Contact : {{ auditLog.user.contact }}</span>
+
+												</td>
+													
+
+												<td>
+													{% if  auditLog.actionLog.actionLog == "CONNEXION" %}
+														<button type="button" class="btn btn-success mt-1 mb-1 me-3">
+															<span>{{ auditLog.actionLog.actionLog }}</span>
+														</button>
+														{% else %}
+														<button type="button" class="btn btn-danger mt-1 mb-1 me-3">
+															<span>{{ auditLog.actionLog.actionLog }}</span>
+														</button>
+													{% endif %}
+													
+												</td>
+												
+												<td>
+													
+													<button type="button" class="btn btn-primary mt-1 mb-1 me-3">
+														<span>{{ auditLog.dateActionAt|date('d/m/Y')}}</span>
+														<span class="badge bg-white text-dark">{{ auditLog.dateActionAt|date('H:i:s')}}</span>
+													</button>
+														
+												</td>
+
+												<td>
+													
+													<a href="{{ path ('impression_audit_log_user', {'slug': auditLog.user.slug }) }}" target="_blank" class="btn btn-outline-primary" rel="noopener noreferrer"><i class="fe fe-printer me-2"></i>{% trans %}Imprimer son audit{% endtrans %}</a>
+														
+												</td>
+					
+											</tr>
+										{# {% endif %} #}
+										
+										{% set i = i + 1 %}
+									{% endfor %}
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End app-content-->
+<script src="{{ asset ('js/sortieVisiteur.js')}}"></script>
+{% endblock %}

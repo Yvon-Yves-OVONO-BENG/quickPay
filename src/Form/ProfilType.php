@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\User;
 use App\Entity\Genre;
-use App\Entity\Profil;
 use App\Repository\GenreRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -28,18 +27,18 @@ class ProfilType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('imageFile', VichImageType::class, [
-            'label' => false,
-            'required' => false,
-            'allow_delete' => true,
-            'delete_label' => "Supprimer",
-            'download_uri' => false,
-            'download_label' => "Télécharger",
-            'image_uri' => true,
-            'attr' => [
-                'class' => 'dropify'
-            ]
-        ])
+        // ->add('imageFile', VichImageType::class, [
+        //     'label' => false,
+        //     'required' => false,
+        //     'allow_delete' => true,
+        //     'delete_label' => "Supprimer",
+        //     'download_uri' => false,
+        //     'download_label' => "Télécharger",
+        //     'image_uri' => true,
+        //     'attr' => [
+        //         'class' => 'dropify'
+        //     ]
+        // ])
         ->add('username', TextType::class, [
             'label' => $this->translator->trans("Nom complet"),
             'required' => true,
@@ -49,12 +48,20 @@ class ProfilType extends AbstractType
             ]
         ])
 
-        ->add('nom', TextType::class, [
-            'label' => $this->translator->trans("Nom complet"),
+        ->add('numCni', TextType::class, [
+            'label' => $this->translator->trans("Numéro CNI"),
             'required' => true,
             'attr' => [
                 'class' => 'form-control',
-                'placeholder' => $this->translator->trans("Nom complet de l'utilisateur"),
+                'placeholder' => $this->translator->trans("Numéro CNI"),
+            ]
+        ])
+        ->add('code', TextType::class, [
+            'label' => $this->translator->trans("Code de transfert"),
+            'required' => true,
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => $this->translator->trans("Code de transfert"),
             ]
         ])
         ->add('contact', TextType::class, [
@@ -85,9 +92,9 @@ class ProfilType extends AbstractType
             'class' => Genre::class,
             'choice_label' => 'genre',
             'required' => true,
+            'placeholder' => $this->translator->trans('- - -'),
             'attr' => [
-                'class' => 'form-control select2-show-search',
-                'placeholder' => $this->translator->trans('- - -'),
+                'class' => 'form-control',
             ],
             'query_builder' => function(GenreRepository $genreRepository){
                 
@@ -101,7 +108,7 @@ class ProfilType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Profil::class,
+            'data_class' => User::class,
         ]);
     }
 }

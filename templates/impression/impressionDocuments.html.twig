@@ -1,0 +1,263 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Impression{% endtrans %} {% endblock %}
+
+{% block body %}
+    <div class="hor-content main-content">
+        <div class="container">
+
+            <!--Page header-->
+            <div class="page-header">
+                <div class="page-leftheader">
+                    <h4 class="page-title mb-0 text-primary"><i class="fe fe-printer me-2"></i>{% trans %}Impressions{% endtrans %}</h4>
+                </div>
+                <div class="page-rightheader">
+                    <div class="btn-list">
+                        <a href="{{ path ('liste_garde') }}" class="btn btn-outline-primary"><i class="fe fe-users me-2"></i>
+                            {% trans %}Les gardes{% endtrans %}
+                        </a>
+
+                        <a href="{{ path ('liste_visiteur') }}" class="btn btn-outline-primary"><i class="fa fa-users me-2"></i>
+                            {% trans %}Les visiteurs{% endtrans %}
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+            <!--End Page header-->
+
+            <!--Row-->
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card border-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fe fe-printer me-2"></i>{% trans %}Options d'impression exacte{% endtrans %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="row g-3" method="post" action="{{ path ('impression_documents')}}" target="_blank">
+                                <div class="col-md-3">
+                                    <label for="dateDebut" class="form-label">{% trans %}Date début{% endtrans %}</label>
+                                    <input type="date" class="form-control" id="dateDebut" name="dateDebut">
+                                    <div class="valid-feedback">
+                                    Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="heureDebut" class="form-label">{% trans %}Heure début{% endtrans %}</label>
+                                    <input type="time" class="form-control" id="heureDebut" name="heureDebut">
+                                    <div class="valid-feedback">
+                                    Looks good!
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="dateFin" class="form-label">{% trans %}Date fin{% endtrans %}</label>
+                                    <input type="date" class="form-control" id="dateFin" name="dateFin">
+                                    <div class="valid-feedback">
+                                    Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="heureFin" class="form-label">{% trans %}Heure fin{% endtrans %}</label>
+                                    <input type="time" class="form-control" id="heureFin" name="heureFin">
+                                    <div class="valid-feedback">
+                                    Looks good!
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="user" class="form-label">{% trans %}Gardes{% endtrans %}</label>
+                                    <select name="user" class="form-control select2-show-search" id="user" data-placeholder="Choisir une garde si besoin">
+                                        <option value="0">{% trans %}Choisir une garde si besoin{% endtrans %}</option>
+
+                                        {% for user in users %}
+                                            <option value="{{ user.id }}">{{ user.nom }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                    Please select a valid state.
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <label for="poste" class="form-label">{% trans %}Poste{% endtrans %}</label>
+                                    <select name="poste" class="form-control select2-show-search" id="poste" data-placeholder="Choisir un poste si besoin">
+                                        <option value="0">{% trans %}Choisir un poste si besoin{% endtrans %}</option>
+
+                                        {% for poste in postes %}
+                                            <option value="{{ poste.id }}">{{ poste.poste }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                    Please select a valid state.
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="typeGarde" class="form-label">{% trans %}Type garde{% endtrans %}</label>
+                                    <select name="typeGarde" class="form-control select2-show-search" id="typeGarde" data-placeholder="Choisir un type garde si besoin">
+                                        <option value="0">{% trans %}Choisir un type garde si besoin{% endtrans %}</option>
+
+                                        {% for typeGarde in typeGardes %}
+                                            <option value="{{ typeGarde.id }}">{{ typeGarde.typeGarde }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                    Please select a valid state.
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-3">
+                                    <label for="etatGarde" class="form-label">{% trans %}Etat garde{% endtrans %}</label>
+                                    <select name="etatGarde" class="form-control select2-show-search" id="etatGarde" data-placeholder="Choisir un état garde si besoin">
+                                        <option value="0">{% trans %}Choisir un état garde si besoin{% endtrans %}</option>
+
+                                        {% for etatGarde in etatGardes %}
+                                            <option value="{{ etatGarde.id }}">{{ etatGarde.etatGarde }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                    Please select a valid state.
+                                    </div>
+                                </div>
+
+                                <input type="hidden" value="{{ csrfToken }}" name="csrfToken">
+                                
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-outline-primary btn-md btn-block" type="submit" name="impressionExacte"><i class="fa fa-repeat me-2"></i> {% trans %}Exécuter la requête{% endtrans %}</button>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card border-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fe fe-printer me-2"></i>{% trans %}Options d'impression dynamique{% endtrans %}</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="row g-3" method="post" action="{{ path ('impression_documents')}}" target="_blank">
+                                <div class="col-md-3">
+                                    <label for="dateDebut" class="form-label">{% trans %}Date début{% endtrans %}</label>
+                                    <input type="date" class="form-control" id="dateDebut" name="dateDebut">
+                                    <div class="valid-feedback">
+                                    Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="heureDebut" class="form-label">{% trans %}Heure début{% endtrans %}</label>
+                                    <input type="time" class="form-control" id="heureDebut" name="heureDebut">
+                                    <div class="valid-feedback">
+                                    Looks good!
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="dateFin" class="form-label">{% trans %}Date fin{% endtrans %}</label>
+                                    <input type="date" class="form-control" id="dateFin" name="dateFin">
+                                    <div class="valid-feedback">
+                                    Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="heureFin" class="form-label">{% trans %}Heure fin{% endtrans %}</label>
+                                    <input type="time" class="form-control" id="heureFin" name="heureFin">
+                                    <div class="valid-feedback">
+                                    Looks good!
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="user" class="form-label">{% trans %}Gardes{% endtrans %}</label>
+                                    <select name="user" class="form-control select2-show-search" id="user" data-placeholder="Choisir une garde si besoin">
+                                        <option value="0">{% trans %}Choisir une garde si besoin{% endtrans %}</option>
+
+                                        {% for user in users %}
+                                            <option value="{{ user.id }}">{{ user.nom }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                    Please select a valid state.
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <label for="poste" class="form-label">{% trans %}Poste{% endtrans %}</label>
+                                    <select name="poste" class="form-control select2-show-search" id="poste" data-placeholder="Choisir un poste si besoin">
+                                        <option value="0">{% trans %}Choisir un poste si besoin{% endtrans %}</option>
+
+                                        {% for poste in postes %}
+                                            <option value="{{ poste.id }}">{{ poste.poste }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                    Please select a valid state.
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="typeGarde" class="form-label">{% trans %}Type garde{% endtrans %}</label>
+                                    <select name="typeGarde" class="form-control select2-show-search" id="typeGarde" data-placeholder="Choisir un type garde si besoin">
+                                        <option value="0">{% trans %}Choisir un type garde si besoin{% endtrans %}</option>
+
+                                        {% for typeGarde in typeGardes %}
+                                            <option value="{{ typeGarde.id }}">{{ typeGarde.typeGarde }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                    Please select a valid state.
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-3">
+                                    <label for="etatGarde" class="form-label">{% trans %}Etat garde{% endtrans %}</label>
+                                    <select name="etatGarde" class="form-control select2-show-search" id="etatGarde" data-placeholder="Choisir un état garde si besoin">
+                                        <option value="0">{% trans %}Choisir un état garde si besoin{% endtrans %}</option>
+
+                                        {% for etatGarde in etatGardes %}
+                                            <option value="{{ etatGarde.id }}">{{ etatGarde.etatGarde }}</option>
+                                        {% endfor %}
+
+                                    </select>
+                                    <div class="invalid-feedback">
+                                    Please select a valid state.
+                                    </div>
+                                </div>
+
+                                <input type="hidden" value="{{ csrfToken }}" name="csrfToken">
+                                
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-outline-primary btn-md btn-block" type="submit" name="impressionDynamique"><i class="fa fa-repeat me-2"></i> {% trans %}Exécuter la requête{% endtrans %}</button>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div><!-- right app-content-->
+</div>
+
+
+{% endblock %}

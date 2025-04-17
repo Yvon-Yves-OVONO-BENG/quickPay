@@ -7,16 +7,26 @@ parameters:
     # ici vos autres variables
     app.locales: [en, fr]
     app.jwtsecret: '%env(JWT_SECRET)%'
-    photoProduit.upload_directory: '%kernel.project_dir%/public/images/photoProduits'
     photoUsers.upload_directory: '%kernel.project_dir%/public/images/photoUsers'
+    aes_secret_key: 'a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6'
 
 
 services:
+    # App\Service\CustomAESService:
+    #     arguments:
+    #         $key: '%aes_secret_key%'
+    #     autowire: true
+    #     autoconfigure: true 
+        
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            string $key: '%env(APP_AES_KEY)%'
 
+    App\Service\CustomAESService: ~
+    
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
@@ -32,6 +42,15 @@ services:
 
     App\Twig\AppExtension:
         tags: [twig.extension]
+
+    App\EventListener\LoginSuccessListener:
+        tags:
+            - { name: kernel.event_listener, event: security.login.success, method: onLoginSuccess }
+    
+    App\EventListener\LogoutListener:
+        tags:
+            - { name: kernel.event_listener, event: security.logout, method: onLogout }
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

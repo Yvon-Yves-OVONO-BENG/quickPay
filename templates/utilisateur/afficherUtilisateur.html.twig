@@ -95,7 +95,7 @@
 								<tbody>
 									{% set i = 1 %}
 									{% for utilisateur in utilisateurs %}
-										{% if utilisateur.user.roles[0] != 'ROLE_ADMINISTRATEUR' %}
+										{# {% if utilisateur.user.roles[0] != 'ROLE_ADMINISTRATEUR' %} #}
 											<tr>
 												<td>
 													<h5 class="text-blue"><span class="badge bg-primary">{{ i }}</span></h5>
@@ -123,6 +123,7 @@
 												</td>
 												
 												<td>
+													<span class="tag tag-primary mt-2">{{ utilisateur.user.grade ? utilisateur.user.grade.grade : ""}}</span> 
 													<span class="tag tag-primary mt-2">{{ utilisateur.nom }}</span> <br> 
 													<span class="tag tag-gray mt-2">{{ utilisateur.genre.genre }}</span>
 													<span class="tag tag-gray mt-2">{{ utilisateur.contact }}</span>
@@ -132,11 +133,11 @@
 												</td>
 												<td>
 													{% set typeUtilisateur = utilisateur.user.typeUtilisateur.typeUtilisateur %}
-													{% if typeUtilisateur == 'CAISSIÈRE' %}
+													{% if typeUtilisateur == 'ADMINISTRATEUR' %}
 														<span class="tag tag-blue">{{ utilisateur.user.typeUtilisateur.typeUtilisateur }}</span>
 														{% else %}
-														{% if typeUtilisateur == 'PHARMACIEN' %}
-															<span class="tag tag-cyan">{{ utilisateur.user.typeUtilisateur.typeUtilisateur }}</span>
+														{% if typeUtilisateur == 'GARDE' %}
+															<span class="tag tag-red">{{ utilisateur.user.typeUtilisateur.typeUtilisateur }}</span>
 															{% else %}
 															{% if typeUtilisateur == 'RÉGIES DES RECETTES' %}
 																<span class="tag tag-red">{{ utilisateur.user.typeUtilisateur.typeUtilisateur }}</span>
@@ -157,13 +158,13 @@
 												</td>
 												
 												<td>
-													{% if utilisateur.user.roles[0] != 'ROLE_ADMINISTRATEUR' %} 
+													{% if utilisateur.user.roles[0] != 'ROLE_SUPER_ADMINISTRATEUR' %} 
 														<a href="{{ path ('modifier_utilisateur', {'slug': utilisateur.user.slug })}}" class="btn btn-outline-primary"><i class="fe fe-edit"></i></a>
 														{# <a href="{{ path ('modifier_utilisateur', {'slug': utilisateur.user.slug })}}" class="btn btn-outline-primary"><i class="fe fe-eye"></i></a> #}
 													{% endif %}
 												</td>
 												<td>
-													{% if utilisateur.user.roles[0] != 'ROLE_ADMINISTRATEUR' %} 
+													{% if utilisateur.user.roles[0] != 'ROLE_SUPER_ADMINISTRATEUR' %} 
 														<div class="form-group">
 															<label class="custom-switch">
 																{# {% if utilisateur.user.etat %}
@@ -179,7 +180,7 @@
 													{% endif %}
 												</td>
 											</tr>
-										{% endif %}
+										{# {% endif %} #}
 										
 										{% set i = i + 1 %}
 									{% endfor %}

@@ -2,8 +2,7 @@
 
 namespace App\Controller\Profil;
 
-use App\Repository\ProfilRepository;
-use App\Service\SessionService;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -18,20 +17,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AfficherProfilController extends AbstractController
 {
     public function __construct(
-        protected SessionService $sessionService,
-        protected ProfilRepository $profilRepository,
+        protected UserRepository $userRepository,
     )
     {}
 
     #[Route('/afficher-profil/{m}', name: 'afficher_profil')]
     public function afficherProfil(Request $request, int $m = 0): Response
     {
+        # je récupère ma session
+        $maSession = $request->getSession();
+
+        if(!$maSession)
+        {
+            return $this->redirectToRoute("app_logout");
+        }
+
         #je teste si le témoin n'est pas vide pour savoir s'il vient de la mise à jour
         if ($m == 1) 
         {
-            # je récupère ma session
-            $maSession = $request->getSession();
-            
             #mes variables témoin pour afficher les sweetAlert
             $maSession->set('ajout', 1);
             $maSession->set('suppression', null);
@@ -39,9 +42,6 @@ class AfficherProfilController extends AbstractController
         }
         else
         {
-            # je récupère ma session
-            $maSession = $request->getSession();
-            
             #mes variables témoin pour afficher les sweetAlert
             $maSession->set('ajout', null);
             $maSession->set('suppression', null);
@@ -54,9 +54,7 @@ class AfficherProfilController extends AbstractController
          */
         $user = $this->getUser();
 
-        $profil = $this->profilRepository->findOneByUser([
-            'user' => $user
-        ]);
+        $profil = $this->userRepository->find($user->getId());
        
         #j'envoie mon user à mon rendu twig
         return $this->render('profil/afficher_profil.html.twig', [

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Top Hébergement - Lancement site web</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #5e00c6, #00b4d8);
+      color: white;
+    }
+
+    header {
+      padding: 20px;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .hero h2 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .hero ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    .hero ul li {
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    .btn {
+      margin-top: 30px;
+      padding: 15px 25px;
+      background-color: #00ff99;
+      color: black;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #00cc77;
+    }
+
+    .plans {
+      background: white;
+      color: black;
+      padding: 40px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .plan {
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      padding: 30px;
+      max-width: 320px;
+      text-align: center;
+    }
+
+    .plan h3 {
+      margin-top: 0;
+    }
+
+    .price {
+      font-size: 28px;
+      color: #00a896;
+    }
+
+    .old-price {
+      text-decoration: line-through;
+      color: gray;
+      font-size: 16px;
+    }
+
+    .plan ul {
+      text-align: left;
+      list-style: none;
+      padding: 0;
+    }
+
+    .plan ul li {
+      margin: 8px 0;
+    }
+
+    .plan button {
+      margin-top: 15px;
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .plans {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Top Hébergement</h1>
+  <span>250 000 sites hébergés depuis 2001</span>
+</header>
+
+<section class="hero">
+  <h2>Lancez votre site web !</h2>
+  <p>Hébergement web ultra performant avec cPanel & nom de domaine gratuit !</p>
+  <ul>
+    <li>Hébergement rapide et fiable</li>
+    <li>Adresses emails personnalisées</li>
+    <li>WordPress en 1 clic</li>
+    <li>Support 7j/7 en France</li>
+  </ul>
+  <button class="btn" onclick="alert('Redirection vers le formulaire d’inscription')">Commencez maintenant</button>
+</section>
+
+<section class="plans">
+  <div class="plan">
+    <h3>cPanel M -60%</h3>
+    <p class="old-price">4,99 €/mois</p>
+    <p class="price">1,99 €/mois</p>
+    <ul>
+      <li>1 Site Web</li>
+      <li>1 Domaine gratuit</li>
+      <li>15 Emails</li>
+      <li>6 vCPU, 8 Go RAM</li>
+      <li>100 Go SSD</li>
+      <li>2 bases MySQL</li>
+      <li>cPanel + SSL offert</li>
+    </ul>
+    <button onclick="alert('cPanel M choisi')">Choisir</button>
+  </div>
+
+  <div class="plan">
+    <h3>cPanel L -57%</h3>
+    <p class="old-price">6,99 €/mois</p>
+    <p class="price">2,99 €/mois</p>
+    <ul>
+      <li>Sites illimités</li>
+      <li>1 Domaine gratuit</li>
+      <li>800 Emails</li>
+      <li>12 vCPU, 32 Go RAM</li>
+      <li>SSD Illimité</li>
+      <li>Bases MySQL illimitées</li>
+      <li>cPanel + SSL offert</li>
+    </ul>
+    <button onclick="alert('cPanel L choisi')">Choisir</button>
+  </div>
+</section>
+
+</body>
+</html>

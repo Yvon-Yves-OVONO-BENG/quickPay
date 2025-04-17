@@ -2,7 +2,6 @@
 
 namespace App\Controller\Profil;
 
-use App\Service\SessionService;
 use App\Form\ModifierMotDePasseType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +23,6 @@ class ModifierMotDePasseController extends AbstractController
     public function __construct(
         protected EntityManagerInterface $em,
         protected UserRepository $userRepository,
-        protected SessionService $sessionService,
         protected TranslatorInterface $translator,
         protected UserPasswordHasherInterface $userPasswordHasher,
     )
@@ -35,12 +33,15 @@ class ModifierMotDePasseController extends AbstractController
     {
         # je récupère ma session
         $maSession = $request->getSession();
+
+        if(!$maSession)
+        {
+            return $this->redirectToRoute("app_logout");
+        }
         
         #mes variables témoin pour afficher les sweetAlert
         $maSession->set('ajout', null);
         $maSession->set('suppression', null);
-
-        
 
         #je récupère l'utilisateur connecté
         /**

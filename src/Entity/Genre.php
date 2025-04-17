@@ -21,13 +21,9 @@ class Genre
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'genre')]
     private Collection $users;
 
-    #[ORM\OneToMany(targetEntity: Profil::class, mappedBy: 'genre')]
-    private Collection $profils;
-
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->profils = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,33 +73,4 @@ class Genre
         return $this;
     }
 
-    /**
-     * @return Collection<int, Profil>
-     */
-    public function getProfils(): Collection
-    {
-        return $this->profils;
-    }
-
-    public function addProfil(Profil $profil): static
-    {
-        if (!$this->profils->contains($profil)) {
-            $this->profils->add($profil);
-            $profil->setGenre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProfil(Profil $profil): static
-    {
-        if ($this->profils->removeElement($profil)) {
-            // set the owning side to null (unless already changed)
-            if ($profil->getGenre() === $this) {
-                $profil->setGenre(null);
-            }
-        }
-
-        return $this;
-    }
 }

@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Factures et Billets{% endtrans %}{% endblock %}
+
+{% block body %}
+<!-- App-Content -->
+				<div class="hor-content main-content">
+					<div class="container">
+
+						<!--Page header-->
+						<div class="page-header">
+							<div class="page-leftheader">
+								<h4 class="page-title mb-0 text-primary"><i class="fa fa-file-pdf-o me-2"></i>{% trans %}Factures et billets{% endtrans %}</h4>
+							</div>
+							<div class="page-rightheader">
+								<div class="btn-list">
+									<a href="javascript:void(0);"  class="btn btn-outline-primary btn-pill">
+										<i class="fa fa-file-text-o me-2 fs-14"></i> 
+                                        {% trans %}Mes règlements{% endtrans %}
+                                    </a>
+									<a href="javascript:void(0);"  class="btn btn-outline-primary btn-pill">
+										<i class="fa fa-car me-2 fs-14"></i> 
+                                        {% trans %}Mes réservations{% endtrans %}
+                                    </a>
+								</div>
+							</div>
+						</div>
+						<!--End Page header-->
+
+                        <!-- Row -->
+                        <div class="expanel expanel-primary">
+                            <div class="expanel-heading">
+                                <h3 class="expanel-title">{% trans %}Règlement facture{% endtrans %}</h3>
+                            </div>
+                            <div class="expanel-body">
+                                <form class="row g-3 needs-validation" novalidate>
+                                    
+                                    <div class="col-md-3">
+                                        <label for="validationCustom04" class="form-label">{% trans %}Facture{% endtrans %}</label>
+                                        <select class="form-select border select2-show-search" id="validationCustom04" required>
+                                            <option selected disabled value="">{% trans %}Choisir...{% endtrans %}</option>
+                                            <option  value="">ENEO</option>
+                                            <option value="">CAMWATER</option>
+                                            <option  value="">CANAL+</option>
+                                            
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez séletionner une facture{% endtrans %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <label for="validationCustom03" class="form-label">{% trans %}Numéro facture{% endtrans %}</label>
+                                        <input type="text" class="form-control" id="validationCustom03">
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir le numéro de ma facture{% endtrans %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <label for="validationCustom05" class="form-label">Montant</label>
+                                        <input type="text" class="form-control" placeholder="{% trans %}Veuillez saisir le montant{% endtrans %}" id="validationCustom05" required>
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir le montant{% endtrans %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <button class="btn btn-outline-primary mt-6" type="submit"><i class="fa fa-money me-2"></i>{% trans %}Payer{% endtrans %}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="expanel expanel-secondary">
+                            <div class="expanel-heading">
+                                <h3 class="expanel-title">{% trans %}Achat et réservations de billets de voyage{% endtrans %}</h3>
+                            </div>
+                            <div class="expanel-body">
+                                <form class="row g-3 needs-validation" novalidate>
+                                    
+                                    <div class="col-md-3">
+                                        <label for="validationCustom04" class="form-label">{% trans %}Agence de voyage{% endtrans %}</label>
+                                        <select class="form-select border select2-show-search" id="validationCustom04" required>
+                                            <option selected disabled value="">{% trans %}Choisir...{% endtrans %}</option>
+                                            <option  value="">TOURISTIQUE</option>
+                                            <option value="">GENERAL</option>
+                                            <option  value="">DANAY</option>
+                                            
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez séletionner une agence{% endtrans %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="validationCustom04" class="form-label">{% trans %}Type voyage{% endtrans %}</label>
+                                        <select class="form-select border select2-show-search" id="validationCustom04" required>
+                                            <option selected disabled value="">{% trans %}Choisir...{% endtrans %}</option>
+                                            <option  value="">CLASSIQUE</option>
+                                            <option value="">CLASSE 1</option>
+                                            <option  value="">VIP</option>
+                                            
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez séletionner le type agence{% endtrans %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="validationCustom04" class="form-label">{% trans %}Ville départ{% endtrans %}</label>
+                                        <select class="form-select border select2-show-search" id="validationCustom04" required>
+                                            <option selected disabled value="">{% trans %}Choisir...{% endtrans %}</option>
+                                            <option  value="">YAOUNDE</option>
+                                            <option value="">DOUALA</option>
+                                            <option  value="">BERTOUA</option>
+                                            
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez séletionner la ville départ{% endtrans %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="validationCustom04" class="form-label">{% trans %}Ville arrivée{% endtrans %}</label>
+                                        <select class="form-select border select2-show-search" id="validationCustom04" required>
+                                            <option selected disabled value="">{% trans %}Choisir...{% endtrans %}</option>
+                                            <option  value="">YAOUNDE</option>
+                                            <option value="">DOUALA</option>
+                                            <option  value="">BERTOUA</option>
+                                            
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez séletionner la ville arrivée{% endtrans %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <label for="validationCustom03" class="form-label">{% trans %}Date voyage{% endtrans %}</label>
+                                        <input type="date" class="form-control" id="validationCustom03" required>
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir le nombre de places{% endtrans %}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label for="validationCustom03" class="form-label">{% trans %}Nombre de places{% endtrans %}</label>
+                                        <input type="text" class="form-control" id="validationCustom03" required>
+                                        <div class="invalid-feedback">
+                                            {% trans %}Veuillez saisir le nombre de places{% endtrans %}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-3">
+                                        <button class="btn btn-outline-primary mt-6" type="submit"><i class="fa fa-money me-2"></i>{% trans %}Payer{% endtrans %}</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+						
+						<!--End Row -->
+
+					
+						<!--/Row-->
+                        
+
+					</div>
+				</div><!-- right app-content-->
+			</div>
+{% endblock %}

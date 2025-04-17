@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Boite de messages{% endtrans %}{% endblock %}
+{% block stylesheets %}
+	<style>
+		th,
+		tfoot {
+			font-size: 15px !important;
+			text-align: center !important;
+			font-weight: bold !important;
+			background-color: #F1F1F1 !important;
+		}
+
+		.infoTable {
+			text-align: center !important;
+			vertical-align: middle !important;
+		}
+
+		tr:hover {
+			background-color: rgba(62, 128, 235, 0.2) !important;
+			color: #3e80eb !important;
+		}
+
+        td {
+			font-size: 12px !important;
+			text-align: center !important;
+		}
+	</style>
+{% endblock %}
+{% block body %}
+
+<!-- App-Content -->
+				<div class="hor-content main-content">
+					<div class="container">
+
+						<!--Page header-->
+						<div class="page-header">
+							<div class="page-leftheader">
+								
+									{% if reception == 1 %}
+										<h4 class="page-title mb-0 text-primary">
+											<i class="fa fa-envelope-o me-2"></i>{% trans %}Messages reçus{% endtrans %}
+									{% endif %}
+
+									{% if envoie == 1 %}
+										<h4 class="page-title mb-0 text-info">
+											<i class="fa fa-send-o me-2 text-info"></i>{% trans %}Messages envoyés{% endtrans %}
+									{% endif %}
+
+									{% if important == 1 %}
+										<h4 class="page-title mb-0 text-warning">
+											<i class="fa fa-star me-2 text-warning"></i>{% trans %}Messages importants{% endtrans %}
+									{% endif %}
+
+									{% if corbeille == 1 %}
+										<h4 class="page-title mb-0 text-danger">
+											<i class="fa fa-trash-o me-2 text-danger"></i>{% trans %}Messages Supprimés{% endtrans %}
+									{% endif %}
+									
+								</h4>
+							</div>
+							<div class="page-rightheader">
+								<div class="btn-list">
+									<a href="javascript:void(0);"  class="btn btn-outline-primary btn-pill" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<i class="fa fa-calendar me-2 fs-14"></i> {% trans %}Chercher par date{% endtrans %}</a>
+									<div class="dropdown-menu border-0">
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}Aujourd'hui{% endtrans %}</a>
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}Hier{% endtrans %}</a>
+											<a class="dropdown-item active" href="javascript:void(0);">{% trans %}Les 7 derniers jours{% endtrans %}</a>
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}Les 30 derniers jours{% endtrans %}</a>
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}Le mois dernier{% endtrans %}</a>
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}Les 6 derniers mois{% endtrans %}</a>
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}L'an dernier{% endtrans %}</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--End Page header-->
+						<!-- Row -->
+						<div class="row">
+							{% include "includes/_menuGauche.html.twig" %}
+							<div class="col-md-12 col-lg-8 col-xl-9"  id="zone-messages">
+								
+								{% include "includes/_tableMessages.html.twig" %}
+
+							</div>
+						</div>
+
+					</div>
+				</div><!-- right app-content-->
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('#menu-dossiers a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dossier = this.getAttribute('data-dossier');
+
+                fetch(`load/${dossier}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('zone-messages').innerHTML = html;
+                    })
+                    .catch(error => console.error('Erreur AJAX :', error));
+            });
+        });
+    });
+</script>
+{% endblock %}

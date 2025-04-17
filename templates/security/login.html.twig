@@ -6,27 +6,7 @@
 	<link rel="stylesheet" href="{{ asset ('assets/plugins/notify/css/notifIt.css')}}">
 {% endblock %}
 {% block body %}
-{% for message in app.flashes('info')  %}
-	{# <div class="alert alert-danger">{{ message }}</div> #}
-	<!-- NOTIFICATIONS js-->
-	<script src="{{ asset ('assets/js/notifications.js')}}"></script>
 
-	<!-- INTERNAL Notifications js -->
-	<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
-	<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
-	<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
-	<script>
-		notif({
-				type: "success",
-				msg: "<b>{{ message }}</b>",
-				position: "center",
-				width: 500,
-				height: 60,
-				autohide: true
-			});
-	</script>
-
-{% endfor %}
 
 {% if error %}
 	<script src="{{ asset ('assets/js/notifications.js')}}"></script>
@@ -41,10 +21,29 @@
 {% endif %}
 
 <body class="register1">
+	{% for message in app.flashes('info')  %}
+		{# <div class="alert alert-light-success" role="alert">
+			<button type="button" class="btn-close text-danger mr-negative-16" data-bs-dismiss="alert" aria-hidden="true">×</button>
+			<strong><i class="fa fa-happy-o me-2" aria-hidden="true"></i>{{ message }}</strong>
+		</div> #}
+		<script src="{{ asset ('assets/js/notifications.js')}}"></script>
+
+		<!-- INTERNAL Notifications js -->
+		<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+		<script>
+			 notif({
+				msg: "<b>Success : </b>{{ message }}",
+				type: "success"
+			});
+		</script>
+	{% endfor %}
 		<div class="page">
 			<div class="page-single">
 				<div class="container">
 					<div class="row">
+					
 						<div class="col mx-auto">
 							<div class="row justify-content-center">
 								<div class="col-xl-7 col-lg-12">
@@ -53,18 +52,17 @@
 											<div class="text-justified text-white p-5 register-1 overflow-hidden">
 												<div class="custom-content">
 													<div class="mb-5 br-7 text-center">
-														<img src="{{ asset ('assets/images/brand/logoPharmacy.png')}}" class="header-brand-img desktop-lgo" alt="logo">
-														
+														<img src="{{ asset ('assets/images/brand/logo.png')}}" height="140" weight="140" alt="logo">
 													</div>
 													<div class="ms-5">
-														<div class="fs-18 mb-6 font-weight-bold text-white">Bienvenue sur Pharmacy</div>
-														<div class="mb-6 text-white text-center font-weight-bold">
-															{% trans %}	La gestion d'une pharmacie n'a jamais été facile avec Pharmacy.
+														<div class="fs-18 mb-6 font-weight-bold text-white text-center">QuickPay</div>
+														<div class="mb-4 text-white text-center font-weight-bold">
+															{% trans %}	Gagnez du temps, payez en un instant.
 														{% endtrans %}
 														</div>
-														<div class="br-7" style="text-align: center !important;">
-                                                            <img src="{{ asset ('assets/images/brand/medicament.png')}}" class="desktop-lgo text-center" alt="logo" height="90" weight="300">
-													    </div>
+														 <div class="fs-18 font-weight-bold text-white text-center">
+                                                        <a href="{{ path ('accueil') }}" class="btn btn-white text-primary font-weight-bold text-center"><i class="fe fe-home me-2"></i> {% trans %}Accueil{% endtrans %}</a>
+                                                    </div>
 													</div>
 												</div>
 											</div>
@@ -88,9 +86,9 @@
                                                         {% endif %}
                                                         <div class="input-group mb-4">
                                                             <div class="input-group-text">
-                                                                <i class="fe fe-user"></i>
+                                                                <i class="fe fe-mail"></i>
                                                             </div>
-                                                            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus placeholder="Nom de connexion">
+                                                            <input type="email" value="{{ last_username }}" name="email" id="inputUsername" class="form-control" autocomplete="username" required autofocus placeholder="Votre email">
                                                         </div>
                                                         <div class="input-group mb-4">
                                                             <div class="input-group" id="Password-toggle">
@@ -114,6 +112,10 @@
                                                             <button class="btn btn-outline-primary btn-md w-100 br-7"><i class="fe fe-unlock me-2"></i> {% trans %}Connexion{% endtrans %}</button>
                                                         </div>
                                                         <div class="form-group fs-13 text-center">
+															{% trans %}Vous n'avez pas de compte ?{% endtrans %}
+															<a href="{{ path ('app_register') }}">
+																{% trans %}Inscrivez-vous ici{% endtrans %}
+															</a>
                                                             <a href="{{ path ('mot_de_passe_oublie') }}">
 																<span class="badge badge-gradient-danger mt-2">
 																	{% trans %}Mot de passe oublié ?{% endtrans %}

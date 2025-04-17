@@ -2,85 +2,96 @@
 
 namespace App\Controller\Profil;
 
-use App\Entity\ReponseQuestion;
-use App\Form\MotDePasseOublieType;
-use App\Form\ReponseQuestionType;
-use App\Repository\QuestionSecreteRepository;
-use App\Repository\ReponseQuestionRepository;
+use App\Entity\DemandeModificationMotDePasse;
+use App\Form\DemandeModificationMotDePasseType;
 use App\Repository\UserRepository;
+use App\Service\InternetConnectionCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Security\Csrf\CsrfToken;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
- *
- */
-#[Route('profil')]
 class MotDePasseOublieController extends AbstractController
 {
-    public function __construct(
-        protected EntityManagerInterface $em,
-        protected UserRepository $userRepository,
-        protected TranslatorInterface $translator,
-        private ParameterBagInterface $parametres,
-        protected ReponseQuestionRepository $reponseQuestionRepository,
-        protected QuestionSecreteRepository $questionSecreteRepository,
-    )
-    {}
-
     #[Route('/mot-de-passe-oublie', name: 'mot_de_passe_oublie')]
-    public function motDePasseOublie(Request $request): Response
+    public function request(
+        Request $request,
+        UserRepository $userRepo,
+        EntityManagerInterface $em,
+        MailerInterface $mailer,
+        TranslatorInterface $translator,
+        CsrfTokenManagerInterface $csrfTokenManager,
+        InternetConnectionCheckerService $internetConnectionCheckerService
+    ): Response 
     {
-        # je récupère ma session
-        $maSession = $request->getSession();
-        
-        #mes variables témoin pour afficher les sweetAlert
-        $maSession->set('ajout', null);
-        $maSession->set('suppression', null);
+        $form = $this->createForm(DemandeModificationMotDePasseType::class);
+        $form->handleRequest($request);
 
-        #je récupère les utilisateurs
-        $users = $this->userRepository->findAll();
+        # je crée mon CSRF pour sécuriser mes formulaires
+        $csrfToken = $csrfTokenManager->getToken('motDePasseOublie')->getValue();
 
-        #je r"cupère les questions secrètes
-        $questionSecretes = $this->questionSecreteRepository->findAll();
-
-        if ($request->request->has('envoyer') && $request->request->has('questionSecreteId') && $request->request->has('userId') && $request->request->has('reponse')) 
+        if ($form->isSubmitted() && $form->isValid()) 
         {
-            $questionReponse = $this->reponseQuestionRepository->findOneBy([
-                'reponse' => $request->request->get('reponse'),
-                'user' => $this->userRepository->find($request->request->get('userId')),
-                'questionSecrete' => $this->questionSecreteRepository->find($request->request->get('questionSecreteId')),
-            ]);
+            $csrfTokenFormulaire = $request->request->get('csrfToken');
 
-            if($questionReponse)
+            if ($csrfTokenManager->isTokenValid(
+                new CsrfToken('motDePasseOublie', $csrfTokenFormulaire))) 
             {
-                #j'affiche le message de confirmation d'ajout
-                $this->addFlash('info', $this->translator->trans("Bonne réponse ! Réinitialiser votre mot de passe ! "));
+                $email = $form->get('email')->getData();
+                $user = $userRepo->findOneBy(['email' => $email]);
+
+                if ($user) 
+                {
+                    $token = bin2hex(random_bytes(32));
+                    $expiresAt = new \DateTime('+1 hour');
+
+                    $resetRequest = new DemandeModificationMotDePasse($user, $token, $expiresAt);
+
+                    $em->persist($resetRequest);
+                    $em->flush();
+
+                    $resetUrl = $this->generateUrl('reinitialiser_mot_de_passe', ['token' => $token], true);
+
+                    if (!$internetConnectionCheckerService->isConnected()) 
+                    {
+                        // Ne pas envoyer le mail si pas de connexion Internet
+                        $this->addFlash('error', $translator->trans('Email pas envoyé ! Problème de connexion'));
             
-                return $this->redirectToRoute('reinitialiser_mot_de_passe', ['slugUser' => $this->userRepository->find($request->request->get('userId'))->getSlug()  ]);
-                
+                        return $this->redirectToRoute('mot_de_passe_oublie');
+                    }
+                    else
+                    {
+                        $mail = (new Email())
+                        ->to($user->getEmail())
+                        ->subject('Réinitialisation de mot de passe / Reset password')
+                        ->html("<p>Cliquez sur ce lien pour réinitialiser votre mot de passe / Click on this link to reset your password: <a href=\"$resetUrl\">Réinitialiser / Reset</a></p>");
+
+                        $mailer->send($mail);
+
+                        $this->addFlash('info', $translator('Un mail de réinitialisation vous a été envoyé.'));
+                        return $this->redirectToRoute('app_login');
+
+                    }
+                    
+                }  
             }
             else
             {
-                #j'affiche le message de confirmation d'ajout
-                $this->addFlash('info', $this->translator->trans("L'une des trois informations n'est pas correcte "));
-            
+                $this->addFlash('info', "Echec d'envoie du mail");
                 return $this->redirectToRoute('mot_de_passe_oublie');
             }
         }
 
-
         return $this->render('profil/motDePasseOublie.html.twig', [
-            'licence' => 1,
             'motDePasse' => 0,
-            'users' => $users,
-            'questionSecretes' => $questionSecretes,
+            'csrfToken' => $csrfToken,
+            'form' => $form->createView()
         ]);
     }
 

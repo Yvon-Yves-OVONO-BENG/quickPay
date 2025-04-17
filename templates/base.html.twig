@@ -12,10 +12,16 @@
 
 
 		<!--Favicon -->
-		<link rel="icon" href="{{ asset ('assets/images/brand/logoPharmacy.png')}}" type="image/x-icon"/>
+		<link rel="icon" href="{{ asset ('assets/images/brand/logo.png')}}" type="image/x-icon"/>
+
 
 		<!--Bootstrap css -->
 		<link href="{{ asset ('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+
+		<!--- INTERNAL JQUERY-COUNTDOWN CSS -->
+		<link href="{{ asset ('assets/plugins/jquery-countdown/jquery.countdown.css')}}" rel="stylesheet" type="text/css">
+
 
 		<!-- Style css -->
 		<link href="{{ asset ('assets/css/style.css')}}" rel="stylesheet" />
@@ -77,7 +83,6 @@
 			<link href="{{ asset ('assets/plugins/notify/css/notifIt.css')}}" rel="stylesheet" />
 		{% endif %}
 		<script src="{{ asset ('js/swal.js') }}"></script>
-		<script src="{{ asset ('js/popupPanier.js') }}"></script>
     </head>
     <body class="app">
 		<!---Global-loader-->
@@ -85,32 +90,54 @@
 			<img src="{{ asset ('assets/images/svgs/loader.svg') }}" alt="loader" width="150" height="150">
 		</div>
 		<!--- End Global-loader-->
-		<!-- Page -->
-		<div class="page">
-			<div class="page-main">
-				{% include "includes/_entete.html.twig" %}
-				
-				{% include "includes/_menu.html.twig" %}
-				
-					{% block stylesheets %}
-						{# {{ encore_entry_link_tags('app') }} #}
-					{% endblock %}
 
-					{% block javascripts %}
-						{# {{ encore_entry_script_tags('app') }}
-						{% block importmap %}{{ importmap('app') }}{% endblock %} #}
-					{% endblock %}
+		{% if app.user.contact == "" or app.user.numCni == "" or app.user.code == "" or app.user.adresse == ""%}
+			<script>
+				window.addEventListener('DOMContentLoaded', () => {
+					Swal.fire({
+						title: 'Information(s) incomplète(s)',
+						text: 'Votre profil est incomplet. Veuillez le compléter',
+						icon: 'info',
+						confirmButtonText: 'Compléter maintenant'
+					}).then((result) => {
+						if (result.isConfirmed) {
+							window.location.href = "{{ path ('modifier_mon_profil')}}";
+						}
+					});
+				});
 				
-				{% block body %}
-					
-				{% endblock %}
-				{% if app.user.etat %}
+			</script>
+		{% endif %}
+
+		{% if app.user and app.user.etat == 1 %}
 				
+			<script>
+				// Exemple d'utilisation de SweetAlert2
+				Swal.fire({
+					title: 'Votre compte est bloqué !',
+					text: "Veuillez consulter un administrateur !",
+					icon: 'error',
+					allowOutsideClick: false,
+					allowEscapeKey: false,
+					allowEnterKey: false,
+					showConfirmButton: true,
+					confirmButtonText: "D'accord",
+				}).then((result) => {
+					if (result.isConfirmed) {
+						// Redirection vers une autre page ou rafraîchissement de la page actuelle
+						window.location.href = "{{ path ('app_logout') }}"; // Exemple de redirection
+					}
+				});
+				// Empêcher toute interaction utilisateur
+				
+			</script>
+			{% else %}
+				{% if app.user and app.user.etat == 1 %}
 					<script>
 						// Exemple d'utilisation de SweetAlert2
 						Swal.fire({
-							title: 'Votre compte est désactivé',
-							text: "Veuillez contacter l'administrateur.",
+							title: 'Sécurité menaceé',
+							text: "Tentative de soumission non sécurisée détectée !",
 							icon: 'error',
 							allowOutsideClick: false,
 							allowEscapeKey: false,
@@ -126,8 +153,26 @@
 						// Empêcher toute interaction utilisateur
 						
 					</script>
-																
 				{% endif %}
+														
+		{% endif %}
+		<!-- Page -->
+		<div class="page">
+			<div class="page-main">
+				{% include "includes/_entete.html.twig" %}
+				
+				{% include "includes/_menu.html.twig" %}
+				
+				{% block stylesheets %}
+					{# {{ encore_entry_link_tags('app') }} #}
+				{% endblock %}
+
+				{% block javascripts %}
+					{# {{ encore_entry_script_tags('app') }}
+					{% block importmap %}{{ importmap('app') }}{% endblock %} #}
+				{% endblock %}
+				
+				{% block body %}{% endblock %}
 
         		{% include "includes/_footer.html.twig" %}
 
@@ -187,6 +232,7 @@
 
 		<!--INTERNAL Index js-->
 		<script src="{{ asset ('assets/js/index1.js')}}"></script>
+		<script src="{{ asset ('assets/js/boite_envoie.js')}}"></script>
 
 		<!-- INTERNAL Data tables -->
 		<script src="{{ asset ('assets/plugins/datatables/Responsive/js/dataTables.responsive.min.js')}}"></script>
@@ -238,6 +284,15 @@
 		<script src="{{ asset ('assets/plugins/sweet-alert/sweetalert.min.js') }}"></script>
 		<script src="{{ asset ('assets/js/sweet-alert.js') }}"></script>
 
+		<!-- INTERNAL JQUERY-COUNTDOWN JS-->
+		<script src="{{ asset ('assets/plugins/jquery-countdown/jquery.plugin.min.js') }}"></script>
+		<script src="{{ asset ('assets/plugins/jquery-countdown/jquery.countdown.js') }}"></script>
+		<script src="{{ asset ('assets/plugins/jquery-countdown/countdown.js') }}"></script>
+
+        <!-- Jquery-steps js -->
+		<script src="{{ asset ('assets/plugins/jquery-steps/jquery.steps.min.js') }}"></script>
+		<script src="{{ asset ('assets/js/checkout-jquery-steps.js') }}"></script>
+
 		{# <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> #}
 
 		{# NOTIFICATIONS  #}
@@ -268,7 +323,7 @@
 						notif({
 						msg: "<b>   {{ notificationSuccess }}</b>",
 						type: "success",
-						position: "left",
+						position: "right",
 						width: 500,
 						height: 60,
 						autohide: true

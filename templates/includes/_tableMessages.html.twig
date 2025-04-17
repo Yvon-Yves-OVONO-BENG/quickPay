@@ -1,0 +1,142 @@
+<div class="card border-primary">
+	<div class="card-body p-6">
+		<div class="inbox-body">
+			<div class="mail-option">
+				<div class="chk-all">
+					<div class="btn-group">
+						<a data-bs-toggle="dropdown" href="javascript:void(0);" class="btn mini all" aria-expanded="false">
+							{% trans %}Tous{% endtrans %}
+							<i class="fa fa-angle-down "></i>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="javascript:void(0);"> {% trans %}Aucun{% endtrans %}</a></li>
+							<li><a href="javascript:void(0);"> {% trans %}Lus{% endtrans %}</a></li>
+							<li><a href="javascript:void(0);"> {% trans %}Non lus{% endtrans %}</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="btn-group">
+					<a data-original-title="Refresh" data-placement="top" data-bs-toggle="" href="{{ path ('boite_messages')}}" class="btn mini tooltips">
+						<i class=" fa fa-refresh"></i>
+					</a>
+				</div>
+				<div class="btn-group hidden-phone">
+					<a data-bs-toggle="dropdown" href="javascript:void(0);" class="btn mini blue" aria-expanded="false">
+						{% trans %}Plus{% endtrans %}
+						<i class="fa fa-angle-down "></i>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="javascript:void(0);"><i class="fa fa-pencil me-2"></i> {% trans %}Marqués comme lus{% endtrans %}</a></li>
+						<li><a href="javascript:void(0);"><i class="fa fa-ban me-2"></i> Spam</a></li>
+						<li class="divider"></li>
+						<li><a href="javascript:void(0);"><i class="fa fa-trash-o me-2"></i> {% trans %}Supprimés{% endtrans %}</a></li>
+					</ul>
+				</div>
+				{% if corbeille == 1 %}
+					{% if messagesSupprimes|length > 0 %}
+						<ul class="unstyled inbox-pagination">
+							<li>
+								<a class="btn btn-outline-danger" href="javascript:void(0);"><i class="fe fe-trash me-2"></i>{% trans %}Vider la corbeille{% endtrans %}</a>
+							</li>
+						</ul>
+						{% else %}
+						<ul class="unstyled inbox-pagination">
+							<li>
+								<a class="btn btn-outline-danger disabled" href="javascript:void(0);"><i class="fe fe-trash me-2"></i>{% trans %}Vider la corbeille{% endtrans %}</a>
+							</li>
+						</ul>
+					{% endif %}
+					
+				{% endif %}
+
+			</div>
+			<div class="table-responsive">
+
+
+				<table id="example-1" class="table table-striped table-bordered text-nowrap">
+					<thead>
+						<tr>
+							<th class="border-bottom-0"></th>
+							<th class="border-bottom-0"></th>
+							<th class="border-bottom-0"></th>
+							<th class="border-bottom-0">{% trans %}Expediteur{% endtrans %}</th>
+							<th class="border-bottom-0">{% trans %}Message{% endtrans %}</th>
+							<th class="border-bottom-0">{% trans %}date envoie{% endtrans %}</th>
+							<th class="border-bottom-0">{% trans %}Options{% endtrans %}</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						{% for message in messages %}
+							{% if app.user == message.destinataire %}
+								{% if message.lu == 1 %}
+								<tr>
+								{% endif %}
+
+								{% if message.lu == 0 %}
+									<tr class="unread" style="background-color: rgb(200, 200, 200) !important;">
+								{% endif %}
+								{% else %}
+								<tr>
+							{% endif %}
+							
+
+								<td class="inbox-small-cells">
+									<label class="custom-control custom-checkbox mb-0">
+										<input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2">
+										<span class="custom-control-label"></span>
+									</label>
+								</td>
+								<td class="inbox-small-cells">
+									{% if message.important == 1 %}
+										<i class="fa fa-star text-warning" data-bs-toggle="tooltip" title="" data-bs-original-title="Important"></i>
+										{% else %}
+										<i class="fa fa-star" data-bs-toggle="tooltip" title="" data-bs-original-title="Pas important"></i>
+									{% endif %}
+								</td>
+								<td class="inbox-small-cells">
+									{% if message.lu == 1 %}
+										<i class="fa fa-envelope-open-o" data-bs-toggle="tooltip" title="" data-bs-original-title="Message lu"></i>
+										{% else %}
+										<i class="fa fa-envelope" data-bs-toggle="tooltip" title="" data-bs-original-title="Message pas encore lu"></i>
+									{% endif %}
+								</td>
+								<td class="view-message dont-show font-weight-semibold">{{ message.expediteur.email }}</td>
+								
+								<td class="view-message">{{ message.messageCrypte|truncate_10 }}</td>
+								
+								<td class="view-message text-end text-muted">{{ message.envoyeLeAt|date('d-m-Y') }} / {{ message.envoyeLeAt|date('H:i:s') }}</td>
+
+								<td class="view-message">
+									<div class="btn-group">
+										<a href="javascript:void(0);" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">...</a>
+										<div class="dropdown-menu border-primary">
+										
+											{# {% if corbeille and message.supprime == 0 and message.supprimePar == app.user %} #}
+												<a class="dropdown-item" href="{{ path ('lire_message_rsa', {'slug': message.slug, 'cryptographie': message.cryptographie.cryptographie })}}"><i class="fe fe-eye me-2"></i> <track>Afficher</track></a>
+													
+												<a class="dropdown-item" href="javascript:void(0);"><i class="fa fa-share me-2"></i> {% trans %}Transférer{% endtrans %}</a>
+												
+												{% if message.expediteur == app.user %}
+													<a class="dropdown-item" href="javascrypt:void(0);"><i class="fa fa-edit me-2"></i> {% trans %}Modifier{% endtrans %}</a>
+												{% endif %}
+												
+												<a class="dropdown-item" href="{{ path ('supprimer_message', {'slug': message.slug }) }}"><i class="fe fe-trash me-2"></i> {% trans %}Supprimer{% endtrans %}</a>
+												{% if message.supprime == 1 and message.supprimePar.id == app.user.id %}
+													<a class="dropdown-item" href="{{ path ('supprimer_message', {'slug': message.slug }) }}"><i class="fe fe-corner-up-left me-2"></i> {% trans %}Restaurer{% endtrans %}</a>
+													<a class="dropdown-item" href="javascript:void(0);"><i class="fe fe-trash me-2"></i> {% trans %}Supprimer définitivement{% endtrans %}</a>
+												{% endif %}
+											{# {% endif %} #}
+										</div>
+									</div>
+								</td>
+							
+							</tr>
+						{% endfor %}
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

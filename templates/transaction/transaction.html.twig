@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if r == 1 %}
+        {% trans %}Transactions reçues{% endtrans %}
+    {% endif %}
+
+    {% if e == 1 %}
+        {% trans %}Transactions envoyées{% endtrans %}
+    {% endif %}
+
+    {% if t == 1 %}
+        {% trans %}Toutes les transactions{% endtrans %}
+    {% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+		th,
+		tfoot {
+			font-size: 15px !important;
+			text-align: center !important;
+			font-weight: bold !important;
+			background-color: #F1F1F1 !important;
+		}
+
+		.infoTable {
+			text-align: center !important;
+			vertical-align: middle !important;
+		}
+
+		tr:hover {
+			background-color: rgba(62, 128, 235, 0.2) !important;
+			color: #3e80eb !important;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+<!-- App-Content -->
+				<div class="hor-content main-content">
+					<div class="container">
+
+						<!--Page header-->
+						<div class="page-header">
+							<div class="page-leftheader">
+								<h4 class="page-title mb-0 text-primary">
+                                    {% if r == 1 %}
+                                        <i class="fa fa-money me-2"></i>{% trans %}Transactions reçues{% endtrans %}
+                                    {% endif %}
+
+                                    {% if e == 1 %}
+                                        <i class="fa fa-money me-2"></i>{% trans %}Transactions envoyées{% endtrans %}
+                                    {% endif %}
+
+                                    {% if t == 1 %}
+                                        <i class="fa fa-exchange me-2"></i> {% trans %}Toutes les transactions{% endtrans %}
+                                    {% endif %}
+                                </h4>
+							</div>
+							<div class="page-rightheader">
+								<div class="btn-list">
+                                    <button type="button" class="btn btn-primary mb-1 me-2">
+                                        <span class="badge bg-white text-dark">{{ transactions|length|number_format }}</span>
+                                        <span>
+                                            {% if r == 1 %}
+                                                {% trans %}Transactions reçues{% endtrans %}
+                                            {% endif %}
+
+                                            {% if e == 1 %}
+                                                {% trans %}Transactions envoyées{% endtrans %}
+                                            {% endif %}
+
+                                            {% if t == 1 %}
+                                                {% trans %}Toutes les transactions{% endtrans %}
+                                            {% endif %}
+                                        </span>
+                                    </button>
+									<a href="javascript:void(0);"  class="btn btn-outline-primary btn-pill">
+										<i class="fe fe-printer me-2 fs-14"></i> {% trans %}Imprimer{% endtrans %}
+                                    </a>
+                                    <a href="javascript:void(0);"  class="btn btn-primary btn-pill" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<i class="fa fa-calendar me-2 fs-14"></i> {% trans %}Filtrer{% endtrans %}</a>
+									<div class="dropdown-menu border-0">
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}Aujourd'hui{% endtrans %}</a>
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}Hier{% endtrans %}</a>
+											<a class="dropdown-item active" href="javascript:void(0);">{% trans %}Les 7 derniers jours{% endtrans %}</a>
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}Les 30 derniers jours{% endtrans %}</a>
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}Le mois dernier{% endtrans %}</a>
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}Les 6 deniers mois{% endtrans %}</a>
+											<a class="dropdown-item" href="javascript:void(0);">{% trans %}L'an dernier{% endtrans %}</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--End Page header-->
+
+
+						<div class="card border-primary">
+                            <div class="card-header">
+                                <div class="col-md-4">
+                                    <div class="card-title">
+                                        {% if r == 1 %}
+                                            <i class="fa fa-money me-2"></i>{% trans %}Transactions reçues{% endtrans %}
+                                        {% endif %}
+
+                                        {% if e == 1 %}
+                                            <i class="fa fa-money me-2"></i>{% trans %}Transactions envoyées{% endtrans %}
+                                        {% endif %}
+
+                                        {% if t == 1 %}
+                                            <i class="fa fa-exchange me-2"></i> {% trans %}Toutes les transactions{% endtrans %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-8 mt-4 text-right">
+                                    <form method="post" action="javascript:void(0);" target="_blank" class="row g-3 needs-validation" novalidate>
+												
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <input type="date" name="dateDebut" class="form-control" id="validationCustom01" required>
+                                                <div class="invalid-feedback">
+                                                    {% trans %}Champ requis{% endtrans %}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="date" name="dateFin" class="form-control" id="validationCustom01" required>
+                                                <div class="invalid-feedback">
+                                                    {% trans %}Champ requis{% endtrans %}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="col-md-4">
+                                                    <button class="btn btn-outline-primary" type="submit" name="impressionFacturePeriode"><i class="fe fe-printer me-2"></i>{% trans %}Imprimer{% endtrans %}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                            </div>
+                            <div class="card-body">
+                                <div class="">
+                                    <div class="table-responsive">
+                                        <table id="example" class="table table-bordered text-nowrap key-buttons">
+                                            <thead>
+                                                <tr>
+                                                    <th class="border-bottom-0">N°</th>
+                                                    <th class="border-bottom-0">{% trans %}Expediteur{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Bénéficiaire{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Montant{% endtrans %}</th>
+                                                    <th class="border-bottom-0">Date</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th class="border-bottom-0">N°</th>
+                                                    <th class="border-bottom-0">{% trans %}Expediteur{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Bénéficiaire{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Montant{% endtrans %}</th>
+                                                    <th class="border-bottom-0">Date</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                {% set i = 1 %}
+                                                {% for transaction in transactions %}
+                                                    <tr>
+                                                        <td style="text-align:center; vertical-align: middle;">{{ i }}</td>
+                                                        <td style="vertical-align: middle;">{{ transaction.expediteur.username }}</td>
+                                                        <td style="vertical-align: middle;">{{ transaction.destinataire.username }}</td>
+                                                        <td style="text-align:center; vertical-align: middle;">{{ transaction.montant }} XAF</td>
+                                                        <td style="text-align:center; vertical-align: middle;">
+                                                            {{ transaction.createdAt|date('d/m/Y H:i') }} <br>
+                                                            {% trans %}Il y'a : {% endtrans %} {{ transaction.createdAt|tempsPublication}}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+								<!--/div-->
+
+					</div>
+				</div>
+				<!-- End app-content-->
+{% endblock %}

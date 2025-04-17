@@ -4,7 +4,6 @@ namespace App\Controller\Profil;
 
 use App\Service\StrService;
 use App\Form\AjoutUtilisateurType;
-use App\Repository\ProfilRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +26,6 @@ class EditerProfilController extends AbstractController
         protected EntityManagerInterface $em,
         protected UserRepository $userRepository,
         protected TranslatorInterface $translator,
-        protected ProfilRepository $profilRepository,
         protected UserPasswordHasherInterface $userPasswordHasher,
     )
     {}
@@ -37,12 +35,15 @@ class EditerProfilController extends AbstractController
     {   
         # je récupère ma session
         $maSession = $request->getSession();
+
+        if(!$maSession)
+        {
+            return $this->redirectToRoute("app_logout");
+        }
         
         #mes variables témoin pour afficher les sweetAlert
         $maSession->set('ajout', null);
         $maSession->set('suppression', null);
-
-        
 
         #je récupère le profil à modifier
         /**
@@ -52,11 +53,6 @@ class EditerProfilController extends AbstractController
 
         $user = $this->userRepository->find($user->getId());
 
-        $profil = $this->profilRepository->findOneByUser([
-            'user' => $user
-        ]);
-        
-        dd($profil);
         #je crée mon formulaire et je le lie à mon instance
         $form = $this->createForm(AjoutUtilisateurType::class, $user);
 
@@ -74,17 +70,9 @@ class EditerProfilController extends AbstractController
                     $user->getPassword()
                 )
             );
-            
-            $profil->setNom($this->strService->strToUpper($user->getNom()))
-                    ->setContact($user->getContact())
-                    ->setAdresse($user->getAdresse())
-                    ->setEmail($user->getEmail())
-                    ->setUser($user)
-            ;
 
             # je prépare ma requête avec entityManager
             $this->em->persist($user);
-            $this->em->persist($profil);
 
             #j'exécute ma requête
             $this->em->flush();

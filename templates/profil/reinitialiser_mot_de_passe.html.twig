@@ -42,37 +42,44 @@
 							<div class="row justify-content-center">
 								<div class="col-md-4">
 									<div class="text-center mb-6">
-										<img src="{{ asset ('assets/images/brand/logoPharmacy.png')}}" class="header-brand-img desktop-lgo" alt="Azea logo">
-									</div>
+									<img src="{{ asset ('assets/images/brand/logo.png')}}" height="50" weight="50" alt="logo">
+								</div>
 									<div class="card border-danger">
 										<div class="card-body">
 											<div class="text-center mb-3">
 												<h4 class="mb-2">{% trans %}Réinitialiser votre mot de passe{% endtrans %}</h4>
 											</div>
-											<form class="row g-3 needs-validation" action="{{ path ('reinitialiser_mot_de_passe', {'slugUser': slugUser }) }}" method="POST" novalidate>
+											{{ form_start(form) }}
+
 												<div class="input-group">
 													<div class="input-group" id="Password-toggle">
 														<a href="" class="input-group-text">
 														  <i class="fe fe-eye" aria-hidden="true"></i>
 														</a>
-														<input class="form-control" id="motDePasse" name="motDePasse" type="password" placeholder="Nouveau mot de passe" required>
+														{# <input class="form-control" id="motDePasse" name="motDePasse" type="password" placeholder="Nouveau mot de passe" required> #}
+														{{ form_widget(form.password) }}
+
 														<div class="invalid-feedback">
-															Veuillez saisir votre nouveau mot de passe
+															{% trans %}Veuillez saisir votre nouveau mot de passe{% endtrans %}
 														</div>
 													</div>
 													
 												</div>
 												
 												
-												<div class="form-group text-center mb-3">
-													<button type="submit" id="boutonEnvoyer" name="envoyer" class="btn btn-outline-primary btn-md w-100 br-7"><i class="fe fe-refresh-cw me-2"></i> {% trans %}Réinitialiser mon mot de passe{% endtrans %}</button>
+												<div class="form-group text-center mb-3 mt-3">
+													<button type="submit" id="boutonEnvoyer" name="envoyer" class="btn btn-outline-primary btn-md w-100 br-7">
+														<i class="fe fe-refresh-cw me-2"></i> 
+														{% trans %}Réinitialiser mon mot de passe{% endtrans %}
+													</button>
 												</div>
 												<div class="form-group fs-12 text-center">
 													<a href="{{ path ('app_login') }}" class="font-weight-bold">
 														<span class="badge badge-gradient-info mt-2">{% trans %}Connexion{% endtrans %}</span>
 													</a>
 												</div>
-											</form>
+											{{ form_end(form) }}
+
 										</div>
 									</div>
 								</div>

@@ -64,14 +64,14 @@ class ProfilType extends AbstractType
                 'placeholder' => $this->translator->trans("Code de transfert"),
             ]
         ])
-        ->add('contact', TextType::class, [
-            'label' => $this->translator->trans("Contact"),
-            'required' => true,
-            'attr' => [
-                'class' => 'form-control',
-                'placeholder' => $this->translator->trans("Contact utilisateur"),
-            ]
-        ])
+        // ->add('contact', TextType::class, [
+        //     'label' => $this->translator->trans("Contact"),
+        //     'required' => true,
+        //     'attr' => [
+        //         'class' => 'form-control',
+        //         'placeholder' => $this->translator->trans("Contact utilisateur"),
+        //     ]
+        // ])
         ->add('email', EmailType::class, [
             'label' => $this->translator->trans("Email"),
             'required' => true,

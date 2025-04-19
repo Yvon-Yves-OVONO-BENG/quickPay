@@ -2,12 +2,12 @@
 
 namespace App\Controller\Profil;
 
-use App\Entity\ConstantsClass;
 use App\Entity\Profil;
-use App\Service\StrService;
 use App\Form\ProfilType;
-use App\Repository\ProfilRepository;
+use App\Service\StrService;
+use App\Entity\ConstantsClass;
 use App\Repository\UserRepository;
+use App\Repository\ProfilRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 /**
  * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
@@ -24,10 +25,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ModifierMonProfilController extends AbstractController
 {
     public function __construct(
-        protected StrService $strService,
-        protected EntityManagerInterface $em,
-        protected UserRepository $userRepository,
-        protected TranslatorInterface $translator,
+        private StrService $strService,
+        private EntityManagerInterface $em,
+        private UserRepository $userRepository,
+        private TranslatorInterface $translator,
+        private UserPasswordHasherInterface $userPasswordHasher
     )
     {}
     
@@ -63,6 +65,14 @@ class ModifierMonProfilController extends AbstractController
         #je teste si mon formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) 
         {   
+            // encode the plain password
+            $user->setCode(
+                $this->userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('code')->getData()
+                )
+            );
+
             # je prépare ma requête avec entityManager
             $this->em->persist($user);
 

@@ -54,6 +54,7 @@ class TransactionRepository extends ServiceEntityRepository
                     ->where('t.expediteur = :userId')
                     ->orWhere('t.destinataire = :userId')
                     ->setParameter('userId', $userId)
+                    ->orderBy('t.createdAt', 'DESC')
                     ->getQuery()
                     ->getResult();
     }

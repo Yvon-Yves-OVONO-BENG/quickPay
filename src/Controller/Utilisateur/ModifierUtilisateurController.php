@@ -13,14 +13,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
- *
- */
+#[IsGranted('ROLE_USER')]
 class ModifierUtilisateurController extends AbstractController
 {
     public function __construct(
@@ -111,8 +108,8 @@ class ModifierUtilisateurController extends AbstractController
                         $utilisateur->setRoles([ConstantsClass::ROLE_ADMINISTRATEUR]);
                         break;
 
-                    case ConstantsClass::GARDE:
-                        // $utilisateur->setRoles([ConstantsClass::ROLE_GARDE]);
+                    case ConstantsClass::UTILISATEUR:
+                        $utilisateur->setRoles([ConstantsClass::ROLE_UTILISATEUR]);
                         break;
                 }
 

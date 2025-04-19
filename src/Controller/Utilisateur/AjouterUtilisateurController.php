@@ -15,14 +15,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-/**
- * @IsGranted("ROLE_USER", message="Accès refusé. Espace reservé uniquement aux abonnés")
- *
- */
+#[IsGranted('ROLE_USER')]
 #[Route('utilisateur')]
 class AjouterUtilisateurController extends AbstractController
 {
@@ -56,8 +53,6 @@ class AjouterUtilisateurController extends AbstractController
         #je déclare une nouvelle instace d'un utilisateur
         $utilisateur = new User;
 
-        $profil = new Profil;
-
         #je crée mon formulaire et je le lie à mon instance
         $form = $this->createForm(AjoutUtilisateurType::class, $utilisateur);
 
@@ -82,7 +77,7 @@ class AjouterUtilisateurController extends AbstractController
                 $id = $derniereUtilisateur[0]->getId();
 
                 #je met le nom de l'utilisateur en CAPITAL LETTER
-                $utilisateur->setNom($this->strService->strToUpper($utilisateur->getNom()))
+                $utilisateur->setUsername($this->strService->strToUpper($utilisateur->getUsername()))
                         ->setSlug(uniqid('', true))
                         ->setEtat(1)
                         ->setPhoto(ConstantsClass::NOM_PHOTO)
@@ -96,15 +91,6 @@ class AjouterUtilisateurController extends AbstractController
                     )
                 );
 
-                $profil->setNom($this->strService->strToUpper($utilisateur->getNom()))
-                        ->setContact($utilisateur->getContact())
-                        ->setAdresse($utilisateur->getAdresse())
-                        ->setEmail($utilisateur->getEmail())
-                        ->setUsername($utilisateur->getUsername())
-                        ->setUser($utilisateur)
-                        ->setGenre($utilisateur->getGenre())
-                ;
-
                 # je récupère le type utlisateur
                 $typeUtilisateur = $form->getData()->getTypeUtilisateur()->getTypeUtilisateur();
 
@@ -115,14 +101,13 @@ class AjouterUtilisateurController extends AbstractController
                         $utilisateur->setRoles([ConstantsClass::ROLE_ADMINISTRATEUR]);
                         break;
 
-                    case ConstantsClass::GARDE:
-                        $utilisateur->setRoles([ConstantsClass::ROLE_GARDE]);
+                    case ConstantsClass::UTILISATEUR:
+                        $utilisateur->setRoles([ConstantsClass::ROLE_UTILISATEUR]);
                         break;
                 }
 
                 # je prépare ma requête avec entityManager
                 $this->em->persist($utilisateur);
-                $this->em->persist($profil);
 
                 #j'exécute ma requête
                 $this->em->flush();

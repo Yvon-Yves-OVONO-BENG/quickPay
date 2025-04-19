@@ -83,6 +83,10 @@
 			<link href="{{ asset ('assets/plugins/notify/css/notifIt.css')}}" rel="stylesheet" />
 		{% endif %}
 		<script src="{{ asset ('js/swal.js') }}"></script>
+
+		<!-- INTERNAL Prism Css -->
+		<link href="{{ asset ('assets/plugins/prism/prism.css')}}" rel="stylesheet">
+
     </head>
     <body class="app">
 		<!---Global-loader-->
@@ -91,22 +95,24 @@
 		</div>
 		<!--- End Global-loader-->
 
-		{% if app.user.contact == "" or app.user.numCni == "" or app.user.code == "" or app.user.adresse == ""%}
-			<script>
-				window.addEventListener('DOMContentLoaded', () => {
-					Swal.fire({
-						title: 'Information(s) incomplète(s)',
-						text: 'Votre profil est incomplet. Veuillez le compléter',
-						icon: 'info',
-						confirmButtonText: 'Compléter maintenant'
-					}).then((result) => {
-						if (result.isConfirmed) {
-							window.location.href = "{{ path ('modifier_mon_profil')}}";
-						}
+		{% if temoin is defined %}
+			{% if temoin == true %}
+				<script>
+					window.addEventListener('DOMContentLoaded', () => {
+						Swal.fire({
+							title: 'Information(s) incomplète(s)',
+							text: 'Votre profil est incomplet. Veuillez le compléter',
+							icon: 'info',
+							confirmButtonText: 'Compléter maintenant'
+						}).then((result) => {
+							if (result.isConfirmed) {
+								window.location.href = "{{ path ('modifier_mon_profil')}}";
+							}
+						});
 					});
-				});
-				
-			</script>
+					
+				</script>
+			{% endif %}
 		{% endif %}
 
 		{% if app.user and app.user.etat == 1 %}
@@ -292,6 +298,58 @@
         <!-- Jquery-steps js -->
 		<script src="{{ asset ('assets/plugins/jquery-steps/jquery.steps.min.js') }}"></script>
 		<script src="{{ asset ('assets/js/checkout-jquery-steps.js') }}"></script>
+
+		<!--########################################################"-->
+
+		<!-- INTERNAL Clipboard js -->
+		<script src="{{ asset ('assets/plugins/clipboard/clipboard.min.js')}}"></script>
+		<script src="{{ asset ('assets/plugins/clipboard/clipboard.js')}}"></script>
+
+		<!-- INTERNAL Prism js -->
+		<script src="{{ asset ('assets/plugins/prism/prism.js')}}"></script>
+
+		<!-- Manipulation compte marchand js -->
+		<script src="{{ asset ('js/afficherCrediter.js') }}"></script>
+		<script src="{{ asset ('js/activerDesactiverMarchand.js') }}"></script>
+
+
+		{% if etat is defined %}
+			<!-- INTERNAL Notifications js -->
+			<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+			<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+			{# <script src="{{asset('assets/plugins/notify/js/jquery.growl.js')}}"></script> #}
+			<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+		{% endif %}
+
+		{% if deleteOperation is defined %}
+			<!-- INTERNAL Notifications js -->
+			<script src="{{ asset ('assets/plugins/notify/js/rainbow.js')}}"></script>
+			<script src="{{ asset ('assets/plugins/notify/js/sample.js')}}"></script>
+			{# <script src="{{asset('assets/plugins/notify/js/jquery.growl.js')}}"></script> #}
+			<script src="{{ asset ('assets/plugins/notify/js/notifIt.js')}}"></script>
+			{% if deleteOperation == true %}
+				{% set msg = "" %}
+				{% for message in app.flashes('info') %}
+					{% set msg = message %}
+				{% endfor %}
+				<script>
+					window.onload = () => {
+						notif({
+						msg: "<b>   {{ msg }}</b>",
+						type: "error",
+						position: "right",
+						width: 500,
+						height: 60,
+						autohide: true
+						});
+						}
+				</script>
+			{% endif %}
+			
+		{% endif %}
+		<!--########################################################"-->
+		
+		
 
 		{# <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> #}
 

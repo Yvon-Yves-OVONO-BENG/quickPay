@@ -19,9 +19,6 @@ class AccueilController extends AbstractController
     {
         $collection = $this->router->getRouteCollection();
         $allRoutes = $collection->all();
-
-        return $this->render('accueil/index.html.twig', [ ]);
-        
-
+        return $this->render('accueil/index.html.twig', []);
     }
 }

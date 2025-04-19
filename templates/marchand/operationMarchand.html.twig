@@ -1,0 +1,208 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+        {% trans %}Opérations sur les comptes marchands{% endtrans %}
+
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+		th,
+		tfoot {
+			font-size: 15px !important;
+			text-align: center !important;
+			font-weight: bold !important;
+			background-color: #F1F1F1 !important;
+		}
+
+		.infoTable {
+			text-align: center !important;
+			vertical-align: middle !important;
+		}
+
+		tr:hover {
+			background-color: rgba(62, 128, 235, 0.2) !important;
+			color: #3e80eb !important;
+		}
+        
+        .custom-switch-input:checked + .custom-switch-indicator {
+        background-color: red !important;
+        border-color: red !important;
+        }
+     
+	</style>
+{% endblock %}
+
+{% block body %}
+
+<!-- App-Content -->
+<div class="hor-content main-content">
+    <div class="container">
+
+
+    <!--Page header-->
+    <div class="page-header">
+        <div class="page-leftheader">
+            <h4 class="page-title mb-0 text-primary">{% trans %}Opération sur le compte marchand de {% endtrans %} {{comptemarchand.username}}</h4>
+        </div>
+        <div class="page-rightheader">
+            <div class="btn-list">
+                <button class="btn btn-outline-primary"><i class="fe fe-download me-2"></i>
+                    Import</button>
+                <a href="javascript:void(0);"  class="btn btn-primary btn-pill" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-calendar me-2 fs-14"></i> Search By Date</a>
+                <div class="dropdown-menu border-0">
+                        <a class="dropdown-item" href="javascript:void(0);">Today</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Yesterday</a>
+                        <a class="dropdown-item active" href="javascript:void(0);">Last 7 days</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Last 30 days</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Last 6 months</a>
+                        <a class="dropdown-item" href="javascript:void(0);">Last year</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Page header-->
+
+        <!-- Row -->
+        <div class="row flex-lg-nowrap">
+            <div class="col-12">
+                <div class="row flex-lg-nowrap">
+                    <div class="col-12 mb-3">
+                        <div class="e-panel card">
+                            <div class="card-body pb-2">
+                                <div class="row">
+                                    <div class="col-md-7 ">
+                                        <div class="form-group w-100">
+                                            <div class="input-icon">
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-auto text-right mb-2">
+                                        <a href="{{path('liste_marchand')}}" class="btn btn-primary"><i class="fe fe-list"></i>{% trans %}Liste des comptes marchands{% endtrans %}</a>
+                                    </div>
+                                </div>
+                                <div class="row" id="cardRow">
+                                    <div class="col-xl-3 col-lg-6">
+                                        <div class="card border-success p-0 shadow-none">
+                                            <div class="d-flex align-items-center p-4">
+                                                
+                                                <div class="wrapper ms-3">
+                                                    <p class="mb-0 mt-1  font-weight-semibold">{% trans %}Créditer{% endtrans %}</p>
+                                                    <small class="text-muted">Solde :</small>
+                                                </div>
+                                                <div class="float-end ms-auto">
+                                                    <a href="javascript:void(0);" class="option-dots" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fe fe-more-vertical fs-18"></i></a>
+                                                    <div class="dropdown-menu dropdown-menu-start">
+                                                        <a class="dropdown-item" href="javascript:void(0);"><i class="fe fe-edit me-2"></i> Imprimer</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);"><i class="fe fe-trash me-2"></i> Modifier</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-body border-top"  id="crediterid">
+                                                <form action="" method="post">
+                                                    <button class="btn btn-success btn-lg w-100 br-7" id="idbtn">{% trans %}Créditer{% endtrans %}</button>
+                                                    <input type="hidden" id="slug" name="slug" value="{{comptemarchand.slug}}">
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-6">
+                                        <div class="card border-primary p-0 shadow-none">
+                                            <div class="d-flex align-items-center p-4">
+                                                
+                                                <div class="wrapper ms-3">
+                                                    <p class="mb-0 mt-1  font-weight-semibold">{% trans %}Modifier{% endtrans %}</p>
+                                                    <small class="text-muted">Numero : </small>
+                                                </div>
+                                               
+                                            </div>
+                                            <div class="card-body border-top">
+                                                <form action="javascript:void(0);" method="post">
+                                                    <button class="btn btn-primary btn-lg w-100 br-7">{% trans %}Modifier{% endtrans %}</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-6">
+                                        <div class="card border-warning p-0 shadow-none">
+                                            <div class="d-flex align-items-center p-4">
+                                               
+                                                <div class="wrapper ms-3">
+                                                    <p class="mb-0 mt-1  font-weight-semibold">{% trans %}Bloquer/Débloquer{% endtrans %}</p>
+                                                    <small class="text-muted">Numero :</small>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="card-body border-top">
+                                                <form id="routeid" action="{{path('activer_desactivercomptemarchand')}}" method="post">
+                                                    <div class="form-group">
+                                                        <label class="custom-switch">
+                                                            <span class="custom-switch-description me-2">{% trans %}Etat: Bloquer{% endtrans %}</span>
+                                                            <input type="checkbox" name="custom-switch-checkbox3" class="custom-switch-input"  id="etatCheckbox" data-slug="{{ comptemarchand.slug }}">
+                                                            <span class="custom-switch-indicator custom-switch-indicator-xl custom-radius"></span>
+                                                        </label>
+                                                    </div>
+                                                </form>
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-lg-6">
+                                        <div class="card border-danger p-0 shadow-none">
+                                            <div class="d-flex align-items-center p-4">
+                                               
+                                                <div class="wrapper ms-3">
+                                                    <p class="mb-0 mt-1  font-weight-semibold">{% trans %}Supprimer{% endtrans %}</p>
+                                                    <small class="text-muted">Numéro :</small>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="card-body border-top">
+                                                <a href="#modaldemo8" data-bs-effect="effect-scale" data-bs-toggle="modal"  class="btn btn-danger btn-lg w-100 br-7">{% trans %}Supprimer{% endtrans %}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- MODAL EFFECTS -->
+                                    <div class="modal fade" id="modaldemo8">
+                                        <div class="modal-dialog modal-dialog-centered text-center" role="document">
+                                            <div class="modal-content modal-content-demo">
+                                                <div class="modal-header">
+                                                    <h6 class="modal-title" style="color:red;">{% trans %}Attention !{% endtrans %}</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h6>{% trans %}Vous êtes sur le point de supprimer un compte !{% endtrans %}</h6>
+                                                    <p>{% trans %}Voulez-vous continuer ?{% endtrans %}</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{{path('supprimer_comptemarchand',{'slug':comptemarchand.slug})}}" method="post">
+                                                        <button class="btn btn-danger" type="submit" data-bs-dismiss="modal">{% trans %}Oui{% endtrans %}</button> 
+                                                    </form>
+                                                    <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">
+                                                        {% trans %}Non{% endtrans %}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                              
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Row -->
+        
+
+    </div>
+</div><!-- right app-content-->
+</div>
+{% endblock %}
+

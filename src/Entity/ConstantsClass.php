@@ -7,6 +7,8 @@ class ConstantsClass
     public const ROLE_ADMINISTRATEUR = 'ROLE_ADMINISTRATEUR';
     public const ROLE_SUPER_ADMINISTRATEUR = 'ROLE_SUPER_ADMINISTRATEUR';
     public const ROLE_UTILISATEUR = 'ROLE_UTILISATEUR';
+    public const ROLE_GESTIONNAIRE = 'ROLE_GESTIONNAIRE';
+    public const ROLE_MARCHAND = 'ROLE_MARCHAND';
 
     public const GESTIONNAIRE = 'GESTIONNAIRE';
     public const UTILISATEUR = 'UTILISATEUR';

@@ -58,7 +58,7 @@
 									<div class="col-md-12 col-sm-12 col-12">
 										<div class="">
 											<span class="fs-14">{% trans %}Votre solde{% endtrans %}</span>
-											<h3 class="mb-2 mt-1 number-font carn2 font-weight-bold">{{ porteMonnaie.solde }} XAF</h3>
+											<h3 class="mb-2 mt-1 number-font carn2 font-weight-bold">{{ porteMonnaie ? porteMonnaie.solde : 0 }} XAF</h3>
 										</div>
 									</div>
 								</div>

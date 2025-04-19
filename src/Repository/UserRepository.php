@@ -66,6 +66,17 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ->getResult();
     }
 
+    //recherche des comptes marchands
+    public function rechercheMarchand(): array
+    {
+        return $this->createQueryBuilder('u')
+        ->where($this->createQueryBuilder('u')->expr()->like('u.roles',':role'))
+        ->setParameter('role', '%ROLE_MARCHAND%')
+        ->getQuery()
+        ->getResult();
+    }
+
+
 
     //    /**
     //     * @return User[] Returns an array of User objects

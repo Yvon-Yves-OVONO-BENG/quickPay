@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Marchand;
 
 use App\Entity\ConstantsClass;
 use App\Entity\PorteMonnaie;
@@ -25,7 +25,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class RegistrationController extends AbstractController
+class CreationCompteMarchandController extends AbstractController
 {
     public function __construct(
         protected MailerInterface $mailer,
@@ -36,8 +36,8 @@ class RegistrationController extends AbstractController
     )
     {}
 
-    #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, 
+    #[Route('/compte-marchand', name: 'compte_marchand')]
+    public function compteMarchand(Request $request, UserPasswordHasherInterface $userPasswordHasher, 
     MailerInterface $mailer, TransportInterface $transport): Response
     {
         $user = new User();
@@ -61,113 +61,7 @@ class RegistrationController extends AbstractController
                     )
                 );
 
-                #UTILISATION DE L'ALGORITHME BRUTE
-                /**
-                 * Fonction qui calcul le pgcd de deux nombres
-                 *
-                 * @param [type] $a
-                 * @param [type] $b
-                 * @return void
-                 */
-                function pgcd($a, $b) {
-                    return $b == 0 ? $a : pgcd($b, $a % $b);
-                }
                 
-                /**
-                 * Fonction qui calcul le modulp inverse
-                 *
-                 * @param [type] $a
-                 * @param [type] $m
-                 * @return void
-                 */
-                function modInverse($a, $m) {
-                    for ($x = 1; $x < $m; $x++) {
-                        if (($a * $x) % $m == 1) return $x;
-                    }
-                    return null;
-                }
-                
-                /**
-                 * fonction qui vérifie si un nombre est premier
-                 *
-                 * @param [type] $nombre
-                 * @return void
-                 */
-                function estPremier($nombre)
-                {
-                    if($nombre < 2) return false;
-                    for($i = 2; $i <= sqrt($nombre); $i++)
-                    {
-                        if ($nombre % $i === 0 ) return false;
-                    }
-                    return true;
-                }
-
-                /**
-                 * fonction qui renvoie un nombre premier aleatoire entre 100 et 200
-                 *
-                 * @param integer $min
-                 * @param integer $max
-                 * @return void
-                 */
-                function nombrePremierAleatoire($min = 100, $max = 200)
-                {
-                    do {
-                        $nombre = rand($min, $max);
-                    }
-                    while (!estPremier($nombre));
-
-                    return $nombre;
-                }
-
-                $p = 0;
-                $q = 0;
-
-                /**
-                 * Boucle qui génère p et q
-                 */
-                do {
-                    $p = nombrePremierAleatoire();
-                    $q = nombrePremierAleatoire();
-                }
-                while ($p === $q);
-
-                $n = $p * $q; 
-                $phi = ($p - 1) * ($q - 1); 
-                
-                $e = 0;
-
-                /**
-                 * function qui permet de trouver e
-                 *
-                 * @param [type] $phi
-                 * @return void
-                 */
-                function choisirE($phi)
-                {
-                    do {
-                        //e doît être entre 2 et phi-1
-                        $e = rand(2, $phi - 1);
-                    }
-                    while(pgcd($e, $phi) !== 1);
-                    return $e;
-                }
-
-                $e = choisirE($phi);
-
-                if (pgcd($e, $phi) !== 1) 
-                {
-                    throw new Exception("e n'est pas premier avec phi");
-                }
-                
-                $d = modInverse($e, $phi); 
-                
-                // echo "Clé publique : ($e, $n)\n";
-                // echo "Clé privée : ($d, $n)\n";
-
-                $publicKey = "$e, $n";
-                $privateKey = "$d, $n";
-
                 #Création du porte monnaie
                 $porteMonnaie = new PorteMonnaie;
                 $porteMonnaie->setSolde(0.0)
@@ -183,20 +77,18 @@ class RegistrationController extends AbstractController
                 
                 $codeQr->setQrCode($qrCode);
 
-                $user->setCleRsaPrivee($privateKey)
-                    ->setCleRsaPublique($publicKey)
-                    ->setPorteMonnaie($porteMonnaie)
+                $user->setPorteMonnaie($porteMonnaie)
                     ->setCodeQr($codeQr)
                     ->setSlug($slug)
-                    ->setRoles([ConstantsClass::ROLE_UTILISATEUR])
+                    ->setRoles([ConstantsClass::ROLE_MARCHAND])
                     ;
-
+                           
                 // Envoi de l'email de confirmation
                 $email = (new TemplatedEmail())
                     ->from(new Address('quickPay@freedomsoftwarepro.com', "QUICK-PAY"))
                     ->to($form->get('email')->getData())
                     ->subject("Bienvenue chez QuickPay / Welcome to QuickPay")
-                    ->htmlTemplate('emails/envoieEmail.html.twig')
+                    ->htmlTemplate('emails/envoieEmailMarchand.html.twig')
                     ->context([
                         'user' => $user,
                     ])
@@ -210,7 +102,7 @@ class RegistrationController extends AbstractController
                 catch (TransportExceptionInterface $e)
                 {
                     $this->addFlash('danger', $this->translator->trans("Error sending mail !"));
-                    return $this->redirectToRoute("app_register");
+                    // return $this->redirectToRoute("compte_marchand");
                 }
 
                 $this->em->persist($user);
@@ -223,9 +115,9 @@ class RegistrationController extends AbstractController
                 ->from(new Address('quickPay@freedomsoftwarepro.com', "QUICK-PAY"))
                 ->to($form->get('email')->getData())
                 ->subject("Bienvenue chez QuickPay / Welcome to QuickPay")
-                ->htmlTemplate('emails/envoieEmail.html.twig')
+                ->htmlTemplate('emails/envoieEmailMarchand.html.twig')
                 ->context([
-                    'user' => $user->getUsername(),
+                    'user' => $user,
                 ])
                 ;
             try 
@@ -238,12 +130,13 @@ class RegistrationController extends AbstractController
             {
                 $this->addFlash('danger', $this->translator->trans("Error sending mail !"));
 
-                return $this->redirectToRoute("transcript_student");
+                // return $this->redirectToRoute("transcript_student");
             }
 
                 $this->addFlash('info', 'Compte créé avec succès !');
-
-                return $this->redirectToRoute('app_login');
+                $user = new User();
+                $form = $this->createForm(RegistrationFormType::class, $user);
+                return $this->redirectToRoute('compte_marchand');
             }
             else
             {
@@ -253,11 +146,11 @@ class RegistrationController extends AbstractController
             
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('marchand/creationCompteMarchand.html.twig', [
             'licence' => 1,
             'motDePasse' => 0,
             'csrfToken' => $csrfToken,
-            'registrationForm' => $form,
+            'comptemarchandForm' => $form,
         ]);
     }
 }

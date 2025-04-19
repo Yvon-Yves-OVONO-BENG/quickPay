@@ -59,6 +59,14 @@ class TableauDeBordController extends AbstractController
         #les transactions envoyés
         $transactionsEnvoyes = $this->utilisateurService->transactionsEnvoyes($user->getId());
 
+        ////Début: je vérifie si le profil est complété///////
+        $temoin = false;
+        if ($user) {
+            if ($user->getContact() == null or $user->getNumCni() == null or $user->getCode() == null or $user->getAdresse() == null) {
+                $temoin = true;
+            }        
+        }
+        ////Fin: je vérifie si le profil est complété///////
         
         return $this->render('tableauDeBord/tableauDeBord.html.twig', [
             'statistiques' => $statistiques,
@@ -66,6 +74,7 @@ class TableauDeBordController extends AbstractController
             'transactionsRecus' => $transactionsRecus,
             'transactionsEnvoyes' => $transactionsEnvoyes,
             'toutesLesTransactions' => $toutesLesTransactions,
+            'temoin' => $temoin,
         ]);
         
 

@@ -35,8 +35,8 @@
 																	<div class="col-lg-2 col-md-12 col-xs-12 link-list">
 																		<ul>
 																			<li><h2 class="fs-14 font-weight-bold"><i class="fa fa-adjust me-2"></i>Etats Garde</h2></li>
-																			<li aria-haspopup="true"><a href="{{ path ('ajout_etat_garde') }}"><i class="si si-plus me-2"></i>{% trans %}Ajouter un état garde{% endtrans %}</a></li>
-																			<li aria-haspopup="true"><a href="{{ path ('liste_etat_garde', {'a': 1 }) }}"><i class="si si-list me-2"></i>{% trans %}Les états garde{% endtrans %}</a></li>
+																			<li aria-haspopup="true"><a href="javascript:void(0);"><i class="si si-plus me-2"></i>{% trans %}Ajouter un état garde{% endtrans %}</a></li>
+																			<li aria-haspopup="true"><a href="javascript:void(0);"><i class="si si-list me-2"></i>{% trans %}Les états garde{% endtrans %}</a></li>
 																		</ul>
 																	</div>
 
@@ -44,10 +44,10 @@
 																		<ul>
 																			<li><h2 class="fs-14 font-weight-bold"><i class="fa fa-mortar-board me-2"></i>Grades</h2></li>
 																			<li aria-haspopup="true">
-																				<a href="{{ path ('ajout_grade') }}"><i class="si si-plus me-2"></i>{% trans %}Ajouter un grade{% endtrans %}</a>
+																				<a href="javascript:void(0);"><i class="si si-plus me-2"></i>{% trans %}Ajouter un grade{% endtrans %}</a>
 																			</li>
 																			<li aria-haspopup="true">
-																				<a href="{{ path ('liste_grade', {'a': 1 }) }}"><i class="si si-list me-2"></i>{% trans %}Les grades{% endtrans %}</a>
+																				<a href="javascript:void(0);"><i class="si si-list me-2"></i>{% trans %}Les grades{% endtrans %}</a>
 																			</li>
 																		</ul>
 																	</div>
@@ -56,10 +56,10 @@
 																		<ul>
 																			<li><h2 class="fs-14 font-weight-bold"><i class="fa fa-id-badge me-2"></i>Postes</h2></li>
 																			<li aria-haspopup="true">
-																				<a href="{{ path ('ajout_poste') }}"><i class="si si-plus me-2"></i>{% trans %}Ajouter un poste{% endtrans %}</a>
+																				<a href="javascript:void(0);"><i class="si si-plus me-2"></i>{% trans %}Ajouter un poste{% endtrans %}</a>
 																			</li>
 																			<li aria-haspopup="true">
-																				<a href="{{ path ('liste_poste', {'a': 1 }) }}"><i class="si si-list me-2"></i>{% trans %}Les postes{% endtrans %}</a>
+																				<a href="javascript:void(0);"><i class="si si-list me-2"></i>{% trans %}Les postes{% endtrans %}</a>
 																			</li>
 																		</ul>
 																	</div>
@@ -67,16 +67,16 @@
 																	<div class="col-lg-2 col-md-12 col-xs-12 link-list">
 																		<ul>
 																			<li><h2 class="fs-14 font-weight-bold"><i class="fa fa-gears me-2"></i>Services</h2></li>
-																			<li aria-haspopup="true"><a href="{{ path ('ajout_service') }}"><i class="si si-plus me-2"></i>{% trans %}Ajouter une service{% endtrans %}</a></li>
-																			<li aria-haspopup="true"><a href="{{ path ('liste_service') }}"><i class="si si-list me-2"></i>{% trans %}Les services{% endtrans %}</a></li>
+																			<li aria-haspopup="true"><a href="javascript:void(0);"><i class="si si-plus me-2"></i>{% trans %}Ajouter une service{% endtrans %}</a></li>
+																			<li aria-haspopup="true"><a href="javascript:void(0);"><i class="si si-list me-2"></i>{% trans %}Les services{% endtrans %}</a></li>
 																		</ul>
 																	</div>
 
 																	<div class="col-lg-2 col-md-12 col-xs-12 link-list">
 																		<ul>
 																			<li><h2 class="fs-14 font-weight-bold"><i class="fa fa-street-view me-2"></i>Type garde</h2></li>
-																			<li aria-haspopup="true"><a href="{{ path ('ajout_type_garde') }}"><i class="si si-plus me-2"></i>{% trans %}Ajouter un type{% endtrans %}</a></li>
-																			<li aria-haspopup="true"><a href="{{ path ('liste_type_garde', {'a': 1 }) }}"><i class="si si-list me-2"></i>{% trans %}Les types garde{% endtrans %}</a></li>
+																			<li aria-haspopup="true"><a href="javascript:void(0);"><i class="si si-plus me-2"></i>{% trans %}Ajouter un type{% endtrans %}</a></li>
+																			<li aria-haspopup="true"><a href="javascript:void(0);"><i class="si si-list me-2"></i>{% trans %}Les types garde{% endtrans %}</a></li>
 																		</ul>
 																	</div>
 																	
@@ -96,6 +96,20 @@
 															</div>
 														</div>
 													</div>
+												</li>
+											{% endif %}
+
+											{% if is_granted('ROLE_SUPER_ADMINISTRATEUR') or is_granted('ROLE_ADMINISTRATEUR')  or is_granted('ROLE_GESTIONNAIRE') %}
+												<li aria-haspopup="true">
+													<a href="javascript:void(0);" class="sub-icon">
+														<svg class="hor-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg>
+														{% trans %}Gestion{% endtrans %}<i class="fa fa-angle-down horizontal-icon"></i>
+													</a>
+													<ul class="sub-menu border-primary">
+														<li aria-haspopup="true"><a href="{{path('compte_marchand')}}"><i class="fa fa-user-plus"></i>{% trans %}Compte marchand{% endtrans %}</a></li>
+														<li aria-haspopup="true"><a href="{{path('liste_marchand')}}"><i class="fa fa-usd"></i>{% trans %}Opérations financières{% endtrans %}</a></li>
+													</ul>
+													
 												</li>
 											{% endif %}
 
@@ -131,7 +145,7 @@
 											
 											{% if is_granted('ROLE_SUPER_ADMINISTRATEUR') or is_granted('ROLE_ADMINISTRATEUR') %}
 												<li aria-haspopup="true">
-													<a href="{{ path ('impression_documents')}}" class="sub-icon">
+													<a href="javascript:void(0);" class="sub-icon">
 														<svg class="hor-icon" height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 																viewBox="0 0 488.9 488.9" xml:space="preserve">
 															<g>

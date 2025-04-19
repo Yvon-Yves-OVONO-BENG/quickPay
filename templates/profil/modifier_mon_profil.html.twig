@@ -61,10 +61,12 @@
 
 									<div class="col-sm-4 col-md-3">
 										<div class="form-group">
-											<label class="form-label">{% trans %}Contact{% endtrans %}</label>
-											{{ form_widget(formProfil.contact, {'attr': {'id':'validationCustom04'}}) }}
+											<label for="validationCustom04" class="form-label">{% trans %}Contact{% endtrans %}</label>
+											{# {{ form_widget(formProfil.contact, {'attr': {'id':'validationCustom04'}}) }} #}
+											<input type="tel" name="contact" id="mobile-number" id="validationCustom04" placeholder="+237 xxx xxx xxx" required>
 											<div class="invalid-feedback">
-												{{ form_errors(formProfil.contact) }}
+												{# {{ form_errors(formProfil.contact) }} #}
+												{% trans %}Veuillez saisir le numéro de téléphone{% endtrans %}
 											</div>
 										</div>
 									</div>

@@ -9,13 +9,11 @@
             <!--Page header-->
             <div class="page-header">
                 <div class="page-leftheader">
-                    <h4 class="page-title mb-0 text-primary"><i class="fa fa-plus me-2"></i> {% trans %}Créditer votre compte{% endtrans %}</h4>
+                    {# <h4 class="page-title mb-0 text-primary"><i class="fa fa-plus me-2"></i> {% trans %}Créditer votre compte{% endtrans %}</h4> #}
                 </div>
                 <div class="page-rightheader">
                     <div class="btn-list">
-                        <a href="{{ path ('retirer_argent')}}"  class="btn btn-outline-primary btn-pill">
-                            <i class="fa fa-money me-2 fs-14"></i> {% trans %}Retirer l'argent{% endtrans %}
-                        </a>
+                        
                         
                     </div>
                 </div>
@@ -28,6 +26,11 @@
                     <div class="card border-primary">
                         <div class="card-header">
                             <h3 class="card-title"><i class="fa fa-check me-2"></i> {% trans %}Choisir le mode de recharge{% endtrans %}</h3>
+                            <div class="card-options">
+                                <a href="{{ path ('retirer_argent')}}"  class="btn btn-outline-primary btn-sm">
+                                    <i class="fa fa-money me-2 fs-14"></i> {% trans %}Transférer l'argent{% endtrans %}
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body p-6">
                             <div class="panel panel-primary">
@@ -35,8 +38,7 @@
                                     <div class="tabs-menu ">
                                         <!-- Tabs -->
                                         <ul class="nav panel-tabs">
-                                            <li class=""><a href="#quickPay" class="active" data-bs-toggle="tab">QuickPay</a></li>
-                                            <li class=""><a href="#momo" data-bs-toggle="tab">MOMO</a></li>
+                                            <li class=""><a href="#momo" class="active" data-bs-toggle="tab">MOMO</a></li>
                                             <li><a href="#om" data-bs-toggle="tab">OM</a></li>
                                             <li><a href="#virement" data-bs-toggle="tab">Virement</a></li>
                                         </ul>
@@ -44,37 +46,7 @@
                                 </div>
                                 <div class="panel-body tabs-menu-body">
                                     <div class="tab-content">
-                                        <div class="tab-pane active" id="quickPay">
-                                        
-                                            <form class="row g-3 needs-validation" novalidate>
-											
-                                                <div class="col-md-3">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label for="validationCustom03" class="form-label">{% trans %}Numéro de téléphone QuickPay{% endtrans %}</label>
-                                                    <input type="text" class="form-control" placeholder="{% trans %}Numéro de téléphone{% endtrans %}" id="validationCustom03" required>
-                                                    <div class="invalid-feedback">
-                                                        {% trans %}Veuillez saisir le numéro de téléphone QuickPay{% endtrans %}
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label for="validationCustom03" class="form-label">{% trans %}Montant{% endtrans %}</label>
-                                                    <input type="text" class="form-control" placeholder="{% trans %}Montant{% endtrans %}" id="validationCustom03" required>
-                                                    <div class="invalid-feedback">
-                                                        {% trans %}Veuillez saisir le montant{% endtrans %}
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                </div>
-                                                <div class="col-12 text-center">
-                                                    <button class="btn btn-outline-primary mt-5" type="submit"><i class="fa fa-plus me-2"></i> {% trans %}Ajouter{% endtrans %}</button>
-                                                </div>
-                                                
-                                                
-										    </form>
-                                        
-                                        </div>
-                                        <div class="tab-pane active " id="momo">
+                                        <div class="tab-pane active" id="momo">
                                         
                                             <form class="row g-3 needs-validation" novalidate>
 											
@@ -282,4 +254,99 @@
         </div>
     </div><!-- right app-content-->
 </div>
+
+<script>
+    // DEBUT JE CHERCHE LE PROPRIETAIRE DU COMPTE
+    document.getElementById("numeroCompte").addEventListener("input", function (){
+        const numero = this.value;
+        if(numero.length >= 12) {
+            fetch('/quickPay/public/chercher-proprietaire-compte', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ numeroCompte: numero}),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const nomElement = document.getElementById("nomProprietaire");
+                const numCni = document.getElementById("numCni");
+                
+                if(data.nom) {
+                    nomElement.innerText = data.nom;
+                    nomElement.classList.add("nom-trouve");
+                    nomElement.classList.remove("nom-introuvable");
+
+                    numCni.innerText = data.numCni;
+                    numCni.classList.add("nom-trouve");
+                    numCni.classList.remove("nom-introuvable");
+                } else {
+                    nomElement.innerText = "Compte introuvable";
+                    nomElement.classList.add("nom-introuvable");
+                    nomElement.classList.remove("nom-trouve");
+
+                    numCni.innerText = "";
+                    numCni.classList.add("nom-introuvable");
+                    numCni.classList.remove("nom-trouve");
+
+
+                }
+            });
+        }
+    });
+
+    document.getElementById("montantEnvoye").addEventListener("input", function() {
+        const montant = parseFloat(this.value);
+       
+        if(!isNaN(montant)) {
+            const frais = Math.min(montant * 0.01, 5000);
+            //const frais = montant * 0.01;
+            const montantReel = montant - frais;
+            document.getElementById("montantReel").innerText = `Montant réel à envoyer : ${montantReel.toFixed(0)} XAF`;
+        }
+        else {
+            document.getElementById("montantReel").innerText = "";
+        }
+    });
+    //FIN //JE CHERCHE LE PROPRIETAIRE DU COMPTE
+
+    //DEBUT TRANSFERT
+    document.getElementById('form-transfert').addEventListener('submit', function (e) {
+        e.preventDefault(); // Empêche la soumission classique du formulaire
+
+        const formData = new FormData(this);
+       
+        fetch('/quickPay/public/transfert-quickPay-quickPay', {
+            method: 'POST',
+            body: formData
+           
+        })
+        .then(response => response.json())
+        .then(data => {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = data.message;
+            messageDiv.style.color = data.status === 'success' ? 'green' : 'red';
+
+            //if (data.status === 'success') 
+            //{
+                //setTimeout(() => {
+                   // window.location.href = '/quickPay/public/tableau-de-bord'; // redirection après succès
+               // }, 2000); // attend 2 secondes avant de rediriger
+            //}
+
+            //je vide les champs du formulaire
+            //document.getElementById('form-transfert').reset();
+
+        })
+        .catch(async error => {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = 'Erreur technique :' + error.message;
+
+            console.error('Erreur complète :', error);
+            //document.getElementById('message').innerHTML = 'Erreur technique.';
+        });
+    });
+    //FIN TRANSFERT
+</script>
 {% endblock %}

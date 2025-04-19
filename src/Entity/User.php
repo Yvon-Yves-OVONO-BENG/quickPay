@@ -109,6 +109,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?CategorieUser $categorieUser = null;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Pays $pays = null;
+
     public function __construct()
     {
         $this->reponseQuestions = new ArrayCollection();
@@ -636,6 +639,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCategorieUser(?CategorieUser $categorieUser): static
     {
         $this->categorieUser = $categorieUser;
+
+        return $this;
+    }
+
+    public function getPays(): ?Pays
+    {
+        return $this->pays;
+    }
+
+    public function setPays(?Pays $pays): static
+    {
+        $this->pays = $pays;
 
         return $this;
     }

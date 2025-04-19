@@ -29,6 +29,12 @@ class Transaction
     #[ORM\ManyToOne(inversedBy: 'transactions')]
     private ?StatutTransaction $statutTransaction = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $numeroTransaction = null;
+
+    #[ORM\Column]
+    private ?float $fraisTransaction = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +96,30 @@ class Transaction
     public function setStatutTransaction(?StatutTransaction $statutTransaction): static
     {
         $this->statutTransaction = $statutTransaction;
+
+        return $this;
+    }
+
+    public function getNumeroTransaction(): ?string
+    {
+        return $this->numeroTransaction;
+    }
+
+    public function setNumeroTransaction(string $numeroTransaction): static
+    {
+        $this->numeroTransaction = $numeroTransaction;
+
+        return $this;
+    }
+
+    public function getFraisTransaction(): ?float
+    {
+        return $this->fraisTransaction;
+    }
+
+    public function setFraisTransaction(float $fraisTransaction): static
+    {
+        $this->fraisTransaction = $fraisTransaction;
 
         return $this;
     }

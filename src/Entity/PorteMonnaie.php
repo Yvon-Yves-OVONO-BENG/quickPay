@@ -5,8 +5,10 @@ namespace App\Entity;
 use App\Repository\PorteMonnaieRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: PorteMonnaieRepository::class)]
+#[UniqueEntity(fields: ['numeroCompte'], message: 'Un compte existant utilise déjà ce numéro')]
 class PorteMonnaie
 {
     #[ORM\Id]
@@ -19,6 +21,9 @@ class PorteMonnaie
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $numeroCompte = null;
 
     public function getId(): ?int
     {
@@ -45,6 +50,18 @@ class PorteMonnaie
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getNumeroCompte(): ?string
+    {
+        return $this->numeroCompte;
+    }
+
+    public function setNumeroCompte(string $numeroCompte): static
+    {
+        $this->numeroCompte = $numeroCompte;
 
         return $this;
     }

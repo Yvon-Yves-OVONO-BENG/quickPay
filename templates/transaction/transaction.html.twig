@@ -147,18 +147,22 @@
                                             <thead>
                                                 <tr>
                                                     <th class="border-bottom-0">N°</th>
+                                                    <th class="border-bottom-0">N° de transaction</th>
                                                     <th class="border-bottom-0">{% trans %}Expediteur{% endtrans %}</th>
                                                     <th class="border-bottom-0">{% trans %}Bénéficiaire{% endtrans %}</th>
                                                     <th class="border-bottom-0">{% trans %}Montant{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Frais{% endtrans %}</th>
                                                     <th class="border-bottom-0">Date</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
                                                 <tr>
                                                     <th class="border-bottom-0">N°</th>
+                                                    <th class="border-bottom-0">N° de transaction</th>
                                                     <th class="border-bottom-0">{% trans %}Expediteur{% endtrans %}</th>
                                                     <th class="border-bottom-0">{% trans %}Bénéficiaire{% endtrans %}</th>
                                                     <th class="border-bottom-0">{% trans %}Montant{% endtrans %}</th>
+                                                    <th class="border-bottom-0">{% trans %}Frais{% endtrans %}</th>
                                                     <th class="border-bottom-0">Date</th>
                                                 </tr>
                                             </tfoot>
@@ -167,14 +171,17 @@
                                                 {% for transaction in transactions %}
                                                     <tr>
                                                         <td style="text-align:center; vertical-align: middle;">{{ i }}</td>
+                                                        <td style="vertical-align: middle;">{{ transaction.numeroTransaction ? transaction.numeroTransaction : "" }}</td>
                                                         <td style="vertical-align: middle;">{{ transaction.expediteur.username }}</td>
                                                         <td style="vertical-align: middle;">{{ transaction.destinataire.username }}</td>
                                                         <td style="text-align:center; vertical-align: middle;">{{ transaction.montant }} XAF</td>
+                                                        <td style="text-align:center; vertical-align: middle;">{{ transaction.fraisTransaction }} XAF</td>
                                                         <td style="text-align:center; vertical-align: middle;">
                                                             {{ transaction.createdAt|date('d/m/Y H:i') }} <br>
                                                             {% trans %}Il y'a : {% endtrans %} {{ transaction.createdAt|tempsPublication}}
                                                         </td>
                                                     </tr>
+                                                    {% set i = i + 1 %}
                                                 {% endfor %}
                                                 
                                                 

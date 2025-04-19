@@ -8,9 +8,11 @@ use App\Entity\CodeQr;
 use Exception;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\PaysRepository;
+use App\Service\LocalisationService;
+use App\Service\NumeroCompteService;
 use App\Service\QrcodeService;
 use Doctrine\ORM\EntityManagerInterface;
-use Endroid\QrCode\Writer\PngWriter;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,11 +30,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RegistrationController extends AbstractController
 {
     public function __construct(
-        protected MailerInterface $mailer,
-        protected EntityManagerInterface $em,
-        protected QrcodeService $qrcodeService,
-        protected TranslatorInterface $translator,
-        protected CsrfTokenManagerInterface $csrfTokenManager,
+        private MailerInterface $mailer,
+        private EntityManagerInterface $em,
+        private QrcodeService $qrcodeService,
+        private PaysRepository $paysRepository,
+        private TranslatorInterface $translator,
+        private NumeroCompteService $numeroCompteService,
+        private LocalisationService $localisationService,
+        private CsrfTokenManagerInterface $csrfTokenManager,
     )
     {}
 
@@ -183,6 +188,25 @@ class RegistrationController extends AbstractController
                 
                 $codeQr->setQrCode($qrCode);
 
+                // $ip = $request->getClientIp(); // Symfony détecte automatiquement l'IP
+                // if ($ip === '127.0.0.1' || $ip === '::1') 
+                // {
+                //     $ip = '154.72.40.10';
+                // }
+
+                
+                // $codePays = $this->localisationService->detecterPaysParIp($ip);
+
+                // // Recherche le Pays correspondant
+                // $pays = $this->paysRepository->findOneBy(['code' => $codePays]);
+
+                // $user->setPays($pays);
+
+                $numeroCompte = $this->numeroCompteService->genererNumeroUnique();
+                
+                // $porteMonnaie->setNumeroCompte($pays->getAlpha3().$numeroCompte);
+                $porteMonnaie->setNumeroCompte($numeroCompte);
+                
                 $user->setCleRsaPrivee($privateKey)
                     ->setCleRsaPublique($publicKey)
                     ->setPorteMonnaie($porteMonnaie)
@@ -192,15 +216,43 @@ class RegistrationController extends AbstractController
                     ;
 
                 // Envoi de l'email de confirmation
+                // $email = (new TemplatedEmail())
+                //     ->from(new Address('quickPay@freedomsoftwarepro.com', "QUICK-PAY"))
+                //     ->to($form->get('email')->getData())
+                //     ->subject("Bienvenue chez QuickPay / Welcome to QuickPay")
+                //     ->htmlTemplate('emails/envoieEmail.html.twig')
+                //     ->context([
+                //         'user' => $user,
+                //     ])
+                //     ;
+                // try 
+                // {
+                //     $transport->send($email);
+                //     $mailer->send($email);
+
+                // } 
+                // catch (TransportExceptionInterface $e)
+                // {
+                //     $this->addFlash('danger', $this->translator->trans("Error sending mail !"));
+
+                //     return $this->redirectToRoute("app_login");
+                // }
+
+                $this->em->persist($user);
+                $this->em->persist($porteMonnaie);
+                $this->em->persist($codeQr);
+                $this->em->flush();
+
+                // Envoi de l'email de confirmation
                 $email = (new TemplatedEmail())
-                    ->from(new Address('quickPay@freedomsoftwarepro.com', "QUICK-PAY"))
-                    ->to($form->get('email')->getData())
-                    ->subject("Bienvenue chez QuickPay / Welcome to QuickPay")
-                    ->htmlTemplate('emails/envoieEmail.html.twig')
-                    ->context([
-                        'user' => $user,
-                    ])
-                    ;
+                ->from(new Address('quickPay@freedomsoftwarepro.com', "QUICK-PAY"))
+                ->to($form->get('email')->getData())
+                ->subject("Bienvenue chez QuickPay / Welcome to QuickPay")
+                ->htmlTemplate('emails/envoieEmail.html.twig')
+                ->context([
+                    'user' => $user,
+                ])
+                ;
                 try 
                 {
                     $transport->send($email);
@@ -211,36 +263,8 @@ class RegistrationController extends AbstractController
                 {
                     $this->addFlash('danger', $this->translator->trans("Error sending mail !"));
 
-                    return $this->redirectToRoute("transcript_student");
+                    return $this->redirectToRoute("app_login");
                 }
-
-                $this->em->persist($user);
-                $this->em->persist($porteMonnaie);
-                // $this->em->persist($qrCode);
-                $this->em->flush();
-
-                // Envoi de l'email de confirmation
-                $email = (new TemplatedEmail())
-                ->from(new Address('quickPay@freedomsoftwarepro.com', "QUICK-PAY"))
-                ->to($form->get('email')->getData())
-                ->subject("Bienvenue chez QuickPay / Welcome to QuickPay")
-                ->htmlTemplate('emails/envoieEmail.html.twig')
-                ->context([
-                    'user' => $user->getUsername(),
-                ])
-                ;
-            try 
-            {
-                $transport->send($email);
-                $mailer->send($email);
-
-            } 
-            catch (TransportExceptionInterface $e)
-            {
-                $this->addFlash('danger', $this->translator->trans("Error sending mail !"));
-
-                return $this->redirectToRoute("transcript_student");
-            }
 
                 $this->addFlash('info', 'Compte créé avec succès !');
 

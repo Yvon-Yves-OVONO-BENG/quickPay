@@ -1,0 +1,96 @@
+{% extends 'baseIndex.html.twig' %}
+
+{% block title %}Termes et conditions{% endblock %}
+
+{% block body %}
+    <section class="py-4 py-lg-6 bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div>
+                        <h1 class="text-white mb-1 display-4">{% trans %}Termes et conditions d'utilisation{% endtrans %}</h1>
+                        <p class="mb-0 text-white lead">{% trans %}Transparence et clarté{% endtrans %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Content -->
+    <section class="py-7">
+        <div class="container">
+            <div class="row mb-6">
+                <div class="col-md-12">
+                    <div class="container mt-5">
+                        <p>
+                            Les présents Termes et Conditions régissent l’utilisation des services de paiement proposés par <strong>QuickPay</strong>. En accédant à notre plateforme,
+                            vous acceptez de vous conformer aux conditions énoncées ci-dessous. Si vous êtes en désaccord avec une partie de ces conditions, vous ne devez pas utiliser nos services.
+                        </p>
+
+                        <h3>1. Objet</h3>
+                        <p>
+                            QuickPay fournit une solution de paiement numérique permettant aux utilisateurs d’envoyer et de recevoir de l’argent de manière rapide, simple et sécurisée.
+                        </p>
+
+                        <h3>2. Création de compte</h3>
+                        <ul>
+                            <li>Vous devez être âgé d'au moins 18 ans ou disposer de l’autorisation de votre représentant légal.</li>
+                            <li>Vous vous engagez à fournir des informations exactes, complètes et à jour.</li>
+                            <li>Vous êtes responsable de la confidentialité de vos identifiants de connexion.</li>
+                        </ul>
+
+                        <h3>3. Utilisation des services</h3>
+                        <ul>
+                            <li>Vous vous engagez à utiliser nos services uniquement à des fins légales.</li>
+                            <li>Tout usage frauduleux ou illicite de la plateforme entraînera la suspension ou la résiliation de votre compte.</li>
+                            <li>QuickPay se réserve le droit de bloquer une transaction suspecte ou non conforme à la réglementation en vigueur.</li>
+                        </ul>
+
+                        <h3>4. Tarification</h3>
+                        <p>
+                            Certains services peuvent être soumis à des frais de transaction. Les tarifs applicables sont clairement affichés avant validation.
+                            QuickPay se réserve le droit de modifier sa politique tarifaire, avec un préavis raisonnable.
+                        </p>
+
+                        <h3>5. Responsabilité</h3>
+                        <ul>
+                            <li>QuickPay ne saurait être tenue responsable des pertes liées à une mauvaise utilisation de vos identifiants ou à un accès non autorisé à votre compte.</li>
+                            <li>Nous ne garantissons pas l’absence d’erreurs, de bugs ou d’interruptions, bien que nous mettions tout en œuvre pour les éviter.</li>
+                        </ul>
+
+                        <h3>6. Suspension et résiliation</h3>
+                        <p>
+                            Nous pouvons suspendre ou résilier votre accès aux services à tout moment, notamment en cas de non-respect des présentes conditions ou d’activité frauduleuse.
+                        </p>
+
+                        <h3>7. Propriété intellectuelle</h3>
+                        <p>
+                            Tous les éléments de la plateforme QuickPay (logo, design, code, contenus) sont protégés par les lois sur la propriété intellectuelle. 
+                            Vous vous engagez à ne pas les copier, reproduire ou distribuer sans autorisation.
+                        </p>
+
+                        <h3>8. Données personnelles</h3>
+                        <p>
+                            En utilisant QuickPay, vous consentez à la collecte et au traitement de vos données personnelles, conformément à notre
+                            <a href="{{ path ('politiqueDeConfidentialite') }}">Politique de confidentialité</a>.
+                        </p>
+
+                        <h3>9. Modifications</h3>
+                        <p>
+                            Nous nous réservons le droit de modifier ces conditions à tout moment. Les utilisateurs seront informés des changements majeurs via l’application ou par e-mail.
+                        </p>
+
+                        <h3>10. Droit applicable</h3>
+                        <p>
+                            Les présentes conditions sont régies par les lois en vigueur dans la République du Cameroun. Tout litige sera porté devant les juridictions compétentes.
+                        </p>
+
+                        <p class="mt-4">
+                            Dernière mise à jour : {{ "now"|date("d/m/Y") }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+{% endblock %}

@@ -56,6 +56,10 @@
 		<link href="{{ asset ('assets/plugins/datatables/Buttons/css/buttons.bootstrap5.min.css')}}"  rel="stylesheet">
 		<link href="{{ asset ('assets/plugins/datatables/Responsive/css/responsive.bootstrap5.min.css')}}" rel="stylesheet" />
 
+		<script src="{{ asset ('js/jquery.js')}}"></script>
+		<script src="{{ asset ('assets/js/jquery.min.js') }}"></script>
+		<script src="{{ asset ('js/sweetalert.js')}}"></script>
+		
 	    <!-- Color Skin css -->
 		<link id="theme" href="{{ asset ('assets/colors/color1.css')}}" rel="stylesheet" type="text/css"/>
 
@@ -174,14 +178,15 @@
 					{# {{ encore_entry_link_tags('app') }} #}
 				{% endblock %}
 
+				{% block body %}{% endblock %}
+
 				{% block javascripts %}
 					{# {{ encore_entry_script_tags('app') }}
 					{% block importmap %}{{ importmap('app') }}{% endblock %} #}
 				{% endblock %}
-				
-				{% block body %}{% endblock %}
+			</div>
 
-        		{% include "includes/_footer.html.twig" %}
+        	{% include "includes/_footerApp.html.twig" %}
 
         <!-- Back to top -->
 		<a href="#top" id="back-to-top"><i class="fe fe-chevron-up"></i></a>

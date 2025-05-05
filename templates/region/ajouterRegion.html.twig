@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if slug == 0 %}
+        {% trans %}Ajouter une région{% endtrans %}
+        {% else %}
+        {% trans %}Modification d'une région{% endtrans %}
+    {% endif %}    
+{% endblock %}
+
+{% block body %}
+    <!-- App-Content -->
+        <div class="hor-content main-content">
+            <div class="container">
+
+                <!--Page header-->
+                <div class="page-header">
+                    <div class="page-leftheader">
+                        <h4 class="page-title mb-0 text-primary">
+                            {% if slug == 0 %}
+                                <i class="fe fe-plus"></i>  {% trans %}Enregistrement d'une région{% endtrans %}
+                                {% else %}
+                                <i class="fe fe-edit"></i>  {% trans %}Modification d'une région{% endtrans %}
+                            {% endif %}
+                        </h4>
+                    </div>
+                    <div class="page-rightheader">
+                        <div class="btn-list">
+                            <a href="{{ path ('afficher_region', {'a': 1 }) }}" class="btn btn-outline-primary"><i class="fe fe-list me-2"></i>
+                                {% trans %}Afficher les régions{% endtrans %}</a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                {% if slug == 0 %}
+                    <div class="card border-primary">
+                    {% else %}
+                    <div class="card border-danger">
+                {% endif %}
+                <div class="card-header">
+                    <h3 class="card-title">
+                        {% if slug == 0 %}
+                            <i class="fe fe-plus"></i>  {% trans %}Ajouter une région{% endtrans %}
+                            {% else %}
+                            <i class="fe fe-edit"></i>  {% trans %}Modification de la région : {% endtrans %} {{ region.region }}
+                        {% endif %}
+                        
+                    </h3>
+                </div>
+                <div class="card-body ">
+                    <form id="region-form" class="row g-4 needs-validation", novalidate="">
+                        <div class="row" style="margin-top: 15px !important;">
+                            <div class="col-md-4 position-relative">
+                                <label for="validationCustom01" class="form-label">{% trans %}Pays{% endtrans %}</label>
+                                <select id="pays" name="pays" class="form-control select2-show-search" data-placeholder="Choose one (with searchbox)" required>
+                                    {% for pay in pays %}
+                                        <option value="{{ pay.id }}">{{ pay.nomFR }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="invalid-feedback">
+                                    {% trans %}Veuillez sélectionner le pays !{% endtrans %}
+                                </div>
+                            </div>
+                            <div class="col-md-4 position-relative">
+                                <label for="validationCustom01" class="form-label">{% trans %}Intitulé de la région{% endtrans %}</label>
+                                <input type="text" class="form-control" id="nom-region" name="nom-region" placeholder="Nom de la région" required>
+                                <div class="invalid-feedback">
+                                    {% trans %}Veuillez saisir le nom de la région{% endtrans %}
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-4 position-relative text-center" style="margin-top: 30px !important;">
+                                <button id="enregistrer-region" class="btn btn-outline-primary btn-md">
+                                    <i class="fe fe-save"></i> 
+                                    {% if slug == 0 %}
+                                        {% trans %}Enregistrer{% endtrans %}
+                                        {% else %}
+                                        {% trans %}Enregistrer les modifications{% endtrans %}
+                                    {% endif %}
+                                </button>
+                            </div>
+                        </div>
+                    
+                    </form>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+<script src="{{ asset ('js/regionJS/enregistrerRegion.js')}}"></script>
+{% endblock %}

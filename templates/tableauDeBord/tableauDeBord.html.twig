@@ -36,7 +36,10 @@
 				<!--Page header-->
 				<div class="page-header">
 					<div class="page-leftheader">
-						<h4 class="page-title mb-0 text-primary"><i class="fa fa-dashboard me-2"></i>{% trans %}Tableau de bord{% endtrans %}</h4>
+						<h4 class="page-title mb-0 text-primary">
+							<i class="fa fa-dashboard me-2"></i>
+							{% trans %}Numéro de compte : {% endtrans %} {{ porteMonnaie.numeroCompte }}
+						</h4>
 					</div>
 					<div class="page-rightheader">
 						<div class="btn-list">

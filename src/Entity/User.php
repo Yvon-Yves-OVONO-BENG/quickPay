@@ -112,6 +112,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Pays $pays = null;
 
+    #[ORM\OneToMany(targetEntity: Agence::class, mappedBy: 'chefAgence')]
+    private Collection $agences;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Agence $agence = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Poste $poste = null;
+
     public function __construct()
     {
         $this->reponseQuestions = new ArrayCollection();
@@ -122,6 +131,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->expediteurTransactions = new ArrayCollection();
         $this->destinataireTransaction = new ArrayCollection();
         $this->demandeModificationMotDePasses = new ArrayCollection();
+        $this->agences = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -651,6 +661,60 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPays(?Pays $pays): static
     {
         $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Agence>
+     */
+    public function getAgences(): Collection
+    {
+        return $this->agences;
+    }
+
+    public function addAgence(Agence $agence): static
+    {
+        if (!$this->agences->contains($agence)) {
+            $this->agences->add($agence);
+            $agence->setChefAgence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAgence(Agence $agence): static
+    {
+        if ($this->agences->removeElement($agence)) {
+            // set the owning side to null (unless already changed)
+            if ($agence->getChefAgence() === $this) {
+                $agence->setChefAgence(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAgence(): ?Agence
+    {
+        return $this->agence;
+    }
+
+    public function setAgence(?Agence $agence): static
+    {
+        $this->agence = $agence;
+
+        return $this;
+    }
+
+    public function getPoste(): ?Poste
+    {
+        return $this->poste;
+    }
+
+    public function setPoste(?Poste $poste): static
+    {
+        $this->poste = $poste;
 
         return $this;
     }

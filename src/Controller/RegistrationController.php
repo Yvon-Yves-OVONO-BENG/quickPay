@@ -251,8 +251,8 @@ class RegistrationController extends AbstractController
                 ->htmlTemplate('emails/envoieEmail.html.twig')
                 ->context([
                     'user' => $user,
-                ])
-                ;
+                ]);
+
                 try 
                 {
                     $transport->send($email);
@@ -261,38 +261,11 @@ class RegistrationController extends AbstractController
                 } 
                 catch (TransportExceptionInterface $e)
                 {
-                    $this->addFlash('danger', $this->translator->trans("Error sending mail !"));
-                    return $this->redirectToRoute("app_register");
+                    $this->addFlash('error', $this->translator->trans("Error sending mail !"));
+                    return $this->redirectToRoute("app_login");
                 }
 
-                $this->em->persist($user);
-                $this->em->persist($porteMonnaie);
-                $this->em->persist($codeQr);
-                $this->em->flush();
-
-                // Envoi de l'email de confirmation
-                $email = (new TemplatedEmail())
-                ->from(new Address('quickPay@freedomsoftwarepro.com', "QUICK-PAY"))
-                ->to($form->get('email')->getData())
-                ->subject("Bienvenue chez QuickPay / Welcome to QuickPay")
-                ->htmlTemplate('emails/envoieEmail.html.twig')
-                ->context([
-                    'user' => $user->getUsername(),
-                ])
-                ;
-            try 
-            {
-                $transport->send($email);
-                $mailer->send($email);
-
-            } 
-            catch (TransportExceptionInterface $e)
-            {
-                $this->addFlash('danger', $this->translator->trans("Error sending mail !"));
-
-                return $this->redirectToRoute("transcript_student");
-            }
-
+                
                 $this->addFlash('info', 'Compte créé avec succès !');
 
                 return $this->redirectToRoute('app_login');

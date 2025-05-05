@@ -1,0 +1,82 @@
+{% extends 'baseIndex.html.twig' %}
+
+{% block title %}Sécurité{% endblock %}
+
+{% block body %}
+    <section class="py-4 py-lg-6 bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div>
+                        <h1 class="text-white mb-1 display-4">Sécurité</h1>
+                        <p class="mb-0 text-white lead">{% trans %}Votre argent, votre sécurité, notre engagement{% endtrans %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Content -->
+    <section class="py-7">
+        <div class="container">
+            <div class="row mb-6">
+                <div class="col-md-12">
+                    <div class="container mt-5">
+                        <p>
+                            Chez <strong>QuickPay</strong>, la sécurité de vos données et transactions est notre priorité absolue. Nous mettons en œuvre des technologies de pointe pour assurer la confidentialité,
+                            l'intégrité et la disponibilité des informations sensibles échangées sur notre plateforme.
+                        </p>
+
+                        <h3>1. Chiffrement SSL/TLS</h3>
+                        <p>
+                            Toutes les communications entre votre appareil et nos serveurs sont protégées par un protocole de chiffrement <strong>SSL/TLS (Secure Socket Layer / Transport Layer Security)</strong>.
+                            Cela garantit que les données transmises, telles que vos informations personnelles ou bancaires, ne peuvent pas être interceptées ou modifiées par des tiers malveillants.
+                        </p>
+                        <p>
+                            Vous pouvez reconnaître une connexion sécurisée par le cadenas affiché dans la barre d’adresse de votre navigateur et le préfixe <code>https://</code>.
+                        </p>
+
+                        <h3>2. Chiffrement des données sensibles avec AES</h3>
+                        <p>
+                            Les informations critiques telles que les identifiants de compte, les soldes ou les historiques de transactions sont chiffrées à l’aide de l’algorithme <strong>AES (Advanced Encryption Standard)</strong>,
+                            une norme de chiffrement symétrique utilisée mondialement par les gouvernements et les institutions financières.
+                        </p>
+                        <p>
+                            QuickPay utilise l’AES avec une clé de 256 bits pour offrir un niveau de sécurité élevé contre les tentatives de piratage ou de vol de données.
+                        </p>
+
+                        <h3>3. Protection contre les intrusions</h3>
+                        <p>
+                            Notre infrastructure est surveillée en temps réel par des systèmes de détection d’intrusion (IDS) et des pare-feu avancés. Tout comportement suspect est immédiatement analysé
+                            et traité par notre équipe de sécurité.
+                        </p>
+
+                        <h3>4. Authentification sécurisée</h3>
+                        <p>
+                            L’accès à votre compte QuickPay est protégé par un mot de passe fort et un système de validation à deux facteurs (2FA). Ainsi, même si votre mot de passe est compromis,
+                            un code de confirmation supplémentaire est requis pour valider l’accès.
+                        </p>
+
+                        <h3>5. Conformité et audits</h3>
+                        <p>
+                            Nous effectuons régulièrement des audits de sécurité et respectons les réglementations locales et internationales en matière de protection des données.
+                            QuickPay est en conformité avec les meilleures pratiques du secteur.
+                        </p>
+
+                        <h3>6. Ce que vous pouvez faire</h3>
+                        <ul>
+                            <li>Utilisez un mot de passe unique et complexe.</li>
+                            <li>Activez la double authentification dans l'application.</li>
+                            <li>Ne partagez jamais vos informations de connexion.</li>
+                            <li>Signalez tout comportement suspect au service support.</li>
+                        </ul>
+
+                        <p class="mt-4">
+                            Ensemble, assurons la sécurité de vos paiements. Pour toute question, n’hésitez pas à consulter notre <a href="{{ path ('supportEtAide') }}">support</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+{% endblock %}

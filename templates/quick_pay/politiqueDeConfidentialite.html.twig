@@ -1,0 +1,110 @@
+{% extends 'baseIndex.html.twig' %}
+
+{% block title %}{% trans %}Politiques de confidentialité{% endtrans %}{% endblock %}
+
+{% block body %}
+    <section class="py-4 py-lg-6 bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-12">
+                    <div>
+                        <h1 class="text-white mb-1 display-4">{% trans %}Politiques de confidentialité{% endtrans %}</h1>
+                        <p class="mb-0 text-white lead">{% trans %}Confidentialité garantie{% endtrans %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Content -->
+    <section class="py-7">
+        <div class="container">
+            <div class="row mb-6">
+                <div class="col-md-12">
+                    <div class="container mt-5">
+                        <p>
+                            Chez <strong>QuickPay</strong>, la protection de vos données personnelles est une priorité. La présente politique de confidentialité a pour but de vous informer
+                            sur la manière dont nous collectons, utilisons, partageons et protégeons vos informations lorsque vous utilisez notre plateforme de paiement.
+                        </p>
+
+                        <h3>1. Données collectées</h3>
+                        <p>
+                            Nous collectons les informations suivantes lorsque vous créez un compte ou utilisez nos services :
+                        </p>
+                        <ul>
+                            <li>Nom et prénom</li>
+                            <li>Numéro de téléphone</li>
+                            <li>Adresse e-mail</li>
+                            <li>Informations de transaction (montants, dates, destinataires, etc.)</li>
+                            <li>Adresse IP et données de localisation</li>
+                        </ul>
+
+                        <h3>2. Finalités de la collecte</h3>
+                        <p>
+                            Les données collectées sont utilisées pour :
+                        </p>
+                        <ul>
+                            <li>Créer et gérer votre compte utilisateur</li>
+                            <li>Traiter vos paiements et assurer leur sécurité</li>
+                            <li>Vous notifier en cas de transaction ou d'activité suspecte</li>
+                            <li>Améliorer notre service et personnaliser votre expérience</li>
+                            <li>Respecter nos obligations légales et réglementaires</li>
+                        </ul>
+
+                        <h3>3. Partage des données</h3>
+                        <p>
+                            Nous ne vendons ni ne louons vos données personnelles. Vos informations peuvent être partagées avec :
+                        </p>
+                        <ul>
+                            <li>Nos partenaires de services de paiement pour exécuter vos transactions</li>
+                            <li>Les autorités compétentes, sur demande légale ou réglementaire</li>
+                            <li>Des prestataires techniques sous contrat de confidentialité</li>
+                        </ul>
+
+                        <h3>4. Sécurité des données</h3>
+                        <p>
+                            QuickPay met en œuvre des mesures de sécurité techniques et organisationnelles strictes pour protéger vos données
+                            contre tout accès non autorisé, perte, altération ou divulgation. Toutes les transactions sont chiffrées et surveillées.
+                        </p>
+
+                        <h3>5. Durée de conservation</h3>
+                        <p>
+                            Vos données sont conservées aussi longtemps que nécessaire pour vous fournir nos services, respecter nos obligations
+                            légales et résoudre les éventuels litiges.
+                        </p>
+
+                        <h3>6. Vos droits</h3>
+                        <p>
+                            Vous disposez des droits suivants concernant vos données personnelles :
+                        </p>
+                        <ul>
+                            <li>Droit d'accès, de modification et de suppression</li>
+                            <li>Droit d’opposition au traitement</li>
+                            <li>Droit à la portabilité des données</li>
+                            <li>Droit de retrait du consentement à tout moment</li>
+                        </ul>
+                        <p>
+                            Pour exercer ces droits, veuillez nous contacter à l’adresse : <strong>confidentialite@quickpay.cm</strong>
+                        </p>
+
+                        <h3>7. Cookies</h3>
+                        <p>
+                            Notre application utilise des cookies pour améliorer votre expérience utilisateur. Vous pouvez modifier vos préférences à tout moment
+                            dans les paramètres de votre navigateur.
+                        </p>
+
+                        <h3>8. Modifications de la politique</h3>
+                        <p>
+                            QuickPay se réserve le droit de modifier cette politique de confidentialité à tout moment. Toute mise à jour sera publiée
+                            sur cette page avec la date de la dernière révision.
+                        </p>
+
+                        <p class="mt-4">
+                            Dernière mise à jour : {{ "now"|date("d/m/Y") }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+{% endblock %}

@@ -8,3 +8,8 @@ activer_utilisateur:
     path: /utilisateur/activer-utilisateur
     controller: App\Controller\Utilisateur\ActiverUtilisateurController::activerUtilisateur
     methods: ['POST']
+
+modifier_region:
+    path: /region/modifier_region
+    controller: App\Controller\Region\ModifierRegionController::modifierRegion
+    methods: ['GET']

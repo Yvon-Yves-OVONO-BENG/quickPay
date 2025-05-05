@@ -40,91 +40,81 @@
 		</script>
 	{% endfor %}
 		<div class="page">
-			<div class="page-single">
+			<div class="page-content">
 				<div class="container">
 					<div class="row">
-					
 						<div class="col mx-auto">
 							<div class="row justify-content-center">
-								<div class="col-xl-7 col-lg-12">
-									<div class="row p-0 m-0">
-										<div class="col-lg-6 p-0">
-											<div class="text-justified text-white p-5 register-1 overflow-hidden">
-												<div class="custom-content">
-													<div class="mb-5 br-7 text-center">
-														<img src="{{ asset ('assets/images/brand/logo.png')}}" height="140" weight="140" alt="logo">
+								<div class="col-md-4">
+									<div class="card border-primary">
+										<div class="card-body">
+											<div class="text-center mb-3">
+												<h1 class="mb-2">{% trans %}Connexion{% endtrans %}</h1>
+											</div>
+											<form method="post" class="mt-5">
+												{# {% if error %}
+													<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+												{% endif %} #}
+
+												{% for message in app.flashes('error')  %}
+
+													<div class="alert alert-light-danger" role="alert">
+														<button type="button" class="btn-close text-danger mr-negative-16" data-bs-dismiss="alert" aria-hidden="true">×</button>
+														<strong><i class="fa fa-frown-o me-2" aria-hidden="true"></i>{{ message }}</strong>
 													</div>
-													<div class="ms-5">
-														<div class="fs-18 mb-6 font-weight-bold text-white text-center">QuickPay</div>
-														<div class="mb-4 text-white text-center font-weight-bold">
-															{% trans %}	Gagnez du temps, payez en un instant.
-														{% endtrans %}
-														</div>
-														 <div class="fs-18 font-weight-bold text-white text-center">
-                                                        <a href="{{ path ('accueil') }}" class="btn btn-white text-primary font-weight-bold text-center"><i class="fe fe-home me-2"></i> {% trans %}Accueil{% endtrans %}</a>
-                                                    </div>
+
+												{% endfor %}
+
+												{% if app.user %}
+													<div class="mb-3">
+														{% trans %}Vous êtes connectés sous {% endtrans %} : {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">{% trans %}Déconnexion{% endtrans %}</a>
+													</div>
+												{% endif %}
+												<div class="input-group mb-4">
+													<div class="input-group-text">
+														<i class="fe fe-mail"></i>
+													</div>
+													<input type="email" value="{{ last_username }}" name="email" id="inputUsername" class="form-control" autocomplete="username" required autofocus placeholder="Votre email">
+												
+												</div>
+												<div class="input-group mb-4">
+													<div class="input-group" id="Password-toggle">
+														<a href="" class="input-group-text">
+															<i class="fe fe-eye" aria-hidden="true"></i>
+														</a>
+														<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="Mot de passe">
 													</div>
 												</div>
-											</div>
-										</div>
-										<div class="col-md-8 col-lg-6 p-0 mx-auto" >
-                                            <div class="bg-white text-dark br-7 br-tl-0 br-bl-0 border-primary">
-                                                <div class="card-body">
-                                                    <div class="text-center mb-3">
-                                                        <h1 class="mb-2">Connexion</h1>
-                                                        <a href="javascript:void(0);" class=""></a>
-                                                    </div>
-                                                    <form method="post" class="mt-5">
-                                                        {# {% if error %}
-                                                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                                                        {% endif %} #}
-
-                                                        {% if app.user %}
-                                                            <div class="mb-3">
-                                                                {% trans %}Vous êtes connectés sous {% endtrans %} : {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">{% trans %}Déconnexion{% endtrans %}</a>
-                                                            </div>
-                                                        {% endif %}
-                                                        <div class="input-group mb-4">
-                                                            <div class="input-group-text">
-                                                                <i class="fe fe-mail"></i>
-                                                            </div>
-                                                            <input type="email" value="{{ last_username }}" name="email" id="inputUsername" class="form-control" autocomplete="username" required autofocus placeholder="Votre email">
-                                                        </div>
-                                                        <div class="input-group mb-4">
-                                                            <div class="input-group" id="Password-toggle">
-                                                                <a href="" class="input-group-text">
-                                                                    <i class="fe fe-eye" aria-hidden="true"></i>
-                                                                </a>
-                                                                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required placeholder="Mot de passe">
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+												<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                                                         
-                                                        <div class="form-group">
-                                                            <label class="custom-control custom-checkbox">
-                                                                <input type="checkbox" name="_remember_me" class="custom-control-input" />
-                                                                <span class="custom-control-label">{% trans %}Se souvenir de moi{% endtrans %}</span>
-                                                            </label>
-                                                        </div>
-
-
-                                                        <div class="form-group text-center mb-3">
-                                                            <button class="btn btn-outline-primary btn-md w-100 br-7"><i class="fe fe-unlock me-2"></i> {% trans %}Connexion{% endtrans %}</button>
-                                                        </div>
-                                                        <div class="form-group fs-13 text-center">
-															{% trans %}Vous n'avez pas de compte ?{% endtrans %}
-															<a href="{{ path ('app_register') }}">
-																{% trans %}Inscrivez-vous ici{% endtrans %}
-															</a>
-                                                            <a href="{{ path ('mot_de_passe_oublie') }}">
-																<span class="badge badge-gradient-danger mt-2">
-																	{% trans %}Mot de passe oublié ?{% endtrans %}
-																</span>
-															</a> 
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
+												<div class="form-group">
+													<label class="custom-control custom-checkbox">
+														<input type="checkbox" name="_remember_me" class="custom-control-input" />
+														<span class="custom-control-label">{% trans %}Se souvenir de moi{% endtrans %}</span>
+													</label>
+												</div>
+												<div class="form-group text-center mb-3">
+													<button class="btn btn-outline-primary btn-md w-100 br-7">
+														<i class="fe fe-unlock me-2"></i> 
+														{% trans %}Connexion{% endtrans %}
+													</button>
+												</div>
+												<div class="form-group fs-13 text-center">
+													<a href="{{ path ('mot_de_passe_oublie') }}">
+														<span class="badge badge-gradient-danger mt-2">
+															{% trans %}Mot de passe oublié ?{% endtrans %}
+														</span>
+													</a> 
+													<a href="{{ path ('app_register') }}">
+														<span class="badge badge-gradient-primary mt-2">
+															{% trans %}Créer un compte{% endtrans %}
+														</span>
+													</a>
+												</div>
+												<div class="form-group fs-14 text-center font-weight-bold">
+													<a href="{{ path ('accueil')}}"><i class="fe fe-home me-2"></i>{% trans %}Accueil{% endtrans %}</a>
+												</div>
+											</form>
 										</div>
 									</div>
 								</div>
@@ -134,4 +124,5 @@
 				</div>
 			</div>
 		</div>
+
 {% endblock %}

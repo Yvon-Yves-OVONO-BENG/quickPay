@@ -33,9 +33,13 @@ class Pays
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'pays')]
     private Collection $users;
 
+    #[ORM\OneToMany(targetEntity: Region::class, mappedBy: 'pays')]
+    private Collection $regions;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->regions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +131,36 @@ class Pays
             // set the owning side to null (unless already changed)
             if ($user->getPays() === $this) {
                 $user->setPays(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Region>
+     */
+    public function getRegions(): Collection
+    {
+        return $this->regions;
+    }
+
+    public function addRegion(Region $region): static
+    {
+        if (!$this->regions->contains($region)) {
+            $this->regions->add($region);
+            $region->setPays($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegion(Region $region): static
+    {
+        if ($this->regions->removeElement($region)) {
+            // set the owning side to null (unless already changed)
+            if ($region->getPays() === $this) {
+                $region->setPays(null);
             }
         }
 
